@@ -2,9 +2,9 @@
 Weggeld is **de** app voor het bijhouden van de maandelijke uitgaves. In deze app is het mogelijk om bij te houden waar al je geld elke maand naar toe gaat en waar er misschien bespaart kan worden. Elke maand kies je een bedrag wat je wilt gaan uitgeven en deze app houdt bij in hoeverre dit bedrag al gehaald is. De app zal voorzien zijn van een makkelijk maandelijks overzicht en mooie statistieken waarin je jouw uitgaves kan bekijken.
 
 ## Student Information
-Naam: Noud Corten
-Studentnummer: 11349948
-Platform: iOS (Swift)
+* Naam: Noud Corten
+* Studentnummer: 11349948
+* Platform: iOS (Swift)
 
 ## Problem Statement
 Iedereen kent het probleem van te weinig geld hebben op je bankrekening. Elke maand wordt er een bedrag gestort op je rekening, maar op magische wijze is dit bedrag binnen een paar weken weg. Deze app is **de** oplossing voor het goed bijhouden van je uitgaves, waardoor je precies in de gaten hebt als je ergens te veel geld aan uitgeeft. Het zorgt voor veel overzicht op financieel vlak en zorgt ervoor dat je precies weet wanneer je moet stoppen met geld uitgeven. 
@@ -33,7 +33,7 @@ Een app waarin de gebruiker zijn/haar maandelijkse kosten kan bijhouden.
 * Totaal bedrag dat verandert na het toevoegen van een uitgave.
 * Het toevoegen van een uitgave.
 * Een opsomming van uitgaves.
-* Een cirkeldiagram die de kosten per categorie weergeeft in een cirkeldiagram.
+* Een cirkeldiagram die de kosten per categorie weergeeft (in percentages).
 
 ## Prerequisites
 ### Data Sources
