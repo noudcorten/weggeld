@@ -5,6 +5,6 @@ Weggeld is **de** app voor het bijhouden van de maandelijke uitgaves. In deze ap
 
 ## Solution
 * Een app waarin de gebruiker zijn/haar maandelijkse kosten kan bijhouden
-* 
+* test
 
 
