@@ -1,13 +1,13 @@
 # DESIGN
 
-### Advanced sketch
+## Advanced sketch
 <body>
 <p float="left">
   <img src="https://github.com/noudcorten/weggeld/blob/master/doc/advanced_sketch_1-1.png" width="1000" height="500"/>
 </p>
 </body>
 
-### Diagram
+## Diagram
 #### Utility Models
 Class Name | View Controllers | Plug-ins
 ---------- | ---------------- | --------
