@@ -1,6 +1,5 @@
 # DESIGN
 
-## Design doc
 ### Advanced sketch
 <body>
 <p float="left">
@@ -10,12 +9,12 @@
 
 ### Diagram
 #### Utility Models
-Class Name | View Controllers 
----------- | ----------------
-Uitgave | GeldViewController
-AppData | WegViewController 
-. | StatistiekViewController
-. | UitgaveViewController
+Class Name | View Controllers | Plug-ins
+---------- | ---------------- | --------
+Uitgave | GeldViewController | CAShapeLayer
+AppData | WegViewController | CABasicAnimation
+. | StatistiekViewController | PropertyListEncoder
+. | UitgaveViewController | .
 
 #### Classes
 Uitgave | AppData
@@ -34,3 +33,11 @@ progressBar | sortBySelector | graphImage | categoryPicker
 uitgaveList | uitgaveList | categoryLegenda | datePicker
 addItemButton | addItemButton | . | descriptionTextBox
 . | . | . | saveButton
+
+#### Databases
+Uitgave | ***(Type)*** | AppData | ***(Type)***
+------- | ------------ | ------- | ------------
+bedrag | ***float*** | uitgaves[] | ***[Uitgave]***
+categorie | ***string*** | total_amount | ***float***
+datum | ***DateFormatter*** | current_amount | ***float***
+omschrijving | ***string*** | . | .
