@@ -39,14 +39,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExpenseCellIdentifier" id="2zM-ty-Rui">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExpenseCellIdentifier" id="2zM-ty-Rui" customClass="ExpenseCell" customModule="WegGeld" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2zM-ty-Rui" id="e2f-2i-btH">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LR5-xa-Msl">
+                                            <rect key="frame" x="24" y="11.5" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rxb-z8-Yex">
+                                            <rect key="frame" x="322.5" y="11.5" width="44.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Rxb-z8-Yex" firstAttribute="trailing" secondItem="e2f-2i-btH" secondAttribute="trailingMargin" constant="8" id="334-fm-t2L"/>
+                                        <constraint firstItem="LR5-xa-Msl" firstAttribute="centerY" secondItem="e2f-2i-btH" secondAttribute="centerY" id="DvO-gs-Ky6"/>
+                                        <constraint firstItem="LR5-xa-Msl" firstAttribute="leading" secondItem="e2f-2i-btH" secondAttribute="leadingMargin" constant="8" id="wik-Te-Wud"/>
+                                        <constraint firstItem="Rxb-z8-Yex" firstAttribute="centerY" secondItem="e2f-2i-btH" secondAttribute="centerY" id="yl5-hA-hEe"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="categoryLabel" destination="Rxb-z8-Yex" id="ESx-5q-dJy"/>
+                                    <outlet property="expenseLabel" destination="LR5-xa-Msl" id="6pO-Ii-1oZ"/>
                                     <segue destination="bIz-Fl-ieO" kind="show" identifier="showDetails" id="WSB-1l-Nj3"/>
                                 </connections>
                             </tableViewCell>

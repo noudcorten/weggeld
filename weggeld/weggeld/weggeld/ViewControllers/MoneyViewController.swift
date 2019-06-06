@@ -27,4 +27,16 @@ class MoneyViewController: UIViewController {
     }
     */
 
+    
+    @IBAction func unwindToController(segue: UIStoryboardSegue) {
+        guard segue.identifier == "saveUnwind" else { return }
+        let sourceViewController = segue.source as! ExpenseTableViewController
+        
+        if let expense = sourceViewController.expense {
+            if var savedExpenses = Expense.loadExpenses() {
+                savedExpenses.append(expense)
+                Expense.saveExpenses(savedExpenses)
+            }
+        }
+    }
 }

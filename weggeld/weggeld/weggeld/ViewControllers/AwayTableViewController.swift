@@ -9,7 +9,7 @@
 import UIKit
 
 class AwayTableViewController: UITableViewController {
-
+    
     var expenses = [Expense]()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,7 +26,7 @@ class AwayTableViewController: UITableViewController {
         if let savedExpenses = Expense.loadExpenses() {
             expenses = savedExpenses
         } else {
-            expenses = Expense.loadSampleExpenses()
+            expenses = []
         }
     }
     
@@ -45,10 +45,11 @@ class AwayTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseCellIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseCellIdentifier", for: indexPath) as! ExpenseCell
         
         let expense = expenses[indexPath.row]
-        cell.textLabel?.text = "€ " + String(expense.amount)
+        cell.expenseLabel.text = "€ " + String(expense.amount)
+        cell.categoryLabel.text = expense.category
         return cell
     }
     
@@ -62,6 +63,7 @@ class AwayTableViewController: UITableViewController {
         if editingStyle == .delete {
             expenses.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            Expense.saveExpenses(expenses)
         }
     }
     
@@ -79,6 +81,7 @@ class AwayTableViewController: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
+        Expense.saveExpenses(expenses)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

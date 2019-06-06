@@ -21,6 +21,7 @@
 		04BD4DBB22A928FF00150288 /* money_bag.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBA22A928FF00150288 /* money_bag.png */; };
 		04BD4DBD22A9290D00150288 /* wallet_app.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBC22A9290D00150288 /* wallet_app.png */; };
 		04BD4DBF22A9292100150288 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBE22A9292100150288 /* settings.png */; };
+		04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DC322A95ED700150288 /* ExpenseCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		04BD4DBA22A928FF00150288 /* money_bag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = money_bag.png; path = ../../../../../iOS_11_glyph_icons/PNG/money_bag.png; sourceTree = "<group>"; };
 		04BD4DBC22A9290D00150288 /* wallet_app.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wallet_app.png; path = ../../../../../iOS_11_glyph_icons/PNG/wallet_app.png; sourceTree = "<group>"; };
 		04BD4DBE22A9292100150288 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../../../../../iOS_11_glyph_icons/PNG/settings.png; sourceTree = "<group>"; };
+		04BD4DC322A95ED700150288 /* ExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			children = (
 				04BD4DA622A925AB00150288 /* Classes */,
 				04BD4DA322A9258900150288 /* ViewControllers */,
+				04BD4DC222A95E7000150288 /* View */,
 				04BD4DB122A9265D00150288 /* Icons */,
 				04BD4D8722A923FC00150288 /* AppDelegate.swift */,
 				04BD4D8B22A923FC00150288 /* Main.storyboard */,
@@ -113,6 +116,15 @@
 				04BD4DBE22A9292100150288 /* settings.png */,
 			);
 			path = Icons;
+			sourceTree = "<group>";
+		};
+		04BD4DC222A95E7000150288 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04BD4DC322A95ED700150288 /* ExpenseCell.swift */,
+			);
+			name = View;
+			path = Classes/View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +206,7 @@
 				04BD4DA022A9254E00150288 /* StatisticsViewController.swift in Sources */,
 				04BD4D9E22A9252200150288 /* ExpenseTableViewController.swift in Sources */,
 				04BD4DA222A9257900150288 /* SettingsTableViewController.swift in Sources */,
+				04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */,
 				04BD4D8822A923FC00150288 /* AppDelegate.swift in Sources */,
 				04BD4DB722A9271100150288 /* MoneyViewController.swift in Sources */,
 				04BD4D9C22A924E800150288 /* AwayTableViewController.swift in Sources */,
