@@ -38,7 +38,7 @@
 
 #### Day 3
 * Research how to improve the app design
-  * Tip1: Make the spending overview a list of month-dropdowns
+  * Tip: Make the spending overview a list of month-dropdowns
 * Local storage on the Device
 
 #### Day 4
