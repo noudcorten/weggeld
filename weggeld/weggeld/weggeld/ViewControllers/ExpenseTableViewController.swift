@@ -58,6 +58,7 @@ class ExpenseTableViewController: UITableViewController {
     
     @IBAction func datePickerChanged(_ sender: Any) {
         updateDueDateLabel(with: dueDatePickerView.date)
+        dueDatePickerView.maximumDate = Date()
     }
     
     /// Disable the save button if there is no title.

@@ -18,9 +18,6 @@ class AwayTableViewController: UITableViewController {
         
         if let appData = AppData.loadAppData() {
             expenses = appData.expenses
-            for expense in expenses {
-                print(expense.getMonth())
-            }
         }
         
         tableView.reloadData()
