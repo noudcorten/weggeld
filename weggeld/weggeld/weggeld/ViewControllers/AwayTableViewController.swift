@@ -15,15 +15,12 @@ class AwayTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
-        tableView.reloadData()
         
         if let appData = AppData.loadAppData() {
             expenses = appData.expenses
-            print("test")
-        } else {
-            print("test2")
-            expenses = []
         }
+        
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -70,9 +67,6 @@ class AwayTableViewController: UITableViewController {
             if var appData = AppData.loadAppData() {
                 appData.expenses = expenses
                 AppData.saveAppData(appData)
-            } else {
-                let appData = AppData(expenses: expenses, maxMoney: 0.0)
-                AppData.saveAppData(appData)
             }
         }
     }
@@ -98,9 +92,6 @@ class AwayTableViewController: UITableViewController {
         
         if var appData = AppData.loadAppData() {
             appData.expenses = expenses
-            AppData.saveAppData(appData)
-        } else {
-            let appData = AppData(expenses: expenses, maxMoney: 0.0)
             AppData.saveAppData(appData)
         }
     }

@@ -10,22 +10,50 @@ import UIKit
 
 class MoneyViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    @IBOutlet weak var moneyLabel: UILabel!
+    @IBOutlet weak var progressBar: UIProgressView!
+    
+    var appData: AppData?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.delegate = self as? UITabBarControllerDelegate
         
-        // Do any additional setup after loading the view.
+        if let appData = AppData.loadAppData() {
+            AppData.saveAppData(appData)
+        } else {
+            let appData = AppData(expenses: [], maxAmount: 100.0)
+            AppData.saveAppData(appData)
+            
+        }
+        
+        appData = AppData.loadAppData()
+        
+        updateMoneyLabel()
+        updateProgressBar()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateMoneyLabel() {
+        if appData!.totalExpense() > appData!.maxAmount {
+            moneyLabel.textColor = UIColor.red
+        } else {
+            moneyLabel.textColor = UIColor.black
+        }
+        let moneyLeft = appData!.maxAmount - appData!.totalExpense()
+        moneyLabel.text = "€ " + String(moneyLeft)
     }
-    */
+    
+    func updateProgressBar() {
+        let progress = appData!.totalExpense() / appData!.maxAmount
+        if progress > 1 {
+            progressBar.setProgress(progress, animated: false)
+        } else {
+            progressBar.setProgress(progress, animated: true)
+        }
+        
+    }
+
 
     
     @IBAction func unwindToController(segue: UIStoryboardSegue) {
@@ -33,10 +61,10 @@ class MoneyViewController: UIViewController {
         let sourceViewController = segue.source as! ExpenseTableViewController
         
         if let expense = sourceViewController.expense {
-            if var savedExpenses = Expense.loadExpenses() {
-                savedExpenses.append(expense)
-                Expense.saveExpenses(savedExpenses)
-            }
+            appData!.expenses.append(expense)
+            AppData.saveAppData(appData!)
         }
     }
+        
+        
 }

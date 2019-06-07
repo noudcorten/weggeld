@@ -10,7 +10,7 @@ import Foundation
 
 struct AppData: Codable {
     var expenses: [Expense]
-    var maxMoney: Float
+    var maxAmount: Float
     
     static let getMonth: DateFormatter = {
         let formatter = DateFormatter()

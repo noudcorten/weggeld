@@ -92,12 +92,12 @@ class ExpenseTableViewController: UITableViewController {
         super.prepare(for: segue, sender: sender)
         guard segue.identifier == "saveUnwind" else { return }
         
-        let amount = amountTextField.text!
+        let amount = abs(Float(amountTextField.text!)!)
         let dueDate = dueDatePickerView.date
         let notes = notesTextView.text
         let category = navigationItem.title!
         
-        expense = Expense(amount: Float(amount)!, dueDate: dueDate, notes: notes, category: category)
+        expense = Expense(amount: amount, dueDate: dueDate, notes: notes, category: category)
     }
 
 }
