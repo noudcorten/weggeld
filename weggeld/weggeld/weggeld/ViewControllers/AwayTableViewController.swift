@@ -16,18 +16,20 @@ class AwayTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
         tableView.reloadData()
+        
+        if let appData = AppData.loadAppData() {
+            expenses = appData.expenses
+            print("test")
+        } else {
+            print("test2")
+            expenses = []
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // This line set an intelligent edit button that just works.
         self.navigationItem.leftBarButtonItem = self.editButtonItem
-        
-        if let savedExpenses = Expense.loadExpenses() {
-            expenses = savedExpenses
-        } else {
-            expenses = []
-        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,6 +52,7 @@ class AwayTableViewController: UITableViewController {
         let expense = expenses[indexPath.row]
         cell.expenseLabel.text = "€ " + String(expense.amount)
         cell.categoryLabel.text = expense.category
+        cell.dateLabel.text = Expense.dueDateFormatter.string(from: expense.dueDate)
         return cell
     }
     
@@ -63,8 +66,19 @@ class AwayTableViewController: UITableViewController {
         if editingStyle == .delete {
             expenses.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            Expense.saveExpenses(expenses)
+            
+            if var appData = AppData.loadAppData() {
+                appData.expenses = expenses
+                AppData.saveAppData(appData)
+            } else {
+                let appData = AppData(expenses: expenses, maxMoney: 0.0)
+                AppData.saveAppData(appData)
+            }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
     
     @IBAction func unwindToController(segue: UIStoryboardSegue) {
@@ -81,7 +95,14 @@ class AwayTableViewController: UITableViewController {
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
-        Expense.saveExpenses(expenses)
+        
+        if var appData = AppData.loadAppData() {
+            appData.expenses = expenses
+            AppData.saveAppData(appData)
+        } else {
+            let appData = AppData(expenses: expenses, maxMoney: 0.0)
+            AppData.saveAppData(appData)
+        }
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

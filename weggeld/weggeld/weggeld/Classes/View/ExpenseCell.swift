@@ -13,7 +13,7 @@ class ExpenseCell: UITableViewCell {
     
     @IBOutlet weak var expenseLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
-    
+    @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
