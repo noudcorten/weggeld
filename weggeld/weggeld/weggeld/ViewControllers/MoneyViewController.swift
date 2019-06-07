@@ -29,7 +29,6 @@ class MoneyViewController: UIViewController {
         }
         
         appData = AppData.loadAppData()
-        
         updateMoneyLabel()
         updateProgressBar()
     }
@@ -67,7 +66,7 @@ class MoneyViewController: UIViewController {
         let sourceViewController = segue.source as! ExpenseTableViewController
         
         if let expense = sourceViewController.expense {
-            appData!.expenses.append(expense)
+            appData!.addExpense(expense: expense)
             AppData.saveAppData(appData!)
         }
     }

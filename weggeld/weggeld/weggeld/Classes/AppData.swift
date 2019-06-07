@@ -12,11 +12,18 @@ struct AppData: Codable {
     var expenses: [Expense]
     var maxAmount: Float
     
-    static let getMonth: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM"
-        return formatter
-    }()
+    mutating func addExpense(expense: Expense) {
+        self.expenses.append(expense)
+        self.expenses = sortExpenses(expenses: self.expenses)
+    }
+    
+    mutating func newExpensesList(expenses: [Expense]) {
+        self.expenses = sortExpenses(expenses: expenses)
+    }
+    
+    mutating func sortExpenses(expenses: [Expense]) -> [Expense] {
+        return expenses.sorted(by: { $0.dueDate.compare($1.dueDate) == .orderedDescending })
+    }
     
     func totalExpense() -> Float {
         var expenseSum: Float = 0.0

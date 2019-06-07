@@ -18,6 +18,9 @@ class AwayTableViewController: UITableViewController {
         
         if let appData = AppData.loadAppData() {
             expenses = appData.expenses
+            for expense in expenses {
+                print(expense.getMonth())
+            }
         }
         
         tableView.reloadData()
@@ -71,7 +74,7 @@ class AwayTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
             
             if var appData = AppData.loadAppData() {
-                appData.expenses = expenses
+                appData.newExpensesList(expenses: expenses)
                 AppData.saveAppData(appData)
             }
         }
@@ -97,7 +100,7 @@ class AwayTableViewController: UITableViewController {
         }
         
         if var appData = AppData.loadAppData() {
-            appData.expenses = expenses
+            appData.newExpensesList(expenses: expenses)
             AppData.saveAppData(appData)
         }
     }

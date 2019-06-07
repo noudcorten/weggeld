@@ -20,6 +20,16 @@ struct Expense: Codable {
         return formatter
     }()
     
+    static let getMonth: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM"
+        return formatter
+    }()
+    
+    func getMonth() -> String {
+        return Expense.getMonth.string(from: self.dueDate)
+    }
+    
     static func loadSampleExpenses() -> [Expense] {
         let expense1 = Expense(amount: 12, dueDate: Date(), notes: "Notes 1", category: "Auto")
         let expense2 = Expense(amount: 16, dueDate: Date(), notes: "Notes 2", category: "Kleding")
