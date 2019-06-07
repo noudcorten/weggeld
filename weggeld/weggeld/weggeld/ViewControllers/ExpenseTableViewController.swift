@@ -27,9 +27,14 @@ class ExpenseTableViewController: UITableViewController {
         pickerView.dataSource = self
         pickerView.delegate = self
         
+        
         if let expense = expense {
             navigationItem.title = expense.category
-            amountTextField.text = String(expense.amount)
+            if floor(expense.amount) == expense.amount {
+                amountTextField.text = String(Int(expense.amount))
+            } else {
+                amountTextField.text = String(expense.amount)
+            }
             dueDatePickerView.date = expense.dueDate
             pickerView.selectRow(categories.firstIndex(of: expense.category)!, inComponent: 0, animated: true)
             notesTextView.text = expense.notes
@@ -55,9 +60,6 @@ class ExpenseTableViewController: UITableViewController {
         updateDueDateLabel(with: dueDatePickerView.date)
     }
     
-    
-    
-    
     /// Disable the save button if there is no title.
     func updateSaveButtonState() {
         let text = amountTextField.text ?? ""
@@ -71,17 +73,27 @@ class ExpenseTableViewController: UITableViewController {
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        let text = amountTextField.text!
+        
         if identifier == "saveUnwind" {
-            if let _ = Float(amountTextField.text!) {
-                return true
-            } else {
-                let alert = UIAlertController(title: "Fout!", message: "Voer een juist getal in.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true, completion: nil)
+            if let _ = Float(text) {
+                let dotString = "."
+                if text.contains(dotString) {
+                    if text.components(separatedBy: dotString)[1].count <= 2 {
+                        return true
+                    }
+                } else {
+                    return true
+                }
             }
         } else {
             return true
         }
+        
+        let alert = UIAlertController(title: "Fout!", message: "Voer een juist getal in.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
+        
         return false
     }
     

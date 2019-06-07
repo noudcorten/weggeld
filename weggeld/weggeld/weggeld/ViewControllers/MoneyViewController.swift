@@ -41,7 +41,13 @@ class MoneyViewController: UIViewController {
             moneyLabel.textColor = UIColor.black
         }
         let moneyLeft = appData!.maxAmount - appData!.totalExpense()
-        moneyLabel.text = "€ " + String(moneyLeft)
+        
+        if floor(moneyLeft) == moneyLeft {
+            moneyLabel.text = "€ " + String(Int(moneyLeft))
+        } else {
+            moneyLabel.text = "€ " + String(moneyLeft)
+        }
+        
     }
     
     func updateProgressBar() {

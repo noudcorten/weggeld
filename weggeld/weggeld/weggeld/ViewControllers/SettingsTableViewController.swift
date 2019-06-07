@@ -32,11 +32,29 @@ class SettingsTableViewController: UITableViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        if let inputMoney = Float(maxAmountTextField.text!) {
-            appData!.maxAmount = inputMoney
-            AppData.saveAppData(appData!)
+        let text = maxAmountTextField.text!
+        
+        if let inputMoney = Float(text) {
+            let dotString = "."
+            if text.contains(dotString) {
+                // Input is float with a maximum of two decimals
+                if text.components(separatedBy: dotString)[1].count <= 2 {
+                    appData!.maxAmount = abs(inputMoney)
+                    AppData.saveAppData(appData!)
+                    saveButton.isEnabled = false
+                // Input is a float with more than two decimals
+                } else {
+                    let alert = UIAlertController(title: "Fout!", message: "Voer een juist getal in.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            // Input is an integer
+            } else {
+                appData!.maxAmount = abs(inputMoney)
+                AppData.saveAppData(appData!)
+                saveButton.isEnabled = false
+            }
         }
-        saveButton.isEnabled = false
     }
     
     
@@ -46,19 +64,19 @@ class SettingsTableViewController: UITableViewController {
         saveButton.isEnabled = !text.isEmpty
         
         if let inputAmount = Float(text) {
-            print(inputAmount)
-            print(appData!.maxAmount)
             if inputAmount == appData!.maxAmount {
-                print("disabled")
                 saveButton.isEnabled = false
             }
         }
     }
     
     func updateTextField() {
-        maxAmountTextField.text = String(appData!.maxAmount)
+        let maxAmount = appData!.maxAmount
+        
+        if floor(maxAmount) == maxAmount {
+            maxAmountTextField.text = String(Int(maxAmount))
+        } else {
+            maxAmountTextField.text = String(maxAmount)
+        }
     }
-    
-    
-
 }

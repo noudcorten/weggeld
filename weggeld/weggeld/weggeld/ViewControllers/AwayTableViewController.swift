@@ -47,7 +47,13 @@ class AwayTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseCellIdentifier", for: indexPath) as! ExpenseCell
         
         let expense = expenses[indexPath.row]
-        cell.expenseLabel.text = "€ " + String(expense.amount)
+        
+        if floor(expense.amount) == expense.amount {
+            cell.expenseLabel.text = "€ " + String(Int(expense.amount))
+        } else {
+            cell.expenseLabel.text = "€ " + String(expense.amount)
+        }
+        
         cell.categoryLabel.text = expense.category
         cell.dateLabel.text = Expense.dueDateFormatter.string(from: expense.dueDate)
         return cell
