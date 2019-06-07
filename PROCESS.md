@@ -23,12 +23,19 @@
     * Also added the option to edit the information of an existing entry.
 
 #### Day 4
-* 
+* Made a huge mistake by deleting the entire app as a consequence of a hard reset using GIT.
+    * Mistakes made using pull-requests.
+* Spend rest of the day rebuilding the app.
+* Finished the day by completely rebuilding the app and also adding PList Encoder.
+    * PList Encoder had to option to save the list of expenses.
 
 #### Day 5
-* 
-
-
+* Plan of the day was to make a prototype in which everything worked ('Geld-Screen', 'Weg-Screen', 'Instellingen-Screen').
+    * I skipped making the 'Statistieken-Screen', because this would take a lot of programming time.
+    * Focussed on completing the interface with everyhthing working (and bug free!).
+* Changed the PList Encoder to saving a class instead of a list.
+    * This because a class can store a lot more information and a lot more efficient.
+* Finished all of the three screens and made it entirely bug free (couldn't find any more bugs myself)
 
 ### Daily Standup
 #### Day 2
@@ -49,4 +56,3 @@
 * Nice light colours
 
 #### Day 5
-* 
