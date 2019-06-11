@@ -40,7 +40,7 @@
 
 ### Week 2
 #### Day 1
--
+* HEMELVAART
 
 #### Day 2
 
@@ -76,7 +76,7 @@
 
 ### Week 2
 #### Day 1
--
+* HEMELVAART
 
 #### Day 2
 
