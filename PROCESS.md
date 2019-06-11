@@ -1,7 +1,8 @@
 # Process Book
 
-## Week 1
-### Personal Developments
+
+## Personal Developments
+### Week 1
 #### Day 1
 * Came up with new idea of the app
     * Previous app design was harder and not usable for all people (only members)
@@ -37,7 +38,20 @@
     * This because a class can store a lot more information and a lot more efficient.
 * Finished all of the three screens and made it entirely bug free (couldn't find any more bugs myself)
 
-### Daily Standup
+### Week 2
+#### Day 1
+-
+
+#### Day 2
+
+#### Day 3
+
+#### Day 4
+
+#### Day 5
+
+## Daily Standup
+### Week 1
 #### Day 2
 * The app is for all users.
 * The app makes your life happier by tracking your money spending
@@ -56,3 +70,19 @@
 * Nice light colours
 
 #### Day 5
+* App worked perfect
+* No bugs where found by testing
+* App didn't break by doing weird things (all exceptions were covered)
+
+### Week 2
+#### Day 1
+-
+
+#### Day 2
+
+#### Day 3
+
+#### Day 4
+
+#### Day 5
+
