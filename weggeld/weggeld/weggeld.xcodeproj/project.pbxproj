@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04B5A7CC22AFADF50059A04F /* CountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CB22AFADF50059A04F /* CountingLabel.swift */; };
+		04B5A7CE22AFC3DF0059A04F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CD22AFC3DF0059A04F /* Extensions.swift */; };
 		04BD4D8822A923FC00150288 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4D8722A923FC00150288 /* AppDelegate.swift */; };
 		04BD4D8D22A923FC00150288 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4D8B22A923FC00150288 /* Main.storyboard */; };
 		04BD4D8F22A923FE00150288 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4D8E22A923FE00150288 /* Assets.xcassets */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04B5A7CB22AFADF50059A04F /* CountingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingLabel.swift; sourceTree = "<group>"; };
+		04B5A7CD22AFC3DF0059A04F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		04BD4D8422A923FC00150288 /* WegGeld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WegGeld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04BD4D8722A923FC00150288 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04BD4D8C22A923FC00150288 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04B5A7CF22AFC3FA0059A04F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				04B5A7CD22AFC3DF0059A04F /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		04BD4D7B22A923FC00150288 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +91,7 @@
 				04BD4DA622A925AB00150288 /* Classes */,
 				04BD4DA322A9258900150288 /* ViewControllers */,
 				04BD4DC222A95E7000150288 /* View */,
+				04B5A7CF22AFC3FA0059A04F /* Extensions */,
 				04BD4DB122A9265D00150288 /* Icons */,
 				04BD4D8722A923FC00150288 /* AppDelegate.swift */,
 				04BD4D8B22A923FC00150288 /* Main.storyboard */,
@@ -125,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				04BD4DC322A95ED700150288 /* ExpenseCell.swift */,
+				04B5A7CB22AFADF50059A04F /* CountingLabel.swift */,
 			);
 			name = View;
 			path = Classes/View;
@@ -210,9 +224,11 @@
 				04BD4D9E22A9252200150288 /* ExpenseTableViewController.swift in Sources */,
 				04BD4DA222A9257900150288 /* SettingsTableViewController.swift in Sources */,
 				04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */,
+				04B5A7CC22AFADF50059A04F /* CountingLabel.swift in Sources */,
 				04BD4D8822A923FC00150288 /* AppDelegate.swift in Sources */,
 				04BD4DB722A9271100150288 /* MoneyViewController.swift in Sources */,
 				04BD4D9C22A924E800150288 /* AwayTableViewController.swift in Sources */,
+				04B5A7CE22AFC3DF0059A04F /* Extensions.swift in Sources */,
 				04BD4DC622AA5B7600150288 /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,7 +382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = noud.corten.WegGeld;
+				PRODUCT_BUNDLE_IDENTIFIER = noud.corten.WegGeldProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -384,7 +400,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = noud.corten.WegGeld;
+				PRODUCT_BUNDLE_IDENTIFIER = noud.corten.WegGeldProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

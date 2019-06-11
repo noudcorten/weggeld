@@ -11,10 +11,26 @@ import UIKit
 class MoneyViewController: UIViewController {
 
     
+    @IBOutlet weak var countingLabel: CountingLabel!
     @IBOutlet weak var moneyLabel: UILabel!
-    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var maxAmountLabel: UILabel!
     
     var appData: AppData?
+    var shapeLayer: CAShapeLayer!
+    var pulsatingLayer: CAShapeLayer!
+    
+    private func createLoadCircle(strokeColor: UIColor, fillColor: UIColor) -> CAShapeLayer {
+        let layer = CAShapeLayer()
+        let circularPath = UIBezierPath(arcCenter: .zero, radius: 100, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+        
+        layer.path = circularPath.cgPath
+        layer.strokeColor = strokeColor.cgColor
+        layer.lineWidth = 20
+        layer.fillColor = fillColor.cgColor
+        layer.lineCap = .round
+        layer.position = view.center
+        return layer
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -29,8 +45,55 @@ class MoneyViewController: UIViewController {
         }
         
         appData = AppData.loadAppData()
+        
         updateMoneyLabel()
-        updateProgressBar()
+        setUpCircleLayers()
+        updatePercentageAnimations()
+    }
+    
+    private func setUpCircleLayers() {
+        // Create pulsating layer
+        pulsatingLayer = createLoadCircle(strokeColor: .clear, fillColor: UIColor.pullsatingFillColor)
+        view.layer.addSublayer(pulsatingLayer)
+        animatePulsatingLayer()
+        
+        // Create track layer
+        let trackLayer = createLoadCircle(strokeColor: .trackStrokeColor, fillColor: .white)
+        view.layer.addSublayer(trackLayer)
+        
+        // Create circle layer
+        shapeLayer = createLoadCircle(strokeColor: .outlineStrokeColor, fillColor: .clear)
+        shapeLayer.transform = CATransform3DMakeRotation(-CGFloat.pi / 2, 0, 0, 1)
+        shapeLayer.strokeEnd = 0
+        view.layer.addSublayer(shapeLayer)
+    }
+    
+    private func updatePercentageAnimations() {
+        view.addSubview(countingLabel)
+        
+        var percentage: Float = (appData!.totalExpense() / appData!.maxAmount)
+        if percentage > 1 {
+            percentage = 1
+        }
+        countingLabel.count(from: 0, to: percentage * 100, withDuration: 3, andAnimationType: .EaseOut, andCounterType: .Int)
+        
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.toValue = CGFloat(percentage)
+        basicAnimation.duration = 3
+        basicAnimation.fillMode = .forwards
+        basicAnimation.isRemovedOnCompletion = false
+        
+        shapeLayer.add(basicAnimation, forKey: "urSoBasic")
+    }
+    
+    private func animatePulsatingLayer() {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.toValue = 1.2
+        animation.duration = 2
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animation.autoreverses = true
+        animation.repeatCount = Float.infinity
+        pulsatingLayer.add(animation, forKey: "pulsing")
     }
     
     func updateMoneyLabel() {
@@ -39,27 +102,24 @@ class MoneyViewController: UIViewController {
         } else {
             moneyLabel.textColor = UIColor.black
         }
+        
         let moneyLeft = appData!.maxAmount - appData!.totalExpense()
-        
         if floor(moneyLeft) == moneyLeft {
-            moneyLabel.text = "€ " + String(Int(moneyLeft))
+            moneyLabel.text = "€ \(Int(moneyLeft))"
         } else {
-            moneyLabel.text = "€ " + String(moneyLeft)
+            moneyLabel.text = "€ \(moneyLeft)"
         }
         
-    }
-    
-    func updateProgressBar() {
-        let progress = appData!.totalExpense() / appData!.maxAmount
-        if progress > 1 {
-            progressBar.setProgress(progress, animated: false)
+        maxAmountLabel.textColor = .gray
+        let maxAmount = appData!.maxAmount
+        if floor(maxAmount) == maxAmount {
+            maxAmountLabel.text = "Totaal: €\(Int(maxAmount))"
         } else {
-            progressBar.setProgress(progress, animated: true)
+            maxAmountLabel.text = "Totaal: €\(maxAmount)"
         }
         
+        
     }
-
-
     
     @IBAction func unwindToController(segue: UIStoryboardSegue) {
         guard segue.identifier == "saveUnwind" else { return }
