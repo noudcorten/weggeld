@@ -78,6 +78,7 @@ class ExpenseTableViewController: UITableViewController {
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         var text = amountTextField.text!
+        
         if text.contains(",") {
             text = text.replacingOccurrences(of: ",", with: ".")
             amountTextField.text = text

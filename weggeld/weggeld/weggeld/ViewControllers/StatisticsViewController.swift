@@ -15,7 +15,6 @@ class StatisticsViewController: UIViewController {
     
     var appData: AppData?
     var categoryPieChart = PieChartDataEntry(value: 0)
-    
     var numberOfDownloadsDataEntries = [PieChartDataEntry]()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -24,7 +23,7 @@ class StatisticsViewController: UIViewController {
         
         appData = AppData.loadAppData()
         
-        pieChartAllCategories.chartDescription?.text = "Alle Categorien"
+        pieChartAllCategories.chartDescription?.text = "Alle Categorieën"
 //        for expense in appData!.expenses {
         
 //        }
