@@ -15,13 +15,18 @@ class ExpenseTableViewController: UITableViewController {
     @IBOutlet weak var dueDatePickerView: UIDatePicker!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var notesUIView: UIView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    
     
     var expense: Expense?
     var appData: AppData?
+    var isExtraInfoHidden: Bool = true
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.tabBarController?.delegate = self as? UITabBarControllerDelegate
+        self.hideKeyboardWhenTappedAround()
         
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -38,6 +43,37 @@ class ExpenseTableViewController: UITableViewController {
         updateDueDateLabel(with: dueDatePickerView.date)
         updateSaveButtonState()
     }
+    
+    
+    
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        switch (indexPath.section, indexPath.row) {
+//        case (2,0):
+//            isExtraInfoHidden = !isExtraInfoHidden
+//
+//            tableView.beginUpdates()
+//            tableView.endUpdates()
+//        default:
+//            break
+//        }
+//    }
+//
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let largeBoxHeight = CGFloat(200)
+//        let smallBoxHeight = CGFloat(44)
+//
+//        switch (indexPath.section, indexPath.row) {
+//        case (0,1):
+//            return largeBoxHeight
+//        case (1,0):
+//            return largeBoxHeight
+//        case (2,0):
+//            print(isExtraInfoHidden)
+//            return isExtraInfoHidden ? smallBoxHeight : largeBoxHeight
+//        default:
+//            return smallBoxHeight
+//        }
+//    }
 
     @IBAction func textEditingChanged(_ sender: Any) {
         updateSaveButtonState()

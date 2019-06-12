@@ -100,30 +100,72 @@
             <point key="canvasLocation" x="501.60000000000002" y="-358.4707646176912"/>
         </scene>
         <!--Statistieken-->
-        <scene sceneID="fBE-0K-iYt">
+        <scene sceneID="bRG-OC-K4e">
             <objects>
-                <viewController id="0MT-hf-395" customClass="StatisticsViewController" customModule="WegGeld" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0jZ-QK-RzW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="Fyk-c8-gQh" customClass="StatisticsViewController" customModule="WegGeld" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vYm-dV-ySJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-tn-zYc" customClass="PieChartView" customModule="Charts">
-                                <rect key="frame" x="16" y="81" width="343" height="343"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RkO-Bu-BAm">
+                                <rect key="frame" x="0.0" y="64" width="375" height="887"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADF-5m-gxM">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alle Categoriën (%)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VY0-HR-KQR">
+                                                <rect key="frame" x="114" y="34" width="147.5" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xx6-Vi-nSc" customClass="PieChartView" customModule="Charts">
+                                                <rect key="frame" x="67" y="63" width="240" height="240"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="40f-JY-hL6"/>
+                                                    <constraint firstAttribute="height" constant="240" id="Z7q-Kd-WCI"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="VY0-HR-KQR" firstAttribute="centerX" secondItem="ADF-5m-gxM" secondAttribute="centerX" id="1E0-e8-JWW"/>
+                                            <constraint firstItem="xx6-Vi-nSc" firstAttribute="leading" secondItem="ADF-5m-gxM" secondAttribute="leading" constant="67" id="H6V-Lc-hxj"/>
+                                            <constraint firstAttribute="trailing" secondItem="xx6-Vi-nSc" secondAttribute="trailing" constant="68" id="V1w-YL-vfk"/>
+                                            <constraint firstItem="VY0-HR-KQR" firstAttribute="top" secondItem="ADF-5m-gxM" secondAttribute="top" constant="34" id="Zra-vl-cGf"/>
+                                            <constraint firstAttribute="height" constant="1000" id="qeN-45-2XS"/>
+                                            <constraint firstItem="xx6-Vi-nSc" firstAttribute="top" secondItem="VY0-HR-KQR" secondAttribute="bottom" constant="8" id="ut4-1d-Td2"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ADF-5m-gxM" firstAttribute="top" secondItem="RkO-Bu-BAm" secondAttribute="top" id="SI1-nq-NBC"/>
+                                    <constraint firstAttribute="bottom" secondItem="ADF-5m-gxM" secondAttribute="bottom" id="TxT-PB-wNL"/>
+                                    <constraint firstAttribute="trailing" secondItem="ADF-5m-gxM" secondAttribute="trailing" id="e6K-Ce-HXG"/>
+                                    <constraint firstItem="ADF-5m-gxM" firstAttribute="leading" secondItem="RkO-Bu-BAm" secondAttribute="leading" id="hsJ-HN-nYb"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="QAK-n0-Heb"/>
+                        <constraints>
+                            <constraint firstItem="RkO-Bu-BAm" firstAttribute="trailing" secondItem="1JP-uH-gE2" secondAttribute="trailing" id="UxG-Jq-wNF"/>
+                            <constraint firstItem="RkO-Bu-BAm" firstAttribute="top" secondItem="1JP-uH-gE2" secondAttribute="top" id="faT-P8-9s0"/>
+                            <constraint firstItem="ADF-5m-gxM" firstAttribute="width" secondItem="vYm-dV-ySJ" secondAttribute="width" id="gUN-eR-bNQ"/>
+                            <constraint firstItem="RkO-Bu-BAm" firstAttribute="bottom" secondItem="1JP-uH-gE2" secondAttribute="bottom" id="n3S-rj-Au9"/>
+                            <constraint firstItem="RkO-Bu-BAm" firstAttribute="leading" secondItem="1JP-uH-gE2" secondAttribute="leading" id="pXG-ql-P4Y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1JP-uH-gE2"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Statistieken" id="yha-TN-V4T"/>
+                    <navigationItem key="navigationItem" title="Statistieken" id="YVX-Rv-LcZ"/>
+                    <size key="freeformSize" width="375" height="1000"/>
                     <connections>
-                        <outlet property="pieChartAllCategories" destination="mT6-tn-zYc" id="em2-KW-QIs"/>
+                        <outlet property="pieChartAllCategories" destination="xx6-Vi-nSc" id="cfC-XT-x8M"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qjW-4L-vf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oMV-O5-1Mx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="501.60000000000002" y="474.51274362818594"/>
+            <point key="canvasLocation" x="1327" y="474"/>
         </scene>
         <!--Instellingen-->
         <scene sceneID="AYE-bZ-LbH">
@@ -212,7 +254,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="0MT-hf-395" kind="relationship" relationship="rootViewController" id="irz-Pk-9Kw"/>
+                        <segue destination="Fyk-c8-gQh" kind="relationship" relationship="rootViewController" id="VlB-pC-1Xn"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rm1-Mz-RUk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -443,15 +485,15 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="CATEGORIE" id="TFg-iq-Q6f">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="w8d-PN-zkm">
-                                        <rect key="frame" x="0.0" y="355.5" width="375" height="150"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="200" id="w8d-PN-zkm">
+                                        <rect key="frame" x="0.0" y="355.5" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w8d-PN-zkm" id="XFr-oU-syq">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pqr-PC-WLE">
-                                                    <rect key="frame" x="1" y="1" width="373" height="147.5"/>
+                                                <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqr-PC-WLE">
+                                                    <rect key="frame" x="1" y="1" width="373" height="200"/>
                                                 </pickerView>
                                             </subviews>
                                             <constraints>
@@ -469,7 +511,7 @@
                             <tableViewSection headerTitle="EXTRA INFO" id="6Ft-Xh-8ze">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="200" id="8Fa-st-KYB">
-                                        <rect key="frame" x="0.0" y="561.5" width="375" height="200"/>
+                                        <rect key="frame" x="0.0" y="611.5" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Fa-st-KYB" id="99u-wZ-yhM">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
@@ -515,6 +557,7 @@
                         <outlet property="dueDateLabel" destination="AbR-2D-TDX" id="QDs-xV-x0b"/>
                         <outlet property="dueDatePickerView" destination="XO1-hg-KD0" id="czA-Lr-eF6"/>
                         <outlet property="notesTextView" destination="zsb-2f-oDi" id="jrL-Gb-gz6"/>
+                        <outlet property="notesUIView" destination="99u-wZ-yhM" id="Hgx-xt-Cgv"/>
                         <outlet property="pickerView" destination="pqr-PC-WLE" id="Dsp-P0-m0m"/>
                         <outlet property="saveButton" destination="3dC-Ga-oy3" id="vtE-xf-duR"/>
                     </connections>

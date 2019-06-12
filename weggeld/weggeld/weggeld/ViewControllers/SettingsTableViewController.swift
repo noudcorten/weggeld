@@ -18,20 +18,22 @@ class SettingsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
+        self.hideKeyboardWhenTappedAround()
         
         appData = AppData.loadAppData()
         
         updateSaveButtonState()
         updateTextField()
+        
         tableView.reloadData()
     }
-    
     
     @IBAction func textEditingChanged(_ sender: Any) {
         updateSaveButtonState()
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
+        view.endEditing(true)
         var text = maxAmountTextField.text!
         if text.contains(",") {
             text = text.replacingOccurrences(of: ",", with: ".")

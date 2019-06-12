@@ -15,8 +15,8 @@ class AwayTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         
         appData = AppData.loadAppData()
         expenses = appData!.expenses

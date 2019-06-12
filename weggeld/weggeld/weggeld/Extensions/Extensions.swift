@@ -13,8 +13,33 @@ extension UIColor {
         return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
+    static func pieChartColors() -> [UIColor] {
+        return [UIColor.rgb(255,127,80),
+            UIColor.rgb(255,99,71),
+            UIColor.rgb(255,165,0),
+            UIColor.rgb(144,238,144),
+            UIColor.rgb(0,128,128),
+            UIColor.rgb(100,149,237),
+            UIColor.rgb(65,105,225),
+            UIColor.rgb(147,112,219),
+            UIColor.rgb(219,112,147),
+            UIColor.rgb(255,192,203),
+            UIColor.rgb(244,164,96)].shuffled()
+    }
+    
     static let outlineStrokeColor = UIColor.rgb(244, 107, 173)
     static let pullsatingFillColor = UIColor.rgb(216, 69, 143)
     static let trackStrokeColor = UIColor.rgb(178, 174, 176)
-//    static let pullsatingFillColor = UIColor.rgb(255, 165, 210)
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

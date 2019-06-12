@@ -35,6 +35,39 @@ struct AppData: Codable {
         self.categories.append(category)
     }
     
+    mutating func getCategoryDict() -> [String: [Expense]]{
+        var categoryDict = [String: [Expense]]()
+        
+        for expense in self.expenses {
+            if var categoryList = categoryDict[expense.category] {
+                categoryList.append(expense)
+                let sortedCategoryList = sortExpenses(expenses: categoryList)
+                categoryDict[expense.category] = sortedCategoryList
+            } else {
+                categoryDict[expense.category] = [expense]
+            }
+        }
+        return categoryDict
+    }
+    
+    mutating func getMoneyByCategory() -> [String: Float] {
+        var moneyCategoryDict = [String: Float]()
+        let categoryDict = self.getCategoryDict()
+        
+        for category in self.categories {
+            if let categoryList = categoryDict[category] {
+                var totalAmount: Float = 0.0
+                
+                for expense in categoryList {
+                    totalAmount += expense.amount
+                }
+                
+                moneyCategoryDict[category] = totalAmount
+            }
+        }
+        return moneyCategoryDict
+    }
+    
     func totalExpense() -> Float {
         var expenseSum: Float = 0.0
         for expense in expenses {
