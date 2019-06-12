@@ -19,7 +19,7 @@ class SettingsTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
         
-        appData = AppData.loadAppData()!
+        appData = AppData.loadAppData()
         
         updateSaveButtonState()
         updateTextField()

@@ -106,14 +106,24 @@
                     <view key="view" contentMode="scaleToFill" id="0jZ-QK-RzW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-tn-zYc" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="81" width="343" height="343"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="QAK-n0-Heb"/>
                     </view>
                     <navigationItem key="navigationItem" title="Statistieken" id="yha-TN-V4T"/>
+                    <connections>
+                        <outlet property="pieChartAllCategories" destination="mT6-tn-zYc" id="em2-KW-QIs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qjW-4L-vf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="502" y="475"/>
+            <point key="canvasLocation" x="501.60000000000002" y="474.51274362818594"/>
         </scene>
         <!--Instellingen-->
         <scene sceneID="AYE-bZ-LbH">

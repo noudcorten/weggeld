@@ -18,19 +18,11 @@ class AwayTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
         
-        if let loadedAppData = AppData.loadAppData() {
-            appData = loadedAppData
-            expenses = appData!.expenses
-        }
+        appData = AppData.loadAppData()
+        expenses = appData!.expenses
         
         tableView.reloadData()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

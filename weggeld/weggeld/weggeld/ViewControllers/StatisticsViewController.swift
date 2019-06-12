@@ -11,21 +11,32 @@ import Charts
 
 class StatisticsViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet weak var pieChartAllCategories: PieChartView!
+    
+    var appData: AppData?
+    var categoryPieChart = PieChartDataEntry(value: 0)
+    
+    var numberOfDownloadsDataEntries = [PieChartDataEntry]()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.delegate = self as? UITabBarControllerDelegate
+        
+        appData = AppData.loadAppData()
+        
+        pieChartAllCategories.chartDescription?.text = "Alle Categorien"
+//        for expense in appData!.expenses {
+        
+//        }
+//        category_1 = appData!.expenses[0]
+//        category_2 = appData!.expenses
+    }
 
-        // Do any additional setup after loading the view.
+    private func updateChartData() {
+        updateAllCategoriesChart()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func updateAllCategoriesChart() {
+        
     }
-    */
-
 }
