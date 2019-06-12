@@ -10,23 +10,20 @@ import UIKit
 
 class AwayTableViewController: UITableViewController {
     
+    var appData: AppData?
     var expenses = [Expense]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
         
-        if let appData = AppData.loadAppData() {
-            expenses = appData.expenses
+        if let loadedAppData = AppData.loadAppData() {
+            appData = loadedAppData
+            expenses = appData!.expenses
         }
         
         tableView.reloadData()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // This line set an intelligent edit button that just works.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,10 +67,8 @@ class AwayTableViewController: UITableViewController {
             expenses.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
-            if var appData = AppData.loadAppData() {
-                appData.newExpensesList(expenses: expenses)
-                AppData.saveAppData(appData)
-            }
+            appData!.newExpensesList(expenses: expenses)
+            AppData.saveAppData(appData!)
         }
     }
     
@@ -96,10 +91,8 @@ class AwayTableViewController: UITableViewController {
             }
         }
         
-        if var appData = AppData.loadAppData() {
-            appData.newExpensesList(expenses: expenses)
-            AppData.saveAppData(appData)
-        }
+        appData!.newExpensesList(expenses: expenses)
+        AppData.saveAppData(appData!)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

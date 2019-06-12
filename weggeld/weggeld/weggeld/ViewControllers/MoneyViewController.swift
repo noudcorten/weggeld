@@ -15,6 +15,11 @@ class MoneyViewController: UIViewController {
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var maxAmountLabel: UILabel!
     
+    @IBOutlet weak var toSpendLabel: UILabel!
+    @IBOutlet weak var spendedLabel: UILabel!
+    @IBOutlet weak var moneyToSpendLabel: UILabel!
+    @IBOutlet weak var moneySpendedLabel: UILabel!
+    
     var appData: AppData?
     var shapeLayer: CAShapeLayer!
     var pulsatingLayer: CAShapeLayer!
@@ -32,9 +37,19 @@ class MoneyViewController: UIViewController {
         return layer
     }
     
+    private func setupNotificationsObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification , object: nil)
+    }
+    
+    @objc private func handleEnterForeground() {
+        animatePulsatingLayer()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
+        
+        setupNotificationsObserver()
         
         if let appData = AppData.loadAppData() {
             AppData.saveAppData(appData)
@@ -46,10 +61,12 @@ class MoneyViewController: UIViewController {
         
         appData = AppData.loadAppData()
         
-        updateMoneyLabel()
+        updateMoneyLabels()
         setUpCircleLayers()
         updatePercentageAnimations()
     }
+    
+    
     
     private func setUpCircleLayers() {
         // Create pulsating layer
@@ -96,18 +113,29 @@ class MoneyViewController: UIViewController {
         pulsatingLayer.add(animation, forKey: "pulsing")
     }
     
-    func updateMoneyLabel() {
+    private func updateMoneyLabels() {
         if appData!.totalExpense() > appData!.maxAmount {
             moneyLabel.textColor = UIColor.red
         } else {
             moneyLabel.textColor = UIColor.black
         }
         
+        toSpendLabel.text = "Nog te besteden:"
         let moneyLeft = appData!.maxAmount - appData!.totalExpense()
         if floor(moneyLeft) == moneyLeft {
             moneyLabel.text = "€ \(Int(moneyLeft))"
+            moneyToSpendLabel.text = "€\(Int(moneyLeft))"
         } else {
-            moneyLabel.text = "€ \(moneyLeft)"
+            moneyLabel.text = "€\(moneyLeft)"
+            moneyToSpendLabel.text = "€\(moneyLeft)"
+        }
+        
+        spendedLabel.text = "Uitgegeven:"
+        let moneySpended = appData!.totalExpense()
+        if floor(moneySpended) == moneySpended {
+            moneySpendedLabel.text = "€\(Int(moneySpended))"
+        } else {
+            moneySpendedLabel.text = "€\(moneySpended)"
         }
         
         maxAmountLabel.textColor = .gray
@@ -117,8 +145,6 @@ class MoneyViewController: UIViewController {
         } else {
             maxAmountLabel.text = "Totaal: €\(maxAmount)"
         }
-        
-        
     }
     
     @IBAction func unwindToController(segue: UIStoryboardSegue) {

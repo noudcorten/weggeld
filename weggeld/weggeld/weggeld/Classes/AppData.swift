@@ -11,6 +11,12 @@ import Foundation
 struct AppData: Codable {
     var expenses: [Expense]
     var maxAmount: Float
+    var categories: [String] = ["Eten", "Vervoer", "Kleding", "Wonen", "Onderwijs", "Gezondheid", "Vakantie", "Liefdadigheid", "Vermaak", "Sparen"]
+    
+    init(expenses: [Expense], maxAmount: Float) {
+        self.expenses = expenses
+        self.maxAmount = maxAmount
+    }
     
     mutating func addExpense(expense: Expense) {
         self.expenses.append(expense)
@@ -23,6 +29,10 @@ struct AppData: Codable {
     
     mutating func sortExpenses(expenses: [Expense]) -> [Expense] {
         return expenses.sorted(by: { $0.dueDate.compare($1.dueDate) == .orderedDescending })
+    }
+    
+    mutating func addCategory(category: String) {
+        self.categories.append(category)
     }
     
     func totalExpense() -> Float {

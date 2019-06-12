@@ -10,7 +10,6 @@ import UIKit
 
 class ExpenseTableViewController: UITableViewController {
     
-    
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var dueDateLabel: UILabel!
     @IBOutlet weak var dueDatePickerView: UIDatePicker!
@@ -19,31 +18,23 @@ class ExpenseTableViewController: UITableViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var expense: Expense?
-    var categories = ["Auto", "Levensmiddelen", "Wonen", "Onderwijs", "Gezondheid", "Kleding", "Vakantie", "Leningen", "Liefdadigheid", "Vermaak", "Sparen"]
+    var appData: AppData?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         pickerView.dataSource = self
         pickerView.delegate = self
         
+        appData = AppData.loadAppData()
         
         if let expense = expense {
-            navigationItem.title = expense.category
-            if floor(expense.amount) == expense.amount {
-                amountTextField.text = String(Int(expense.amount))
-            } else {
-                amountTextField.text = String(expense.amount)
-            }
-            dueDatePickerView.date = expense.dueDate
-            pickerView.selectRow(categories.firstIndex(of: expense.category)!, inComponent: 0, animated: true)
-            notesTextView.text = expense.notes
+            setExpenseInfo(expense: expense)
         } else {
-            navigationItem.title = categories[0]
+            navigationItem.title = appData!.categories[0]
             dueDatePickerView.date = Date()
         }
         
-        dueDatePickerView.date = Date()
         updateDueDateLabel(with: dueDatePickerView.date)
         updateSaveButtonState()
     }
@@ -58,23 +49,39 @@ class ExpenseTableViewController: UITableViewController {
     
     @IBAction func datePickerChanged(_ sender: Any) {
         updateDueDateLabel(with: dueDatePickerView.date)
+    }
+    
+    private func setExpenseInfo(expense: Expense) {
+        navigationItem.title = expense.category
+        if floor(expense.amount) == expense.amount {
+            amountTextField.text = String(Int(expense.amount))
+        } else {
+            amountTextField.text = String(expense.amount)
+        }
         dueDatePickerView.maximumDate = Date()
+        dueDatePickerView.date = expense.dueDate
+        pickerView.selectRow(appData!.categories.firstIndex(of: expense.category)!, inComponent: 0, animated: true)
+        notesTextView.text = expense.notes
     }
     
     /// Disable the save button if there is no title.
-    func updateSaveButtonState() {
+    private func updateSaveButtonState() {
         let text = amountTextField.text ?? ""
         saveButton.isEnabled = !text.isEmpty
     }
     
     /// Update the due date label to match the date from the date picker.
     /// - parameter date: The actual date from the data picker.
-    func updateDueDateLabel(with date: Date) {
+    private func updateDueDateLabel(with date: Date) {
         dueDateLabel.text = Expense.dueDateFormatter.string(from: date)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        let text = amountTextField.text!
+        var text = amountTextField.text!
+        if text.contains(",") {
+            text = text.replacingOccurrences(of: ",", with: ".")
+            amountTextField.text = text
+        }
         
         if identifier == "saveUnwind" {
             if let _ = Float(text) {
@@ -122,14 +129,14 @@ extension ExpenseTableViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return categories.count
+        return appData!.categories.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        navigationItem.title = categories[row]
+        navigationItem.title = appData!.categories[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categories[row]
+        return appData!.categories[row]
     }
 }

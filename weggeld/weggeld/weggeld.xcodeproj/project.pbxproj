@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		04B5A7CC22AFADF50059A04F /* CountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CB22AFADF50059A04F /* CountingLabel.swift */; };
 		04B5A7CE22AFC3DF0059A04F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CD22AFC3DF0059A04F /* Extensions.swift */; };
+		04B5A7D322B1056C0059A04F /* bar_chart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D222B1056C0059A04F /* bar_chart@3x.png */; };
+		04B5A7D522B105820059A04F /* money_box@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D422B105820059A04F /* money_box@3x.png */; };
+		04B5A7D722B105940059A04F /* money_box.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D622B105940059A04F /* money_box.png */; };
+		04B5A7D922B105AE0059A04F /* wallet_app@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D822B105AE0059A04F /* wallet_app@2x.png */; };
+		04B5A7DB22B105BA0059A04F /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7DA22B105BA0059A04F /* settings@3x.png */; };
 		04BD4D8822A923FC00150288 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4D8722A923FC00150288 /* AppDelegate.swift */; };
 		04BD4D8D22A923FC00150288 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4D8B22A923FC00150288 /* Main.storyboard */; };
 		04BD4D8F22A923FE00150288 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4D8E22A923FE00150288 /* Assets.xcassets */; };
@@ -20,16 +25,21 @@
 		04BD4DA522A925A200150288 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DA422A925A200150288 /* Expense.swift */; };
 		04BD4DB722A9271100150288 /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DB622A9271100150288 /* MoneyViewController.swift */; };
 		04BD4DB922A928F000150288 /* bar_chart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DB822A928EF00150288 /* bar_chart.png */; };
-		04BD4DBB22A928FF00150288 /* money_bag.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBA22A928FF00150288 /* money_bag.png */; };
 		04BD4DBD22A9290D00150288 /* wallet_app.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBC22A9290D00150288 /* wallet_app.png */; };
 		04BD4DBF22A9292100150288 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBE22A9292100150288 /* settings.png */; };
 		04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DC322A95ED700150288 /* ExpenseCell.swift */; };
 		04BD4DC622AA5B7600150288 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DC522AA5B7600150288 /* AppData.swift */; };
+		B89FEB6CB90D41E2D179C715 /* Pods_WegGeld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 686C030CB85E4BA6AE51964B /* Pods_WegGeld.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		04B5A7CB22AFADF50059A04F /* CountingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingLabel.swift; sourceTree = "<group>"; };
 		04B5A7CD22AFC3DF0059A04F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		04B5A7D222B1056C0059A04F /* bar_chart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_chart@3x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/bar_chart@3x.png"; sourceTree = "<group>"; };
+		04B5A7D422B105820059A04F /* money_box@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "money_box@3x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/money_box@3x.png"; sourceTree = "<group>"; };
+		04B5A7D622B105940059A04F /* money_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = money_box.png; path = ../../../../../iOS_11_glyph_icons/PNG/money_box.png; sourceTree = "<group>"; };
+		04B5A7D822B105AE0059A04F /* wallet_app@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet_app@2x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/wallet_app@2x.png"; sourceTree = "<group>"; };
+		04B5A7DA22B105BA0059A04F /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@3x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/settings@3x.png"; sourceTree = "<group>"; };
 		04BD4D8422A923FC00150288 /* WegGeld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WegGeld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04BD4D8722A923FC00150288 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04BD4D8C22A923FC00150288 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -43,11 +53,13 @@
 		04BD4DA422A925A200150288 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		04BD4DB622A9271100150288 /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
 		04BD4DB822A928EF00150288 /* bar_chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_chart.png; path = ../../../../../iOS_11_glyph_icons/PNG/bar_chart.png; sourceTree = "<group>"; };
-		04BD4DBA22A928FF00150288 /* money_bag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = money_bag.png; path = ../../../../../iOS_11_glyph_icons/PNG/money_bag.png; sourceTree = "<group>"; };
 		04BD4DBC22A9290D00150288 /* wallet_app.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wallet_app.png; path = ../../../../../iOS_11_glyph_icons/PNG/wallet_app.png; sourceTree = "<group>"; };
 		04BD4DBE22A9292100150288 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../../../../../iOS_11_glyph_icons/PNG/settings.png; sourceTree = "<group>"; };
 		04BD4DC322A95ED700150288 /* ExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCell.swift; sourceTree = "<group>"; };
 		04BD4DC522AA5B7600150288 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		1F1F1D8F0876A7F90FE80224 /* Pods-WegGeld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WegGeld.release.xcconfig"; path = "Target Support Files/Pods-WegGeld/Pods-WegGeld.release.xcconfig"; sourceTree = "<group>"; };
+		2845423499FB63FB4B08433B /* Pods-WegGeld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WegGeld.debug.xcconfig"; path = "Target Support Files/Pods-WegGeld/Pods-WegGeld.debug.xcconfig"; sourceTree = "<group>"; };
+		686C030CB85E4BA6AE51964B /* Pods_WegGeld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WegGeld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B89FEB6CB90D41E2D179C715 /* Pods_WegGeld.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +87,8 @@
 			children = (
 				04BD4D8622A923FC00150288 /* WegGeld */,
 				04BD4D8522A923FC00150288 /* Products */,
+				98709F1F24A369F1394F516A /* Pods */,
+				813E5D6447CE076F89B2B2F1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,10 +141,14 @@
 		04BD4DB122A9265D00150288 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				04BD4DBA22A928FF00150288 /* money_bag.png */,
+				04B5A7D622B105940059A04F /* money_box.png */,
+				04B5A7D422B105820059A04F /* money_box@3x.png */,
 				04BD4DBC22A9290D00150288 /* wallet_app.png */,
+				04B5A7D822B105AE0059A04F /* wallet_app@2x.png */,
 				04BD4DB822A928EF00150288 /* bar_chart.png */,
+				04B5A7D222B1056C0059A04F /* bar_chart@3x.png */,
 				04BD4DBE22A9292100150288 /* settings.png */,
+				04B5A7DA22B105BA0059A04F /* settings@3x.png */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -144,6 +163,24 @@
 			path = Classes/View;
 			sourceTree = "<group>";
 		};
+		813E5D6447CE076F89B2B2F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				686C030CB85E4BA6AE51964B /* Pods_WegGeld.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		98709F1F24A369F1394F516A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2845423499FB63FB4B08433B /* Pods-WegGeld.debug.xcconfig */,
+				1F1F1D8F0876A7F90FE80224 /* Pods-WegGeld.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,9 +188,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04BD4D9622A923FE00150288 /* Build configuration list for PBXNativeTarget "WegGeld" */;
 			buildPhases = (
+				C76C8ED97CC9FF251F484EA6 /* [CP] Check Pods Manifest.lock */,
 				04BD4D8022A923FC00150288 /* Sources */,
 				04BD4D8122A923FC00150288 /* Frameworks */,
 				04BD4D8222A923FC00150288 /* Resources */,
+				5681486732B9776B9675C263 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -202,17 +241,63 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B5A7DB22B105BA0059A04F /* settings@3x.png in Resources */,
 				04BD4D9222A923FE00150288 /* LaunchScreen.storyboard in Resources */,
+				04B5A7D722B105940059A04F /* money_box.png in Resources */,
 				04BD4DBF22A9292100150288 /* settings.png in Resources */,
+				04B5A7D922B105AE0059A04F /* wallet_app@2x.png in Resources */,
 				04BD4D8F22A923FE00150288 /* Assets.xcassets in Resources */,
+				04B5A7D522B105820059A04F /* money_box@3x.png in Resources */,
 				04BD4DB922A928F000150288 /* bar_chart.png in Resources */,
-				04BD4DBB22A928FF00150288 /* money_bag.png in Resources */,
+				04B5A7D322B1056C0059A04F /* bar_chart@3x.png in Resources */,
 				04BD4DBD22A9290D00150288 /* wallet_app.png in Resources */,
 				04BD4D8D22A923FC00150288 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5681486732B9776B9675C263 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WegGeld/Pods-WegGeld-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WegGeld/Pods-WegGeld-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WegGeld/Pods-WegGeld-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C76C8ED97CC9FF251F484EA6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WegGeld-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		04BD4D8022A923FC00150288 /* Sources */ = {
@@ -373,6 +458,7 @@
 		};
 		04BD4D9722A923FE00150288 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2845423499FB63FB4B08433B /* Pods-WegGeld.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -391,6 +477,7 @@
 		};
 		04BD4D9822A923FE00150288 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F1F1D8F0876A7F90FE80224 /* Pods-WegGeld.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

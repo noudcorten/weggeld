@@ -32,34 +32,55 @@ class SettingsTableViewController: UITableViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
-        let text = maxAmountTextField.text!
+        var text = maxAmountTextField.text!
+        if text.contains(",") {
+            text = text.replacingOccurrences(of: ",", with: ".")
+            maxAmountTextField.text = text
+        }
         
-        if let inputMoney = Float(text) {
-            let dotString = "."
-            if text.contains(dotString) {
-                // Input is float with a maximum of two decimals
-                if text.components(separatedBy: dotString)[1].count <= 2 {
-                    appData!.maxAmount = abs(inputMoney)
-                    AppData.saveAppData(appData!)
-                    saveButton.isEnabled = false
-                // Input is a float with more than two decimals
-                } else {
-                    let alert = UIAlertController(title: "Fout!", message: "Voer een juist getal in.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alert, animated: true, completion: nil)
-                }
-            // Input is an integer
-            } else {
-                appData!.maxAmount = abs(inputMoney)
-                AppData.saveAppData(appData!)
-                saveButton.isEnabled = false
-            }
+        if inputIsFloat(input: text) {
+            saveInputMoney(input: text)
+        } else if inputIsInt(input: text) {
+            saveInputMoney(input: text)
+        } else {
+            let alert = UIAlertController(title: "Fout!", message: "Voer een juist getal in.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
+    private func inputIsInt(input: String) -> Bool {
+        if let _ = Int(input) {
+            return true
+        }
+        return false
+    }
+    
+    private func inputIsFloat(input: String) -> Bool {
+        if let _ = Float(input) {
+            let dotString = "."
+            if input.contains(dotString) {
+                // Input is float with a maximum of two decimals
+                if input.components(separatedBy: dotString)[1].count <= 2 {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    private func saveInputMoney(input: String) {
+        let inputMoney = Float(input)
+        appData!.maxAmount = abs(inputMoney!)
+        AppData.saveAppData(appData!)
+        saveButton.isEnabled = false
+    }
+            
+    
+    
     
     /// Disable the save button if there is no title.
-    func updateSaveButtonState() {
+    private func updateSaveButtonState() {
         let text = maxAmountTextField.text ?? ""
         saveButton.isEnabled = !text.isEmpty
         
@@ -70,7 +91,7 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    func updateTextField() {
+    private func updateTextField() {
         let maxAmount = appData!.maxAmount
         
         if floor(maxAmount) == maxAmount {
