@@ -24,7 +24,7 @@ extension UIColor {
             UIColor.rgb(147,112,219),
             UIColor.rgb(219,112,147),
             UIColor.rgb(255,192,203),
-            UIColor.rgb(244,164,96)].shuffled()
+            UIColor.rgb(244,164,96)]
     }
     
     static let outlineStrokeColor = UIColor.rgb(244, 107, 173)
