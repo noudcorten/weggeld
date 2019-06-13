@@ -43,8 +43,23 @@
 * HEMELVAART
 
 #### Day 2
+* Finished the 'Geld-Screen'
+   * Added a loading bar in the form of a circle
+   * Added an animation for the loading bar
+   * Added an animation at the back of the loading bar which is pulsating, because this added more diversity
+   * Added an animation for the percentage label
+   * Added two labels which give the "Can still spend"- and "Already spend"-amounts
+* Added an icon to the app
+   * I managed to install the app on my iPhone (this was a problem because XCode didn't compile for iOS 12.3)
+   * Adding an icon to the app made it look a lot more professional
 
 #### Day 3
+* Installed pods
+   * This is used for the 'Statistieken-Screen'
+   * Imported the 'Charts'-pod
+* Started working on the 'Statistieken-Screen'
+   * Added a scroll view so multiple statistics can be seen
+   * Added the first pie-chart using the 'Charts'-pod
 
 #### Day 4
 
@@ -79,8 +94,20 @@
 * HEMELVAART
 
 #### Day 2
+* Came up with more ideas for the app
+   * Give every category it's own color 
+   * Give every category it's own icon
+* Made a planning for the week
+   * Every day is scheduled to work on a particular screen
+   * Day 1: Nothing (Hemelvaart)
+   * Day 2: Work on the 'Geld-Screen'
+   * Day 3: Work on the 'Statistieken-Screen'
+   * Day 4: Work on the 'Instellingen-Screen'
+   * Day 5: Work on the 'Weg-Screen' (optimalisation)
 
 #### Day 3
+* Made a basic Style Guide which can be found under 'STYLE.md'
+   * https://github.com/noudcorten/weggeld/blob/master/STYLE.md
 
 #### Day 4
 
