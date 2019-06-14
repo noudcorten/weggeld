@@ -13,7 +13,7 @@ extension UIColor {
         return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
-    static func pieChartColors() -> [UIColor] {
+    static func chartColors() -> [UIColor] {
         return [UIColor.rgb(255,127,80),
             UIColor.rgb(255,99,71),
             UIColor.rgb(255,165,0),

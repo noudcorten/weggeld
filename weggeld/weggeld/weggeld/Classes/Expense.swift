@@ -22,7 +22,19 @@ struct Expense: Codable {
     
     static let getMonth: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM"
+        formatter.dateFormat = "MMMM"
+        return formatter
+    }()
+    
+    static let getMonthNumber: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M"
+        return formatter
+    }()
+    
+    static let getYear: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
         return formatter
     }()
     
@@ -30,9 +42,11 @@ struct Expense: Codable {
         return Expense.getMonth.string(from: self.dueDate)
     }
     
-    static func loadSampleExpenses() -> [Expense] {
-        let expense1 = Expense(amount: 12, dueDate: Date(), notes: "Notes 1", category: "Auto")
-        let expense2 = Expense(amount: 16, dueDate: Date(), notes: "Notes 2", category: "Kleding")
-        return [expense1, expense2]
+    func getMonthNumber() -> Int {
+        return Int(Expense.getMonthNumber.string(from: self.dueDate))!
+    }
+    
+    func getYear() -> String {
+        return Expense.getYear.string(from: self.dueDate)
     }
 }

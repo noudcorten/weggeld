@@ -9,22 +9,32 @@
 import Foundation
 
 struct AppData: Codable {
+    var isEmpty: Bool
     var expenses: [Expense]
     var maxAmount: Float
     var categories: [String] = ["Eten", "Vervoer", "Kleding", "Wonen", "Onderwijs", "Gezondheid", "Vakantie", "Liefdadigheid", "Vermaak", "Sparen"]
+    let months: [String] = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
+    let month_dict: [String: Int] = ["Januari" : 1, "Februari" : 2, "Maart" : 3, "April" : 4, "Mei" : 5, "Juni" : 6, "Juli" : 7, "Augustus" : 8, "September" : 9, "Oktober" : 10, "November" : 11, "December" : 12]
     
-    init(expenses: [Expense], maxAmount: Float) {
+    init(isEmpty: Bool, expenses: [Expense], maxAmount: Float) {
+        self.isEmpty = isEmpty
         self.expenses = expenses
         self.maxAmount = maxAmount
     }
     
     mutating func addExpense(expense: Expense) {
+        self.isEmpty = false
         self.expenses.append(expense)
         self.expenses = sortExpenses(expenses: self.expenses)
     }
     
     mutating func newExpensesList(expenses: [Expense]) {
         self.expenses = sortExpenses(expenses: expenses)
+        if self.expenses.count > 0 {
+            self.isEmpty = false
+        } else {
+            self.isEmpty = true
+        }
     }
     
     mutating func sortExpenses(expenses: [Expense]) -> [Expense] {
@@ -35,7 +45,108 @@ struct AppData: Codable {
         self.categories.append(category)
     }
     
-    mutating func getCategoryDict() -> [String: [Expense]]{
+    func getUsedMonths(year: String) -> [String]? {
+        let dateDict = getDateDict()
+        
+        if let dict = dateDict[year] {
+            var monthArray = [String]()
+            
+            for i in 1...self.month_dict.count {
+                for month in Array(dict.keys) {
+                    if month_dict[month] == i {
+                        monthArray.append(month)
+                        break
+                    }
+                }
+            }
+            return monthArray
+        } else {
+            return []
+        }
+    }
+    
+    func getDateDict() -> [String: [String: [Expense]]] {
+        var dateDict = [String: [String: [Expense]]]()
+        
+        for expense in self.expenses {
+            let year = expense.getYear()
+            let month = self.months[expense.getMonthNumber() - 1]
+            
+            if var monthDict = dateDict[year] {
+                if var expenseList = monthDict[month] {
+                    expenseList.append(expense)
+                    monthDict[month] = expenseList
+                    dateDict[year] = monthDict
+                } else {
+                    monthDict[month] = [expense]
+                    dateDict[year] = monthDict
+                }
+            } else {
+                var monthDict = [String: [Expense]]()
+                monthDict[month] = [expense]
+                dateDict[year] = monthDict
+            }
+        }
+        return dateDict
+    }
+    
+    func getCategoryMonthMoneyDict(year: String, month: String) -> [String: Float]? {
+        var categoryMonthMoneyDict = [String: Float]()
+        let dateDict = self.getDateDict()
+        if let monthDict = dateDict[year] {
+            if let expenseList = monthDict[month] {
+                for expense in expenseList {
+                    if var value = categoryMonthMoneyDict[expense.category] {
+                        value += expense.amount
+                        categoryMonthMoneyDict[expense.category] = value
+                    } else {
+                        categoryMonthMoneyDict[expense.category] = expense.amount
+                    }
+                }
+            }
+        }
+        return categoryMonthMoneyDict
+    }
+    
+    func getCategoryYearMoneyDict(year: String) -> [String: Float]? {
+        var categoryYearMoneyDict = [String: Float]()
+        let dateDict = self.getDateDict()
+        
+        if let monthDict = dateDict[year] {
+            for (_, expenses) in monthDict {
+                for expense in expenses {
+                    if var categoryValue = categoryYearMoneyDict[expense.category] {
+                        categoryValue += expense.amount
+                        categoryYearMoneyDict[expense.category] = categoryValue
+                    } else {
+                        categoryYearMoneyDict[expense.category] = expense.amount
+                    }
+                }
+            }
+        }
+        return categoryYearMoneyDict
+    }
+    
+    func getYearMoneyDict(year: String) -> [String: Float]? {
+        var yearMoneyDict = [String: Float]()
+        let dateDict = self.getDateDict()
+        
+        if let monthDict = dateDict[year] {
+            for month in self.getUsedMonths(year: year)! {
+                if let expenses = monthDict[month] {
+                    var totalAmount: Float = 0.0
+                    
+                    for expense in expenses {
+                        totalAmount += expense.amount
+                    }
+                    yearMoneyDict[month] = totalAmount
+                }
+            }
+        }
+        return yearMoneyDict
+    }
+    
+    mutating func getCategoryDict() -> [String: [Expense]]? {
         var categoryDict = [String: [Expense]]()
         
         for expense in self.expenses {
@@ -50,9 +161,9 @@ struct AppData: Codable {
         return categoryDict
     }
     
-    mutating func getMoneyByCategory() -> [String: Float] {
-        var moneyCategoryDict = [String: Float]()
-        let categoryDict = self.getCategoryDict()
+    mutating func getCategoryMoneyDict() -> [String: Float]? {
+        var categoryMoneyDict = [String: Float]()
+        let categoryDict = self.getCategoryDict()!
         
         for category in self.categories {
             if let categoryList = categoryDict[category] {
@@ -62,10 +173,10 @@ struct AppData: Codable {
                     totalAmount += expense.amount
                 }
                 
-                moneyCategoryDict[category] = totalAmount
+                categoryMoneyDict[category] = totalAmount
             }
         }
-        return moneyCategoryDict
+        return categoryMoneyDict
     }
     
     func totalExpense() -> Float {
