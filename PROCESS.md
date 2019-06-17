@@ -36,30 +36,60 @@
     * Focussed on completing the interface with everyhthing working (and bug free!).
 * Changed the PList Encoder to saving a class instead of a list.
     * This because a class can store a lot more information and a lot more efficient.
-* Finished all of the three screens and made it entirely bug free (couldn't find any more bugs myself)
+* Finished all of the three screens and made it entirely bug free (couldn't find any more bugs myself).
 
 ### Week 2
 #### Day 1
 * HEMELVAART
 
 #### Day 2
-* Finished the 'Geld-Screen'
-   * Added a loading bar in the form of a circle
-   * Added an animation for the loading bar
-   * Added an animation at the back of the loading bar which is pulsating, because this added more diversity
-   * Added an animation for the percentage label
-   * Added two labels which give the "Can still spend"- and "Already spend"-amounts
-* Added an icon to the app
-   * I managed to install the app on my iPhone (this was a problem because XCode didn't compile for iOS 12.3)
-   * Adding an icon to the app made it look a lot more professional
+* Finished the 'Geld-Screen'.
+   * Added a loading bar in the form of a circle.
+   * Added an animation for the loading bar.
+   * Added an animation at the back of the loading bar which is pulsating, because this added more diversity.
+   * Added an animation for the percentage label.
+   * Added two labels which give the "Can still spend"- and "Already spend"-amounts.
+* Added an icon to the app.
+   * I managed to install the app on my iPhone (this was a problem because XCode didn't compile for iOS 12.3).
+   * Adding an icon to the app made it look a lot more professional.
 
 #### Day 3
 * Installed pods
-   * This is used for the 'Statistieken-Screen'
-   * Imported the 'Charts'-pod
-* Started working on the 'Statistieken-Screen'
-   * Added a scroll view so multiple statistics can be seen
-   * Added the first pie-chart using the 'Charts'-pod
+   * This is used for the 'Statistieken-Screen'.
+   * Imported the 'Charts'-pod.
+* Started working on the 'Statistieken-Screen'.
+   * Added a scroll view so multiple statistics can be seen.
+   * Added the first pie-chart using the 'Charts'-pod.
+
+#### Day 4
+* Continued working on the 'Statistieken-Screen'.
+   * Tried to add a nice looking bar plot, but took very long because of little documentation.
+* Made a lot of changes to the 'AppData-class', which is the class that stores all the information.
+   * Created DateDict - output: year->month->[expenses] (all time)
+   * Created categoryMonthMoneyDict - input: month, output: category->amount (per month)
+   * Created categoryYearMoneyDict - input: year, output: category->amount (per year)
+   * Created yearMoneyDict - input: year, output: month->amount (per year)
+   * Created categoryDict - output: category->[expenses] (all time)
+   * Created categoryMonthDict - output: category->amount (all time)
+   
+
+#### Day 5
+* Finished a prototype of the app
+   * Included bar graphs to the 'Statistieken-Screen'
+   * Changed some code in 'Statistieken-Screen' so the colours in the pie-chart and bar-chart lined up
+   * Cleaned some of the code
+   * Started working on the category-editing system in 'Instellingen-Screen'
+   
+### Week 3
+#### Day 1
+* Finished the 'Instellingen-Screen'
+   * Managed to add the whole category-editing system
+   * Able to add and edit categories
+   * Added some exceptions to remove bugs (no duplicates, every word starts with capital letter, no empty textfield, etc.)
+   
+#### Day 2
+
+#### Day 3
 
 #### Day 4
 
@@ -110,6 +140,7 @@
    * https://github.com/noudcorten/weggeld/blob/master/STYLE.md
 
 #### Day 4
+
 
 #### Day 5
 
