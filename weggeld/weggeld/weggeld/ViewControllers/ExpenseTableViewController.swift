@@ -14,13 +14,8 @@ class ExpenseTableViewController: UITableViewController {
     @IBOutlet weak var dueDateLabel: UILabel!
     @IBOutlet weak var dueDatePickerView: UIDatePicker!
     @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var notesTextView: UITextView!
-    @IBOutlet weak var notesUIView: UIView!
+    @IBOutlet weak var notesTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
-    
-    
-    
     
     var expense: Expense?
     var appData: AppData?
@@ -70,7 +65,7 @@ class ExpenseTableViewController: UITableViewController {
         dueDatePickerView.maximumDate = Date()
         dueDatePickerView.date = expense.dueDate
         pickerView.selectRow(appData!.categories.firstIndex(of: expense.category)!, inComponent: 0, animated: true)
-        notesTextView.text = expense.notes
+        notesTextField.text = expense.notes
     }
     
     /// Disable the save button if there is no title.
@@ -124,7 +119,7 @@ class ExpenseTableViewController: UITableViewController {
         
         let amount = abs(Float(amountTextField.text!)!)
         let dueDate = dueDatePickerView.date
-        let notes = notesTextView.text
+        let notes = notesTextField.text
         let category = navigationItem.title!
         
         expense = Expense(amount: amount, dueDate: dueDate, notes: notes, category: category)

@@ -12,7 +12,10 @@ struct AppData: Codable {
     var isEmpty: Bool
     var expenses: [Expense]
     var maxAmount: Float
+    
     var categories: [String] = ["Eten", "Vervoer", "Kleding", "Wonen", "Onderwijs", "Gezondheid", "Vakantie", "Liefdadigheid", "Vermaak", "Sparen"]
+    var category_dict: [String: Int] = ["Eten" : 0, "Vervoer" : 1, "Kleding" : 2, "Wonen" : 3, "Onderwijs" : 4, "Gezondheid" : 5, "Vakantie" : 6, "Liefdadigheid" : 7, "Vermaak" : 8, "Sparen" : 9]
+    
     let months: [String] = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
     let month_dict: [String: Int] = ["Januari" : 1, "Februari" : 2, "Maart" : 3, "April" : 4, "Mei" : 5, "Juni" : 6, "Juli" : 7, "Augustus" : 8, "September" : 9, "Oktober" : 10, "November" : 11, "December" : 12]
     
@@ -41,9 +44,24 @@ struct AppData: Codable {
         return expenses.sorted(by: { $0.dueDate.compare($1.dueDate) == .orderedDescending })
     }
     
-    mutating func addCategory(category: String) {
-        self.categories.append(category)
+    mutating func newCategoryList(categories newList: [String]) {
+        self.categories = newList
     }
+    
+    mutating func removeCategory(category: String) {
+        if let index = self.categories.index(of: category)  {
+            self.categories.remove(at: index)
+        }
+        self.category_dict.removeValue(forKey: category)
+    }
+    
+    mutating func addCategory(category: String, index: Int) {
+        self.categories.append(category)
+        self.category_dict[category] = index
+        
+    }
+    
+    
     
     func getUsedMonths(year: String) -> [String]? {
         let dateDict = getDateDict()

@@ -46,13 +46,13 @@ class CountingLabel: UILabel {
         return endNumber - (update * (endNumber - startNumber))
     }
     
-    func count(from fromValue: Float, to toValue: Float, withDuration duration: TimeInterval, andAnimationType animationType: CounterAnimationType, andCounterType counterType: CounterType) {
+    func count(from fromValue: Float, to toValue: Float) {
         
         self.startNumber = fromValue
         self.endNumber = toValue
-        self.duration = duration
-        self.counterType = counterType
-        self.counterAnimationType = animationType
+        self.duration = 3
+        self.counterType = .Int
+        self.counterAnimationType = .EaseOut
         self.progress = 0
         self.lastUpdate = Date.timeIntervalSinceReferenceDate
         

@@ -101,16 +101,13 @@ class StatisticsViewController: UIViewController {
     }
     
     func updatePieChartData(chart: PieChartView, data: [PieChartDataEntry], label: String) {
-        let chartDataSet = PieChartDataSet(values: data, label: label)
-        let chartData = PieChartData(dataSet: chartDataSet)
-        chartDataSet.colors = UIColor.chartColors()
-
-        chart.data = chartData
-        chartDataSet.valueColors = [UIColor.black]
-
         chart.drawEntryLabelsEnabled = false
         chart.usePercentValuesEnabled = true
         
+        let chartDataSet = PieChartDataSet(values: data, label: label)
+        let chartData = PieChartData(dataSet: chartDataSet)
+        chartDataSet.colors = UIColor.chartColors()
+        chart.data = chartData
     }
     
     func createAllCategoriesBarChart() {
@@ -175,9 +172,9 @@ class StatisticsViewController: UIViewController {
             chart.animate(yAxisDuration: 0.5, easingOption: .easeInExpo)
             
         } else {
-            let chartDataSet = PieChartDataSet(values: [PieChartDataEntry](), label: "")
-            let chartData = PieChartData(dataSet: chartDataSet)
-            barChartAllCategories.data = chartData
+            let chartDataSet = BarChartDataSet(values: [BarChartDataEntry](), label: "")
+            let chartData = BarChartData(dataSet: chartDataSet)
+            chart.data = chartData
         }
     }
     

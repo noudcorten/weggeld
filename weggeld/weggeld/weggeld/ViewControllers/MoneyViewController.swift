@@ -92,7 +92,7 @@ class MoneyViewController: UIViewController {
         if percentage > 1 {
             percentage = 1
         }
-        countingLabel.count(from: 0, to: percentage * 100, withDuration: 3, andAnimationType: .EaseOut, andCounterType: .Int)
+        countingLabel.count(from: 0, to: percentage * 100)
         
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.toValue = CGFloat(percentage)

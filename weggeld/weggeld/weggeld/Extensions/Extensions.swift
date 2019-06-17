@@ -27,6 +27,17 @@ extension UIColor {
             UIColor.rgb(244,164,96)]
     }
     
+    static func categoryColors() -> [UIColor] {
+        return [UIColor.rgb(244, 66, 66),
+        UIColor.rgb(244, 157, 65),
+        UIColor.rgb(244, 232, 65),
+        UIColor.rgb(79, 244, 65),
+        UIColor.rgb(65, 235, 244),
+        UIColor.rgb(67, 65, 244),
+        UIColor.rgb(178, 65, 244),
+        UIColor.rgb(255, 66, 226)]
+    }
+    
     static let outlineStrokeColor = UIColor.rgb(244, 107, 173)
     static let pullsatingFillColor = UIColor.rgb(216, 69, 143)
     static let trackStrokeColor = UIColor.rgb(178, 174, 176)
