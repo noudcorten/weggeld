@@ -25,17 +25,31 @@ class AwayTableViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
+        let numOfSections = appData!.getAllExpensesList()!.count
+        if numOfSections > 0 {
+            return numOfSections
+        }
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return expenses.count
+        let allExpensesList = appData!.getAllExpensesList()!
+    
+        let numOfSections = allExpensesList.count
+        if numOfSections > 0 {
+            let numOfRows = allExpensesList[section].count
+            if numOfRows > 0 {
+                return numOfRows
+            }
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseCellIdentifier", for: indexPath) as! ExpenseCell
-        
-        let expense = expenses[indexPath.row]
+        let allExpensesList = appData!.getAllExpensesList()!
+        let expenseList = allExpensesList[indexPath.section]
+        let expense = expenseList[indexPath.row]
         
         if floor(expense.amount) == expense.amount {
             cell.expenseLabel.text = "€ " + String(Int(expense.amount))
@@ -56,19 +70,24 @@ class AwayTableViewController: UITableViewController {
         return cell
     }
     
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            expenses.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let allExpensesList = appData!.getAllExpensesList()!
+            let expensesList = allExpensesList[indexPath.section]
+            let expense = expensesList[indexPath.row]
             
-            appData!.newExpensesList(expenses: expenses)
+            appData!.removeExpense(expense)
             AppData.saveAppData(appData!)
+            
+            if expensesList.count > 1 {
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                tableView.reloadData()
+            }
         }
     }
     
@@ -76,31 +95,48 @@ class AwayTableViewController: UITableViewController {
         return 70
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        
+        let numOfSections = appData!.getAllExpensesList()!.count
+        if numOfSections > 0 {
+            view.backgroundColor = UIColor.outlineStrokeColor
+            
+            let label = UILabel()
+            label.textColor = UIColor.white
+            label.frame = CGRect(x: 10, y: 3, width: 200, height: 20)
+            
+            let allUsedMonths = appData!.getAllUsedMonthsString()
+            label.text = allUsedMonths[section]
+            
+            view.addSubview(label)
+        }
+        return view
+    }
+    
     @IBAction func unwindToController(segue: UIStoryboardSegue) {
         guard segue.identifier == "saveUnwind" else { return }
         let sourceViewController = segue.source as! ExpenseTableViewController
         
         if let expense = sourceViewController.expense {
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                expenses[selectedIndexPath.row] = expense
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            if let _ = tableView.indexPathForSelectedRow {
+                appData!.replaceExpense(expense)
             } else {
-                let newIndexPath = IndexPath(row: expenses.count, section: 0)
-                expenses.append(expense)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                 appData!.addExpense(expense)
             }
+            AppData.saveAppData(appData!)
+            tableView.reloadData()
         }
-        
-        appData!.newExpensesList(expenses: expenses)
-        AppData.saveAppData(appData!)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetails" {
             let expenseViewController = segue.destination as! ExpenseTableViewController
+            let allExpensesList = appData!.getAllExpensesList()!
+            
             let indexPath = tableView.indexPathForSelectedRow!
-            let selectedExpense = expenses[indexPath.row]
+            let selectedExpense = allExpensesList[indexPath.section][indexPath.row]
             expenseViewController.expense = selectedExpense
         }
     }

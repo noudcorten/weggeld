@@ -57,7 +57,6 @@ class AddCategoryViewController: UIViewController {
         let name = nameField.text!.capitalizingFirstLetter()
         
         if let category = categoryLabel {
-            print(selectedColor)
             appData!.changeCategory(newName: name, prevName: category, color: selectedColor)
         } else {
             appData!.addCategory(category: name, color: selectedColor)

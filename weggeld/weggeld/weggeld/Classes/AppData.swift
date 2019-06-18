@@ -25,7 +25,7 @@ struct AppData: Codable {
         self.maxAmount = maxAmount
     }
     
-    mutating func addExpense(expense: Expense) {
+    mutating func addExpense(_ expense: Expense) {
         self.isEmpty = false
         self.expenses.append(expense)
         self.expenses = sortExpenses(expenses: self.expenses)
@@ -37,6 +37,17 @@ struct AppData: Codable {
             self.isEmpty = false
         } else {
             self.isEmpty = true
+        }
+    }
+    
+    mutating func removeExpense(_ expense: Expense) {
+        for (i, posExpens) in self.expenses.enumerated() {
+            if posExpens.dueDate == expense.dueDate {
+                self.expenses.remove(at: i)
+                if self.expenses.count == 0 {
+                    self.isEmpty = true
+                }
+            }
         }
     }
     
@@ -71,7 +82,19 @@ struct AppData: Codable {
         self.category_dict[newName] = color
     }
     
+    mutating func replaceExpense(_ expense: Expense) {
+        let index = self.findIndexOfExpense(expense)!
+        self.expenses[index] = expense
+    }
     
+    func findIndexOfExpense(_ expense: Expense) -> Int? {
+        for (i, possibleExpense) in self.expenses.enumerated() {
+            if expense.dueDate == possibleExpense.dueDate {
+                return i
+            }
+        }
+        return nil
+    }
     
     func getUsedMonths(year: String) -> [String]? {
         let dateDict = getDateDict()
@@ -91,6 +114,50 @@ struct AppData: Codable {
         } else {
             return []
         }
+    }
+    
+    func getUsedYears() -> [String]? {
+        let dateDict = getDateDict()
+        
+        var yearArray = [String]()
+        for (year, _) in dateDict {
+            yearArray.append(year)
+        }
+        
+        return yearArray
+    }
+    
+    func getAllUsedMonthsString() -> [Int: String] {
+        var allUsedMonths = [Int: String]()
+        var index = 0
+        for year in self.getUsedYears()!.reversed() {
+            for month in getUsedMonths(year: year)!.reversed() {
+                let monthYearString = month + " (" + year + ")"
+                allUsedMonths[index] = monthYearString
+                index += 1
+            }
+        }
+        return allUsedMonths
+    }
+    
+    
+    func getAllExpensesList() -> [[Expense]]? {
+        var allExpensesList = [[Expense]]()
+        let dateDict = self.getDateDict()
+        
+        for year in self.getUsedYears()! {
+//            print(year)
+            if let monthDict = dateDict[year] {
+                for month in self.getUsedMonths(year: year)! {
+//                    print(month)
+                    if let expenses = monthDict[month] {
+                        allExpensesList.append(expenses)
+                    }
+                }
+            }
+        }
+//        print("-")
+        return Array(allExpensesList.reversed())
     }
     
     func getDateDict() -> [String: [String: [Expense]]] {
@@ -214,8 +281,6 @@ struct AppData: Codable {
         }
         return expenseSum
     }
-    
-    func
     
     static var DocumentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("appdata")

@@ -152,7 +152,7 @@ class MoneyViewController: UIViewController {
         let sourceViewController = segue.source as! ExpenseTableViewController
         
         if let expense = sourceViewController.expense {
-            appData!.addExpense(expense: expense)
+            appData!.addExpense(expense)
             AppData.saveAppData(appData!)
         }
     }
