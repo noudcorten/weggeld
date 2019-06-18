@@ -122,6 +122,10 @@ class SettingsTableViewController: UITableViewController {
             return appData!.categories.count
         }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(40)
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
@@ -134,7 +138,17 @@ class SettingsTableViewController: UITableViewController {
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
-            cell.categoryLabel.text = appData!.categories[indexPath.row]
+            
+            let category = appData!.categories[indexPath.row]
+            cell.categoryLabel.text = category
+            
+            let colors = UIColor.categoryColors()
+            let pickedColor = appData!.category_dict[category]!
+            cell.colorView.backgroundColor = colors[pickedColor]
+            
+            let radius = cell.colorView.frame.height / 2
+            cell.colorView.layer.cornerRadius = radius
+            
             return cell
         }
     }
@@ -150,8 +164,13 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = UIColor.outlineStrokeColor
+        
+        
         let label = UILabel()
-        label.backgroundColor = UIColor.lightGray
+        label.textColor = UIColor.white
+        label.frame = CGRect(x: 10, y: 3, width: 200, height: 20)
         
         switch section {
         case 0:
@@ -160,7 +179,8 @@ class SettingsTableViewController: UITableViewController {
             label.text = "CATEGORIEËN"
         }
         
-        return label
+        view.addSubview(label)
+        return view
     }
 //
 //    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -170,7 +190,7 @@ class SettingsTableViewController: UITableViewController {
 //    }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat(20)
+        return CGFloat(40)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -185,9 +205,23 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetails" {
+            let addCategoryController = segue.destination as! AddCategoryViewController
+            let indexPath = tableView.indexPathForSelectedRow!
+            let category = appData!.categories[indexPath.row]
+            addCategoryController.selectedColor = appData!.category_dict[category]!
+            addCategoryController.categoryLabel = category
+        }
+    }
+    
     @IBAction func unwindToSettings(segue: UIStoryboardSegue) {
-        guard segue.identifier == "saveCategory" else { return }
         appData = AppData.loadAppData()
-        tableView.reloadData()
+        
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.reloadRows(at: [selectedIndexPath], with: .none)
+        } else {
+            tableView.reloadData()
+        }
     }
 }

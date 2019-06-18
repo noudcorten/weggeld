@@ -14,7 +14,7 @@ struct AppData: Codable {
     var maxAmount: Float
     
     var categories: [String] = ["Eten", "Vervoer", "Kleding", "Wonen", "Onderwijs", "Gezondheid", "Vakantie", "Liefdadigheid", "Vermaak", "Sparen"]
-    var category_dict: [String: Int] = ["Eten" : 0, "Vervoer" : 1, "Kleding" : 2, "Wonen" : 3, "Onderwijs" : 4, "Gezondheid" : 5, "Vakantie" : 6, "Liefdadigheid" : 7, "Vermaak" : 8, "Sparen" : 9]
+    var category_dict: [String: Int] = ["Eten" : 0, "Vervoer" : 1, "Kleding" : 2, "Wonen" : 3, "Onderwijs" : 4, "Gezondheid" : 5, "Vakantie" : 6, "Liefdadigheid" : 7, "Vermaak" : 0, "Sparen" : 1]
     
     let months: [String] = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
     let month_dict: [String: Int] = ["Januari" : 1, "Februari" : 2, "Maart" : 3, "April" : 4, "Mei" : 5, "Juni" : 6, "Juli" : 7, "Augustus" : 8, "September" : 9, "Oktober" : 10, "November" : 11, "December" : 12]
@@ -49,16 +49,26 @@ struct AppData: Codable {
     }
     
     mutating func removeCategory(category: String) {
-        if let index = self.categories.index(of: category)  {
+        if let index = self.categories.index(of: category) {
             self.categories.remove(at: index)
         }
         self.category_dict.removeValue(forKey: category)
     }
     
-    mutating func addCategory(category: String, index: Int) {
-        self.categories.append(category)
-        self.category_dict[category] = index
+    mutating func addCategory(category: String, color: Int) {
+        if !(self.categories.contains(category)) {
+            self.categories.append(category)
+        }
+        self.category_dict[category] = color
+    }
+    
+    mutating func changeCategory(newName: String, prevName: String, color: Int) {
+        if let index = self.categories.index(of: prevName) {
+            self.categories[index] = newName
+        }
         
+        self.category_dict.removeValue(forKey: prevName)
+        self.category_dict[newName] = color
     }
     
     
@@ -204,6 +214,8 @@ struct AppData: Codable {
         }
         return expenseSum
     }
+    
+    func
     
     static var DocumentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("appdata")

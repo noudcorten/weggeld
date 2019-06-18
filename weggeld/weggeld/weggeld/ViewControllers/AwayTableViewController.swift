@@ -45,6 +45,14 @@ class AwayTableViewController: UITableViewController {
         
         cell.categoryLabel.text = expense.category
         cell.dateLabel.text = Expense.dueDateFormatter.string(from: expense.dueDate)
+        
+        let colors = UIColor.categoryColors()
+        let pickedColor = appData!.category_dict[expense.category]!
+        cell.colorView.backgroundColor = colors[pickedColor]
+        
+        let radius = cell.colorView.frame.height / 2
+        cell.colorView.layer.cornerRadius = radius
+        
         return cell
     }
     

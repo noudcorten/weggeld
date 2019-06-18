@@ -42,13 +42,13 @@ class ExpenseTableViewController: UITableViewController {
         updateSaveButtonState()
     }
 
-    @IBAction func textEditingChanged(_ sender: Any) {
-        amountTextField.becomeFirstResponder()
+    @IBAction func textEditingChanged(_ sender: UITextField) {
+        sender.becomeFirstResponder()
         updateSaveButtonState()
     }
     
-    @IBAction func returnPressed(_ sender: Any) {
-        amountTextField.resignFirstResponder()
+    @IBAction func returnPressed(_ sender: UITextField) {
+        sender.resignFirstResponder()
     }
     
     @IBAction func datePickerChanged(_ sender: Any) {

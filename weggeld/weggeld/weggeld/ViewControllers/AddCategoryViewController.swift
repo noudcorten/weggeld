@@ -16,12 +16,15 @@ class AddCategoryViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     var appData: AppData?
+    var categoryLabel: String?
+    
     var colors = UIColor.categoryColors()
     var indexPaths = [IndexPath]()
     var selectedColor = Int()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -30,37 +33,38 @@ class AddCategoryViewController: UIViewController {
         
     }
     
-    @IBAction func cancelButtonPressed(_ sender: Any) {
-        
-    }
-    
-    @IBAction func saveButtonPressed(_ sender: Any) {
-        
-    }
-    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         guard identifier == "saveCategory" else { return true }
         
-        let name = nameField.text!.capitalizingFirstLetter()
-        if appData!.categories.contains(name) {
-            let alert = UIAlertController(title: "Fout!", message: "Deze categorie bestaat al.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(alert, animated: true, completion: nil)
-            return false
+        if let _ = categoryLabel {
+            return true
+        } else {
+            let name = nameField.text!.capitalizingFirstLetter()
+            if appData!.categories.contains(name) {
+                let alert = UIAlertController(title: "Fout!", message: "Deze categorie bestaat al.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+                return false
+            } else {
+                return true
+            }
         }
-        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         guard segue.identifier == "saveCategory" else { return }
-        
         let name = nameField.text!.capitalizingFirstLetter()
         
-        appData!.addCategory(category: name, index: selectedColor)
+        if let category = categoryLabel {
+            print(selectedColor)
+            appData!.changeCategory(newName: name, prevName: category, color: selectedColor)
+        } else {
+            appData!.addCategory(category: name, color: selectedColor)
+        }
+        
         AppData.saveAppData(appData!)
     }
-    
 }
 
 extension AddCategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -72,8 +76,12 @@ extension AddCategoryViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as UICollectionViewCell
         let view = cell.viewWithTag(1)!
         view.backgroundColor = colors[indexPath.row]
+        
+        if let label = categoryLabel {
+            nameField.text = label
+        }
 
-        if indexPath.row == 0 {
+        if indexPath.row == selectedColor {
             cell.backgroundColor = UIColor.black
         } else {
             cell.backgroundColor = colors[indexPath.row]
@@ -86,7 +94,6 @@ extension AddCategoryViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt
         indexPath: IndexPath) {
         var selectedCell: UICollectionViewCell
-        print(indexPath.row)
         
         if indexPath.row != selectedColor {
             let previousIndexPath = indexPaths[selectedColor]
@@ -98,11 +105,5 @@ extension AddCategoryViewController: UICollectionViewDelegate, UICollectionViewD
 
             selectedColor = indexPath.row
         }
-    }
-}
-
-extension String {
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).uppercased() + self.lowercased().dropFirst()
     }
 }
