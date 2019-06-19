@@ -106,8 +106,21 @@ class StatisticsViewController: UIViewController {
         
         let chartDataSet = PieChartDataSet(values: data, label: label)
         let chartData = PieChartData(dataSet: chartDataSet)
-        chartDataSet.colors = UIColor.chartColors()
+        chartDataSet.colors = getPieChartColors(data)
         chart.data = chartData
+    }
+    
+    func getPieChartColors(_ data: [PieChartDataEntry]) -> [UIColor] {
+        var colors = [UIColor]()
+        let categoryColors = UIColor.categoryColors()
+        let category_dict = appData!.category_dict
+        
+        for entry in data {
+            if let index = category_dict[entry.label!] {
+                colors.append(categoryColors[index])
+            }
+        }
+        return colors
     }
     
     func createAllCategoriesBarChart() {
@@ -160,11 +173,18 @@ class StatisticsViewController: UIViewController {
         
         if !(appData!.isEmpty) {
             let chartData = BarChartData()
-            let colors = UIColor.chartColors()
+            var colors: [UIColor]
             
             for (offset: index, element: (key: label, value: entry)) in data.enumerated() {
                 let chartDataSet = BarChartDataSet(values: [entry], label: label)
-                chartDataSet.colors = [colors[index]]
+                if appData!.months.contains(label) {
+                    colors = ChartColorTemplates.joyful()
+                    chartDataSet.colors = [colors[index]]
+                } else if appData!.categories.contains(label) {
+                    colors = UIColor.categoryColors()
+                    let newIndex = appData!.category_dict[label]!
+                    chartDataSet.colors = [colors[newIndex]]
+                }
                 chartDataSet.valueColors = [UIColor.black]
                 chartData.addDataSet(chartDataSet)
             }
@@ -219,11 +239,19 @@ extension StatisticsViewController: UIPickerViewDelegate, UIPickerViewDataSource
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if !(appData!.isEmpty) {
-            self.pickedMonth = String(pickerView.selectedRow(inComponent: 0))
-            self.pickedYear = Array(appData!.getDateDict().keys)[pickerView.selectedRow(inComponent: 1)]
+            switch component {
+            case 0:
+                self.pickedMonth = String(pickerView.selectedRow(inComponent: component))
+                if monthIsPicked {
+                    loadUI()
+                }
+            case 1:
+                self.pickedYear = Array(appData!.getDateDict().keys)[pickerView.selectedRow(inComponent: component)]
+                loadUI()
+            default:
+                return
+            }
         }
-        
-        loadUI()
     }
 }
 
