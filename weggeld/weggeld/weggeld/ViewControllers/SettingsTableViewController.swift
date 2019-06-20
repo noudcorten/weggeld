@@ -32,10 +32,7 @@ class SettingsTableViewController: UITableViewController {
         print("changed!")
         updateSaveButtonState()
     }
-    
-    @IBAction func addButtonPressed(_ sender: Any) {
-        
-    }
+
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         view.endEditing(true)
@@ -131,6 +128,7 @@ class SettingsTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath) as! InputCell
+            cell.selectionStyle = .none
             cell.inputField.delegate = self as? UITextFieldDelegate
             maxAmountTextField = cell.inputField
             updateTextField()
@@ -190,7 +188,7 @@ class SettingsTableViewController: UITableViewController {
 //    }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat(40)
+        return CGFloat(10)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

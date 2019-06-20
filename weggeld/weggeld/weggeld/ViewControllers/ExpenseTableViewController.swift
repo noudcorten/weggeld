@@ -10,82 +10,224 @@ import UIKit
 
 class ExpenseTableViewController: UITableViewController {
     
-    @IBOutlet weak var amountTextField: UITextField!
-    @IBOutlet weak var dueDateLabel: UILabel!
-    @IBOutlet weak var dueDatePickerView: UIDatePicker!
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var notesTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    var amountTextField: UITextField?
+    var dueDateLabel: UILabel?
+    var dueDatePickerView: UIDatePicker?
+    var categoryLabel: UILabel?
+    var colorView: UIView?
+    var pickerView: UIPickerView?
+    var notesTextField: UITextField?
     
     var expense: Expense?
     var appData: AppData?
     var isExtraInfoHidden: Bool = true
+    
+    var bottomConstraint: NSLayoutConstraint?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
         self.hideKeyboardWhenTappedAround()
         
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        
         appData = AppData.loadAppData()
+        tableView.reloadData()
         
-        if let expense = expense {
-            setExpenseInfo(expense: expense)
-        } else {
-            navigationItem.title = appData!.categories[0]
-            dueDatePickerView.date = Date()
-        }
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(keyboardWillShow),
+//            name: UIResponder.keyboardWillShowNotification,
+//            object: nil
+//        )
+//
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(keyboardWillHide),
+//            name: UIResponder.keyboardWillHideNotification,
+//            object: nil
+//        )
         
-        updateDueDateLabel(with: dueDatePickerView.date)
-        updateSaveButtonState()
     }
 
-    @IBAction func textEditingChanged(_ sender: UITextField) {
-        sender.becomeFirstResponder()
+//    @objc func keyboardWillShow(_ notification: Notification) {
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//            let keyboardRectangle = keyboardFrame.cgRectValue
+//            tableView.contentOffset = CGPoint(x: 0, y: keyboardRectangle.height)
+//        }
+//    }
+//
+//    @objc func keyboardWillHide(_ notification: Notification) {
+//        tableView.contentOffset = CGPoint(x: 0, y: 0)
+//    }
+    
+    @objc func textEditingChanged(_ sender: UITextField) {
         updateSaveButtonState()
     }
     
-    @IBAction func returnPressed(_ sender: UITextField) {
-        sender.resignFirstResponder()
+    @objc func beginEditing(_ sender: UITextField) {
+        tableView.contentOffset = CGPoint(x: 0, y: 40)
     }
     
-    @IBAction func datePickerChanged(_ sender: Any) {
-        updateDueDateLabel(with: dueDatePickerView.date)
+    @objc func endEditing(_ sender: UITextField) {
+        tableView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
-    private func setExpenseInfo(expense: Expense) {
-        navigationItem.title = expense.category
-        if floor(expense.amount) == expense.amount {
-            amountTextField.text = String(Int(expense.amount))
-        } else {
-            amountTextField.text = String(expense.amount)
-        }
-        dueDatePickerView.maximumDate = Date()
-        dueDatePickerView.date = expense.dueDate
-        pickerView.selectRow(appData!.categories.firstIndex(of: expense.category)!, inComponent: 0, animated: true)
-        notesTextField.text = expense.notes
+    @objc func returnPressed(_ sender: UITextField) {
+        self.view.endEditing(true)
+        tableView.contentOffset = CGPoint(x: 0, y: 0)
+    }
+    
+    @objc func datePickerChanged(_ sender: Any) {
+        updateDueDateLabel(with: dueDatePickerView!.date)
     }
     
     /// Disable the save button if there is no title.
     private func updateSaveButtonState() {
-        let text = amountTextField.text ?? ""
+        let text = amountTextField!.text ?? ""
         saveButton.isEnabled = !text.isEmpty
     }
     
     /// Update the due date label to match the date from the date picker.
     /// - parameter date: The actual date from the data picker.
     private func updateDueDateLabel(with date: Date) {
-        dueDateLabel.text = Expense.dueDateFormatter.string(from: date)
+        dueDateLabel!.text = Expense.dueDateFormatter.string(from: date)
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let normalCellHeight = CGFloat(40)
+        let largeCellHeight = CGFloat(200)
+        
+        switch indexPath.section {
+        case 1:
+            return largeCellHeight
+        case 2:
+            return largeCellHeight
+        default:
+            return normalCellHeight
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath) as! ExpenseInputCell
+            cell.selectionStyle = .none
+            cell.amountTextField.delegate = self as? UITextFieldDelegate
+            amountTextField = cell.amountTextField
+            amountTextField!.addTarget(self, action: #selector(self.textEditingChanged(_:)), for: UIControl.Event.editingChanged)
+            
+            if let expense = expense {
+                if floor(expense.amount) == expense.amount {
+                    amountTextField!.text = String(Int(expense.amount))
+                } else {
+                    amountTextField!.text = String(expense.amount)
+                }
+            }
+            
+            updateSaveButtonState()
+            
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! ExpenseDateCell
+            cell.selectionStyle = .none
+            dueDateLabel = cell.dueDateLabel
+            dueDatePickerView = cell.dueDatePickerView
+            dueDatePickerView!.maximumDate = Date()
+            dueDatePickerView!.addTarget(self, action: #selector(self.datePickerChanged), for: UIControl.Event.valueChanged)
+            
+            if let expense = expense {
+                dueDatePickerView!.date = expense.dueDate
+            } else {
+                dueDatePickerView!.date = Date()
+            }
+            
+            updateDueDateLabel(with: dueDatePickerView!.date)
+
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! ExpenseCategoryCell
+            cell.selectionStyle = .none
+            pickerView = cell.pickerView
+            categoryLabel = cell.categoryLabel
+            colorView = cell.colorView
+            
+            let colors = UIColor.categoryColors()
+            let category_dict = appData!.category_dict
+            var category: String
+            
+            if let expense = expense {
+                category = expense.category
+            } else {
+                category = appData!.categories[0]
+            }
+            
+            categoryLabel!.text = category
+            let index = category_dict[category]
+            colorView!.backgroundColor = colors[index!]
+            pickerView!.selectRow(appData!.categories.firstIndex(of: category)!, inComponent: 0, animated: true)
+            
+            return cell
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath) as! ExpenseInfoCell
+            cell.selectionStyle = .none
+            cell.notesTextField.delegate = self as? UITextFieldDelegate
+            notesTextField = cell.notesTextField
+            notesTextField!.addTarget(self, action: #selector(self.beginEditing(_:)), for: .editingDidBegin)
+            notesTextField!.addTarget(self, action: #selector(self.endEditing(_:)),
+                                       for: .editingDidEnd)
+            notesTextField!.addTarget(self, action: #selector(self.returnPressed(_:)), for: .primaryActionTriggered)
+            
+            if let expense = expense {
+                notesTextField!.text = expense.notes
+            }
+            
+            return cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = UIColor.outlineStrokeColor
+        
+        
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.frame = CGRect(x: 10, y: 3, width: 200, height: 20)
+        
+        switch section {
+        case 0:
+            label.text = "UITGAVE"
+        case 1:
+            label.text = "DATUM"
+        case 2:
+            label.text = "CATEGORIE"
+        default:
+            label.text = "EXTRA INFO"
+        }
+        
+        view.addSubview(label)
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat(10)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        var text = amountTextField.text!
+        var text = amountTextField!.text!
         
         if text.contains(",") {
             text = text.replacingOccurrences(of: ",", with: ".")
-            amountTextField.text = text
+            amountTextField!.text = text
         }
         
         if identifier == "saveUnwind" {
@@ -117,31 +259,12 @@ class ExpenseTableViewController: UITableViewController {
         super.prepare(for: segue, sender: sender)
         guard segue.identifier == "saveUnwind" else { return }
         
-        let amount = abs(Float(amountTextField.text!)!)
-        let dueDate = dueDatePickerView.date
-        let notes = notesTextField.text
-        let category = navigationItem.title!
+        let amount = abs(Float(amountTextField!.text!)!)
+        let dueDate = dueDatePickerView!.date
+        let notes = notesTextField!.text
+        let category = categoryLabel!.text!
         
         expense = Expense(amount: amount, dueDate: dueDate, notes: notes, category: category)
     }
 
-}
-
-extension ExpenseTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return appData!.categories.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        navigationItem.title = appData!.categories[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return appData!.categories[row]
-    }
 }

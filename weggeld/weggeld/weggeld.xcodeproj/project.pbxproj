@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		042CF1DB22B7A0740044CFCC /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1DA22B7A0740044CFCC /* AddCategoryViewController.swift */; };
+		042CF1F522BA56200044CFCC /* ExpenseInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1F422BA56200044CFCC /* ExpenseInputCell.swift */; };
+		042CF1F722BA56450044CFCC /* ExpenseDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1F622BA56450044CFCC /* ExpenseDateCell.swift */; };
+		042CF1F922BA565A0044CFCC /* ExpenseCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1F822BA565A0044CFCC /* ExpenseCategoryCell.swift */; };
+		042CF1FB22BA56660044CFCC /* ExpenseInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */; };
 		04B5A7CC22AFADF50059A04F /* CountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CB22AFADF50059A04F /* CountingLabel.swift */; };
 		04B5A7CE22AFC3DF0059A04F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CD22AFC3DF0059A04F /* Extensions.swift */; };
 		04B5A7D322B1056C0059A04F /* bar_chart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D222B1056C0059A04F /* bar_chart@3x.png */; };
@@ -37,6 +41,10 @@
 
 /* Begin PBXFileReference section */
 		042CF1DA22B7A0740044CFCC /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
+		042CF1F422BA56200044CFCC /* ExpenseInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseInputCell.swift; sourceTree = "<group>"; };
+		042CF1F622BA56450044CFCC /* ExpenseDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDateCell.swift; sourceTree = "<group>"; };
+		042CF1F822BA565A0044CFCC /* ExpenseCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCategoryCell.swift; sourceTree = "<group>"; };
+		042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseInfoCell.swift; sourceTree = "<group>"; };
 		04B5A7CB22AFADF50059A04F /* CountingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingLabel.swift; sourceTree = "<group>"; };
 		04B5A7CD22AFC3DF0059A04F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		04B5A7D222B1056C0059A04F /* bar_chart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_chart@3x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/bar_chart@3x.png"; sourceTree = "<group>"; };
@@ -167,6 +175,10 @@
 				04B5A7E022B3F0BF0059A04F /* CategoryCell.swift */,
 				04BD4DC322A95ED700150288 /* ExpenseCell.swift */,
 				04B5A7CB22AFADF50059A04F /* CountingLabel.swift */,
+				042CF1F422BA56200044CFCC /* ExpenseInputCell.swift */,
+				042CF1F622BA56450044CFCC /* ExpenseDateCell.swift */,
+				042CF1F822BA565A0044CFCC /* ExpenseCategoryCell.swift */,
+				042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */,
 			);
 			name = View;
 			path = Classes/View;
@@ -314,10 +326,13 @@
 			files = (
 				04BD4DA522A925A200150288 /* Expense.swift in Sources */,
 				04BD4DA022A9254E00150288 /* StatisticsViewController.swift in Sources */,
+				042CF1F522BA56200044CFCC /* ExpenseInputCell.swift in Sources */,
 				04BD4D9E22A9252200150288 /* ExpenseTableViewController.swift in Sources */,
 				04BD4DA222A9257900150288 /* SettingsTableViewController.swift in Sources */,
 				04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */,
+				042CF1F722BA56450044CFCC /* ExpenseDateCell.swift in Sources */,
 				04B5A7E522B4030C0059A04F /* InputCell.swift in Sources */,
+				042CF1FB22BA56660044CFCC /* ExpenseInfoCell.swift in Sources */,
 				04B5A7CC22AFADF50059A04F /* CountingLabel.swift in Sources */,
 				04BD4D8822A923FC00150288 /* AppDelegate.swift in Sources */,
 				04BD4DB722A9271100150288 /* MoneyViewController.swift in Sources */,
@@ -325,6 +340,7 @@
 				04B5A7CE22AFC3DF0059A04F /* Extensions.swift in Sources */,
 				04BD4DC622AA5B7600150288 /* AppData.swift in Sources */,
 				042CF1DB22B7A0740044CFCC /* AddCategoryViewController.swift in Sources */,
+				042CF1F922BA565A0044CFCC /* ExpenseCategoryCell.swift in Sources */,
 				04B5A7E122B3F0BF0059A04F /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
