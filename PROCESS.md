@@ -88,12 +88,25 @@
    * Added some exceptions to remove bugs (no duplicates, every word starts with capital letter, no empty textfield, etc.)
    
 #### Day 2
+* Added colors to categories
+* Changed 'Instellingen-Screen' to show selected colors
+* Changed 'Weg-Screen' to show selected colors
 
 #### Day 3
+* 'Statistieken-Screen'-colors now matches category colors
+* Changed entire UI
 
 #### Day 4
+* Finished category editing
+   * Able to change priority of category
+* Removed bugs
+   * Changing category name crashed 'Weg-Screen'
+   * Removing category crashed 'Weg-Screen'
+   * Deleting all categories crashed 'Uitgave-Screen'
 
 #### Day 5
+* Fixed total expense
+* Added horizontal gesture recognizer
 
 ## Daily Standup
 ### Week 1
