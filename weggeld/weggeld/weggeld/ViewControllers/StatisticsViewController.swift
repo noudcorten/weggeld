@@ -105,6 +105,8 @@ class StatisticsViewController: UIViewController {
         var dataEntries = [PieChartDataEntry]()
         
         if !(appData.isEmpty) {
+            print(appData.getUsedMonths(year: pickedYear))
+            print(Int(pickedMonth))
             let monthString = appData.getUsedMonths(year: pickedYear)![Int(pickedMonth)!]
             
             if monthIsPicked {
@@ -279,6 +281,8 @@ extension StatisticsViewController: UIPickerViewDelegate, UIPickerViewDataSource
                 }
             case 1:
                 self.pickedYear = Array(appData.getDateDict().keys)[pickerView.selectedRow(inComponent: component)]
+                self.pickedMonth = String(0)
+                pickerView.reloadAllComponents()
                 loadUI()
             default:
                 return
