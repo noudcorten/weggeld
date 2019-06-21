@@ -38,9 +38,9 @@ extension UIColor {
         UIColor.rgb(255, 66, 226)]
     }
     
-    static let outlineStrokeColor = UIColor.rgb(244, 107, 173)
-    static let pullsatingFillColor = UIColor.rgb(216, 69, 143)
-    static let trackStrokeColor = UIColor.rgb(178, 174, 176)
+    static let light_pink = UIColor.rgb(244, 107, 173)
+    static let dark_pink = UIColor.rgb(216, 69, 143)
+    static let light_gray = UIColor.rgb(178, 174, 176)
 }
 
 extension UIViewController {

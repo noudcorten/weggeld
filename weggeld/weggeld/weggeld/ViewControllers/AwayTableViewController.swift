@@ -10,22 +10,84 @@ import UIKit
 
 class AwayTableViewController: UITableViewController {
     
-    var appData: AppData?
+    @IBAction func unwindToController(segue: UIStoryboardSegue) {
+        guard segue.identifier == "saveUnwind" else { return }
+        let sourceViewController = segue.source as! ExpenseTableViewController
+        
+        if let expense = sourceViewController.expense {
+            if let _ = tableView.indexPathForSelectedRow {
+                if let prevExpense = sourceViewController.prevExpense {
+                    appData.replaceExpense(prevExpense, expense)
+                }
+            } else {
+                appData.addExpense(expense)
+            }
+            AppData.saveAppData(appData)
+            tableView.reloadData()
+        }
+    }
+    
+    var appData: AppData!
     var expenses = [Expense]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
         
         appData = AppData.loadAppData()
-        expenses = appData!.expenses
+        expenses = appData.expenses
         
         tableView.reloadData()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupSwipeRecognizer()
+        self.setupNavigationBar()
+    }
+    
+    @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .left {
+            if (self.tabBarController?.selectedIndex)! < 3 { // set your total tabs here
+                self.tabBarController?.selectedIndex += 1
+            }
+        } else if gesture.direction == .right {
+            if (self.tabBarController?.selectedIndex)! > 0 {
+                self.tabBarController?.selectedIndex -= 1
+            }
+        }
+    }
+    
+    private func setupSwipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.gray
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        self.navigationItem.leftBarButtonItem!.title = "Wijzig"
+    }
+    
+    override func setEditing (_ editing:Bool, animated:Bool) {
+        super.setEditing(editing,animated:animated)
+        
+        if self.isEditing {
+            self.editButtonItem.title = "Klaar"
+        } else {
+            self.editButtonItem.title = "Wijzig"
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        let numOfSections = appData!.getAllExpensesList()!.count
+        let numOfSections = appData.getAllExpensesList()!.count
         if numOfSections > 0 {
             return numOfSections
         }
@@ -33,7 +95,7 @@ class AwayTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let allExpensesList = appData!.getAllExpensesList()!
+        let allExpensesList = appData.getAllExpensesList()!
     
         let numOfSections = allExpensesList.count
         if numOfSections > 0 {
@@ -47,7 +109,7 @@ class AwayTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseCellIdentifier", for: indexPath) as! ExpenseCell
-        let allExpensesList = appData!.getAllExpensesList()!
+        let allExpensesList = appData.getAllExpensesList()!
         let expenseList = allExpensesList[indexPath.section]
         let expense = expenseList[indexPath.row]
         
@@ -61,7 +123,7 @@ class AwayTableViewController: UITableViewController {
         cell.dateLabel.text = Expense.dueDateFormatter.string(from: expense.dueDate)
         
         let colors = UIColor.categoryColors()
-        let pickedColor = appData!.category_dict[expense.category]!
+        let pickedColor = appData.category_dict[expense.category]!
         cell.colorView.backgroundColor = colors[pickedColor]
         
         let radius = cell.colorView.frame.height / 2
@@ -76,12 +138,12 @@ class AwayTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let allExpensesList = appData!.getAllExpensesList()!
+            let allExpensesList = appData.getAllExpensesList()!
             let expensesList = allExpensesList[indexPath.section]
             let expense = expensesList[indexPath.row]
             
-            appData!.removeExpense(expense)
-            AppData.saveAppData(appData!)
+            appData.removeExpense(expense)
+            AppData.saveAppData(appData)
             
             if expensesList.count > 1 {
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
@@ -98,15 +160,15 @@ class AwayTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
         
-        let numOfSections = appData!.getAllExpensesList()!.count
+        let numOfSections = appData.getAllExpensesList()!.count
         if numOfSections > 0 {
-            view.backgroundColor = UIColor.outlineStrokeColor
+            view.backgroundColor = UIColor.light_pink
             
             let label = UILabel()
             label.textColor = UIColor.white
             label.frame = CGRect(x: 10, y: 3, width: 200, height: 20)
             
-            let allUsedMonths = appData!.getAllUsedMonthsString()
+            let allUsedMonths = appData.getAllUsedMonthsString()
             label.text = allUsedMonths[section]
             
             view.addSubview(label)
@@ -114,26 +176,21 @@ class AwayTableViewController: UITableViewController {
         return view
     }
     
-    @IBAction func unwindToController(segue: UIStoryboardSegue) {
-        guard segue.identifier == "saveUnwind" else { return }
-        let sourceViewController = segue.source as! ExpenseTableViewController
-        
-        if let expense = sourceViewController.expense {
-            if let _ = tableView.indexPathForSelectedRow {
-                appData!.replaceExpense(expense)
-            } else {
-                 appData!.addExpense(expense)
-            }
-            AppData.saveAppData(appData!)
-            tableView.reloadData()
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if appData.categories.count == 0 {
+            let alert = UIAlertController(title: "Fout!", message: "Voeg een categorie toe.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+            return false
         }
+        return true
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetails" {
             let expenseViewController = segue.destination as! ExpenseTableViewController
-            let allExpensesList = appData!.getAllExpensesList()!
+            let allExpensesList = appData.getAllExpensesList()!
             
             let indexPath = tableView.indexPathForSelectedRow!
             let selectedExpense = allExpensesList[indexPath.section][indexPath.row]

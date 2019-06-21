@@ -8,14 +8,14 @@
 
 import UIKit
 
-class AddCategoryViewController: UIViewController {
+class AddCategoryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
-    var appData: AppData?
+    var appData: AppData!
     var categoryLabel: String?
     
     var colors = UIColor.categoryColors()
@@ -40,7 +40,7 @@ class AddCategoryViewController: UIViewController {
             return true
         } else {
             let name = nameField.text!.capitalizingFirstLetter()
-            if appData!.categories.contains(name) {
+            if appData.categories.contains(name) {
                 let alert = UIAlertController(title: "Fout!", message: "Deze categorie bestaat al.", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true, completion: nil)
@@ -57,16 +57,14 @@ class AddCategoryViewController: UIViewController {
         let name = nameField.text!.capitalizingFirstLetter()
         
         if let category = categoryLabel {
-            appData!.changeCategory(newName: name, prevName: category, color: selectedColor)
+            appData.changeCategory(newName: name, prevName: category, color: selectedColor)
         } else {
-            appData!.addCategory(category: name, color: selectedColor)
+            appData.addCategory(category: name, color: selectedColor)
         }
         
-        AppData.saveAppData(appData!)
+        AppData.saveAppData(appData)
     }
-}
 
-extension AddCategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
     }

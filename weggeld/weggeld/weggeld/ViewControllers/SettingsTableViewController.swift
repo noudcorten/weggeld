@@ -13,27 +13,6 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    var appData: AppData?
-    var maxAmountTextField: UITextField?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tabBarController?.delegate = self as? UITabBarControllerDelegate
-        navigationItem.leftBarButtonItem = editButtonItem
-//        self.navigationController!.navigationBar.tintColor = UIColor.lightGray
-        self.hideKeyboardWhenTappedAround()
-        
-        
-        appData = AppData.loadAppData()
-        tableView.reloadData()
-    }
-    
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        print("changed!")
-        updateSaveButtonState()
-    }
-
-    
     @IBAction func saveButtonPressed(_ sender: Any) {
         view.endEditing(true)
         var text = maxAmountTextField!.text!
@@ -52,6 +31,71 @@ class SettingsTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func unwindToSettings(segue: UIStoryboardSegue) {
+        appData = AppData.loadAppData()
+        
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.reloadRows(at: [selectedIndexPath], with: .none)
+        } else {
+            tableView.reloadData()
+        }
+    }
+    
+    var appData: AppData!
+    var maxAmountTextField: UITextField?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.delegate = self as? UITabBarControllerDelegate
+        
+        appData = AppData.loadAppData()
+        
+        tableView.reloadData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+        self.setupSwipeRecognizer()
+        self.setupNavigationBar()
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        updateSaveButtonState()
+    }
+    
+    @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .left {
+            if (self.tabBarController?.selectedIndex)! < 3 { // set your total tabs here
+                self.tabBarController?.selectedIndex += 1
+            }
+        } else if gesture.direction == .right {
+            if (self.tabBarController?.selectedIndex)! > 0 {
+                self.tabBarController?.selectedIndex -= 1
+            }
+        }
+    }
+    
+    private func setupSwipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.gray
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        self.navigationItem.leftBarButtonItem!.title = "Wijzig"
+    }
+    
+
     
     private func inputIsInt(input: String) -> Bool {
         if let _ = Int(input) {
@@ -75,8 +119,8 @@ class SettingsTableViewController: UITableViewController {
     
     private func saveInputMoney(input: String) {
         let inputMoney = Float(input)
-        appData!.maxAmount = abs(inputMoney!)
-        AppData.saveAppData(appData!)
+        appData.maxAmount = abs(inputMoney!)
+        AppData.saveAppData(appData)
         saveButton.isEnabled = false
     }
     
@@ -86,14 +130,14 @@ class SettingsTableViewController: UITableViewController {
         saveButton.isEnabled = !text.isEmpty
         
         if let inputAmount = Float(text) {
-            if inputAmount == appData!.maxAmount {
+            if inputAmount == appData.maxAmount {
                 saveButton.isEnabled = false
             }
         }
     }
     
     private func updateTextField() {
-        let maxAmount = appData!.maxAmount
+        let maxAmount = appData.maxAmount
         
         if floor(maxAmount) == maxAmount {
             maxAmountTextField!.text = String(Int(maxAmount))
@@ -105,7 +149,15 @@ class SettingsTableViewController: UITableViewController {
                                      for: UIControl.Event.editingChanged)
     }
     
-    
+    override func setEditing (_ editing:Bool, animated:Bool) {
+        super.setEditing(editing,animated:animated)
+        
+        if self.isEditing {
+            self.editButtonItem.title = "Klaar"
+        } else {
+            self.editButtonItem.title = "Wijzig"
+        }
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -116,7 +168,7 @@ class SettingsTableViewController: UITableViewController {
         case 0:
             return 1
         default:
-            return appData!.categories.count
+            return appData.categories.count
         }
     }
     
@@ -137,11 +189,11 @@ class SettingsTableViewController: UITableViewController {
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
             
-            let category = appData!.categories[indexPath.row]
+            let category = appData.categories[indexPath.row]
             cell.categoryLabel.text = category
             
             let colors = UIColor.categoryColors()
-            let pickedColor = appData!.category_dict[category]!
+            let pickedColor = appData.category_dict[category]!
             cell.colorView.backgroundColor = colors[pickedColor]
             
             let radius = cell.colorView.frame.height / 2
@@ -163,7 +215,7 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = UIColor.outlineStrokeColor
+        view.backgroundColor = UIColor.light_pink
         
         
         let label = UILabel()
@@ -172,20 +224,14 @@ class SettingsTableViewController: UITableViewController {
         
         switch section {
         case 0:
-            label.text = "MAXIMALE BEDRAG"
+            label.text = "Maximale Bedrag"
         default:
-            label.text = "CATEGORIEËN"
+            label.text = "Categorieën"
         }
         
         view.addSubview(label)
         return view
     }
-//
-//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let label = UILabel()
-//        label.text = "joehoe"
-//        return label
-//    }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat(10)
@@ -193,33 +239,51 @@ class SettingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            var categories = appData!.categories
+            var categories = appData.categories
             let category = categories[indexPath.row]
             
-            appData!.removeCategory(category: category)
-            AppData.saveAppData(appData!)
-            
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            if appData.hasCategory(category) {
+                let alert = UIAlertController(title: "Waarschuwing!", message: "Het verwijderen van deze categorie zal alle uitgaves in deze categorie verwijderen.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Stop", style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                    return
+                }))
+                alert.addAction(UIAlertAction(title: "Doorgaan", style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                    self.appData.removeCategory(category: category)
+                    AppData.saveAppData(self.appData)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                self.appData.removeCategory(category: category)
+                AppData.saveAppData(self.appData)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+            }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        switch indexPath.section {
+        case 0:
+            return false
+        default:
+            return true
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movingCategory = appData.categories[sourceIndexPath.row]
+        appData.categories.remove(at: sourceIndexPath.row)
+        appData.categories.insert(movingCategory, at: destinationIndexPath.row)
+        AppData.saveAppData(appData)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetails" {
             let addCategoryController = segue.destination as! AddCategoryViewController
             let indexPath = tableView.indexPathForSelectedRow!
-            let category = appData!.categories[indexPath.row]
-            addCategoryController.selectedColor = appData!.category_dict[category]!
+            let category = appData.categories[indexPath.row]
+            addCategoryController.selectedColor = appData.category_dict[category]!
             addCategoryController.categoryLabel = category
-        }
-    }
-    
-    @IBAction func unwindToSettings(segue: UIStoryboardSegue) {
-        appData = AppData.loadAppData()
-        
-        if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            tableView.reloadRows(at: [selectedIndexPath], with: .none)
-        } else {
-            tableView.reloadData()
         }
     }
 }

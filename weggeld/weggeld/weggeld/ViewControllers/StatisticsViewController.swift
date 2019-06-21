@@ -17,9 +17,16 @@ class StatisticsViewController: UIViewController {
     @IBOutlet weak var barChartAllCategories: BarChartView!
     @IBOutlet weak var barChartAllMonths: BarChartView!
     
+    @IBAction func switchViewAction(_ sender: UISegmentedControl) {
+        monthIsPicked = !monthIsPicked
+        if !(appData.isEmpty) {
+            self.pickedMonth = String(pickerView.selectedRow(inComponent: 0))
+            self.pickedYear = Array(appData.getDateDict().keys)[pickerView.selectedRow(inComponent: 1)]
+        }
+        loadUI()
+    }
     
-    var appData: AppData?
-    let maxEntryLength = 10
+    var appData: AppData!
     var monthIsPicked = true
     var pickedMonth = String()
     var pickedYear = String()
@@ -33,28 +40,57 @@ class StatisticsViewController: UIViewController {
         
         appData = AppData.loadAppData()
         
-        pickedYear = Expense.getYear.string(from: Date())
-        let monthNumber = Expense.getMonthNumber.string(from: Date())
-        let monthString = appData!.months[Int(monthNumber)!-1]
-        if let usedMonths = appData!.getUsedMonths(year: pickedYear) {
-            if let indexInUsedMonth = usedMonths.firstIndex(of: monthString) {
-                pickedMonth = String(indexInUsedMonth)
+        setupMonthAndYear()
+        loadUI()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupSwipeRecognizer()
+        self.setupNavigationBar()
+    }
+    
+    @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .left {
+            if (self.tabBarController?.selectedIndex)! < 3 { // set your total tabs here
+                self.tabBarController?.selectedIndex += 1
+            }
+        } else if gesture.direction == .right {
+            if (self.tabBarController?.selectedIndex)! > 0 {
+                self.tabBarController?.selectedIndex -= 1
             }
         }
-    
-        loadUI()
     }
     
-    @IBAction func switchViewAction(_ sender: UISegmentedControl) {
-        monthIsPicked = !monthIsPicked
-        if !(appData!.isEmpty) {
-            self.pickedMonth = String(pickerView.selectedRow(inComponent: 0))
-            self.pickedYear = Array(appData!.getDateDict().keys)[pickerView.selectedRow(inComponent: 1)]
+    private func setupSwipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.gray
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+    }
+    
+    private func setupMonthAndYear() {
+        monthYearPicker.tintColor = UIColor.light_pink
+        
+        pickedYear = Expense.getYear.string(from: Date())
+        let monthNumber = Expense.getMonthNumber.string(from: Date())
+        let monthString = appData.months[Int(monthNumber)!-1]
+        if let usedMonths = appData.getUsedMonths(year: pickedYear) {
+            if let indexInUsedMonths = usedMonths.firstIndex(of: monthString) {
+                pickedMonth = String(indexInUsedMonths)
+            }
         }
-        loadUI()
     }
     
-    func loadUI() {
+    private func loadUI() {
         setupConfigurations()
         createAllCategoriesPieChart()
         createAllCategoriesBarChart()
@@ -62,9 +98,9 @@ class StatisticsViewController: UIViewController {
     }
     
     func setupConfigurations() {
-        if appData!.getUsedMonths(year: pickedYear)!.count > 0 {
+        if appData.getUsedMonths(year: pickedYear)!.count > 0 {
             pickerView.selectRow(Int(pickedMonth)!, inComponent: 0, animated: true)
-            pickerView.selectRow(Array(appData!.getDateDict().keys).firstIndex(of:pickedYear)!, inComponent: 1, animated: true)
+            pickerView.selectRow(Array(appData.getDateDict().keys).firstIndex(of:pickedYear)!, inComponent: 1, animated: true)
         }
     }
     
@@ -72,15 +108,15 @@ class StatisticsViewController: UIViewController {
         pieChartAllCategories.chartDescription?.text = "in percentages (%)"
         var dataEntries = [PieChartDataEntry]()
         
-        if !(appData!.isEmpty) {
-            let monthString = appData!.getUsedMonths(year: pickedYear)![Int(pickedMonth)!]
+        if !(appData.isEmpty) {
+            let monthString = appData.getUsedMonths(year: pickedYear)![Int(pickedMonth)!]
             
             if monthIsPicked {
-                if let categoryMonthMoneyDict = appData!.getCategoryMonthMoneyDict(year:pickedYear, month: monthString) {
+                if let categoryMonthMoneyDict = appData.getCategoryMonthMoneyDict(year:pickedYear, month: monthString) {
                     dataEntries = getPieChartDataEntries(dict: categoryMonthMoneyDict)
                 }
             } else {
-                if let categoryYearMoneyDict = appData!.getCategoryYearMoneyDict(year: pickedYear) {
+                if let categoryYearMoneyDict = appData.getCategoryYearMoneyDict(year: pickedYear) {
                     dataEntries = getPieChartDataEntries(dict: categoryYearMoneyDict)
                 }
             }
@@ -113,7 +149,7 @@ class StatisticsViewController: UIViewController {
     func getPieChartColors(_ data: [PieChartDataEntry]) -> [UIColor] {
         var colors = [UIColor]()
         let categoryColors = UIColor.categoryColors()
-        let category_dict = appData!.category_dict
+        let category_dict = appData.category_dict
         
         for entry in data {
             if let index = category_dict[entry.label!] {
@@ -126,14 +162,14 @@ class StatisticsViewController: UIViewController {
     func createAllCategoriesBarChart() {
         var dataEntries = [String: BarChartDataEntry]()
         
-        if !(appData!.isEmpty) {
-            let monthString = appData!.getUsedMonths(year: pickedYear)![Int(pickedMonth)!]
+        if !(appData.isEmpty) {
+            let monthString = appData.getUsedMonths(year: pickedYear)![Int(pickedMonth)!]
             if monthIsPicked {
-                if let categoryMonthMoneyDict = appData!.getCategoryMonthMoneyDict(year: pickedYear, month: monthString) {
+                if let categoryMonthMoneyDict = appData.getCategoryMonthMoneyDict(year: pickedYear, month: monthString) {
                     dataEntries = getBarChartDataEntries(dict: categoryMonthMoneyDict)
                 }
             } else {
-                if let categoryYearMoneyDict = appData!.getCategoryYearMoneyDict(year: pickedYear) {
+                if let categoryYearMoneyDict = appData.getCategoryYearMoneyDict(year: pickedYear) {
                     dataEntries = getBarChartDataEntries(dict: categoryYearMoneyDict)
                 }
             }
@@ -145,8 +181,8 @@ class StatisticsViewController: UIViewController {
     func createAllMonthsBarChart() {
         var dataEntries = [String: BarChartDataEntry]()
         
-        if !(appData!.isEmpty) {
-            if let yearMoneyDict = appData!.getYearMoneyDict(year: pickedYear) {
+        if !(appData.isEmpty) {
+            if let yearMoneyDict = appData.getYearMoneyDict(year: pickedYear) {
                 dataEntries = getBarChartDataEntries(dict: yearMoneyDict)
             }
         }
@@ -171,18 +207,18 @@ class StatisticsViewController: UIViewController {
     func updateBarChartData(chart: BarChartView, data: [String: BarChartDataEntry], label: String) {
         setupBarChartConfigurations(chart: chart)
         
-        if !(appData!.isEmpty) {
+        if !(appData.isEmpty) {
             let chartData = BarChartData()
             var colors: [UIColor]
             
             for (offset: index, element: (key: label, value: entry)) in data.enumerated() {
                 let chartDataSet = BarChartDataSet(values: [entry], label: label)
-                if appData!.months.contains(label) {
+                if appData.months.contains(label) {
                     colors = ChartColorTemplates.joyful()
                     chartDataSet.colors = [colors[index]]
-                } else if appData!.categories.contains(label) {
+                } else if appData.categories.contains(label) {
                     colors = UIColor.categoryColors()
-                    let newIndex = appData!.category_dict[label]!
+                    let newIndex = appData.category_dict[label]!
                     chartDataSet.colors = [colors[newIndex]]
                 }
                 chartDataSet.valueColors = [UIColor.black]
@@ -218,9 +254,9 @@ extension StatisticsViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
         case 0:
-            return appData!.getUsedMonths(year: pickedYear)!.count
+            return appData.getUsedMonths(year: pickedYear)!.count
         case 1:
-            return appData!.getDateDict().keys.count
+            return appData.getDateDict().keys.count
         default:
             return 0
         }
@@ -229,16 +265,16 @@ extension StatisticsViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
         case 0:
-            return appData!.getUsedMonths(year: pickedYear)![row]
+            return appData.getUsedMonths(year: pickedYear)![row]
         case 1:
-            return Array(appData!.getDateDict().keys)[row]
+            return Array(appData.getDateDict().keys)[row]
         default:
             return ""
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if !(appData!.isEmpty) {
+        if !(appData.isEmpty) {
             switch component {
             case 0:
                 self.pickedMonth = String(pickerView.selectedRow(inComponent: component))
@@ -246,7 +282,7 @@ extension StatisticsViewController: UIPickerViewDelegate, UIPickerViewDataSource
                     loadUI()
                 }
             case 1:
-                self.pickedYear = Array(appData!.getDateDict().keys)[pickerView.selectedRow(inComponent: component)]
+                self.pickedYear = Array(appData.getDateDict().keys)[pickerView.selectedRow(inComponent: component)]
                 loadUI()
             default:
                 return

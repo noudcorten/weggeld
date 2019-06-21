@@ -64,6 +64,12 @@ struct AppData: Codable {
             self.categories.remove(at: index)
         }
         self.category_dict.removeValue(forKey: category)
+        
+        for expense in self.expenses {
+            if expense.category == category {
+                self.removeExpense(expense)
+            }
+        }
     }
     
     mutating func addCategory(category: String, color: Int) {
@@ -74,17 +80,26 @@ struct AppData: Codable {
     }
     
     mutating func changeCategory(newName: String, prevName: String, color: Int) {
-        if let index = self.categories.index(of: prevName) {
+        if let index = self.categories.firstIndex(of: prevName) {
             self.categories[index] = newName
         }
-        
         self.category_dict.removeValue(forKey: prevName)
         self.category_dict[newName] = color
+        self.replaceCategoryInExpense(newName, prevName)
     }
     
-    mutating func replaceExpense(_ expense: Expense) {
-        let index = self.findIndexOfExpense(expense)!
-        self.expenses[index] = expense
+    mutating func replaceCategoryInExpense(_ newName: String, _ prevName: String) {
+        for prevExpense in self.expenses {
+            if prevExpense.category == prevName {
+                let newExpense = Expense(amount: prevExpense.amount, dueDate: prevExpense.dueDate, notes: prevExpense.notes, category: newName)
+                self.replaceExpense(prevExpense, newExpense)
+            }
+        }
+    }
+    
+    mutating func replaceExpense(_ prevExpense: Expense, _ newExpense: Expense) {
+        let index = self.findIndexOfExpense(prevExpense)!
+        self.expenses[index] = newExpense
     }
     
     func findIndexOfExpense(_ expense: Expense) -> Int? {
@@ -94,6 +109,15 @@ struct AppData: Codable {
             }
         }
         return nil
+    }
+    
+    func hasCategory(_ category: String) -> Bool {
+        for expense in self.expenses {
+            if expense.category == category {
+                return true
+            }
+        }
+        return false
     }
     
     func getUsedMonths(year: String) -> [String]? {
@@ -146,17 +170,14 @@ struct AppData: Codable {
         let dateDict = self.getDateDict()
         
         for year in self.getUsedYears()! {
-//            print(year)
             if let monthDict = dateDict[year] {
                 for month in self.getUsedMonths(year: year)! {
-//                    print(month)
                     if let expenses = monthDict[month] {
                         allExpensesList.append(expenses)
                     }
                 }
             }
         }
-//        print("-")
         return Array(allExpensesList.reversed())
     }
     

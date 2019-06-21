@@ -21,7 +21,8 @@ class ExpenseTableViewController: UITableViewController {
     var notesTextField: UITextField?
     
     var expense: Expense?
-    var appData: AppData?
+    var prevExpense: Expense?
+    var appData: AppData!
     var isExtraInfoHidden: Bool = true
     
     var bottomConstraint: NSLayoutConstraint?
@@ -29,37 +30,16 @@ class ExpenseTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.delegate = self as? UITabBarControllerDelegate
-        self.hideKeyboardWhenTappedAround()
         
         appData = AppData.loadAppData()
         tableView.reloadData()
-        
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(keyboardWillShow),
-//            name: UIResponder.keyboardWillShowNotification,
-//            object: nil
-//        )
-//
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(keyboardWillHide),
-//            name: UIResponder.keyboardWillHideNotification,
-//            object: nil
-//        )
-        
     }
-
-//    @objc func keyboardWillShow(_ notification: Notification) {
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//            let keyboardRectangle = keyboardFrame.cgRectValue
-//            tableView.contentOffset = CGPoint(x: 0, y: keyboardRectangle.height)
-//        }
-//    }
-//
-//    @objc func keyboardWillHide(_ notification: Notification) {
-//        tableView.contentOffset = CGPoint(x: 0, y: 0)
-//    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+        self.setupNavigationBar()
+    }
     
     @objc func textEditingChanged(_ sender: UITextField) {
         updateSaveButtonState()
@@ -80,6 +60,16 @@ class ExpenseTableViewController: UITableViewController {
     
     @objc func datePickerChanged(_ sender: Any) {
         updateDueDateLabel(with: dueDatePickerView!.date)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.gray
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        if let _ = expense {
+            self.title = "Uitgave Wijzigen"
+        }
     }
     
     /// Disable the save button if there is no title.
@@ -161,19 +151,19 @@ class ExpenseTableViewController: UITableViewController {
             colorView = cell.colorView
             
             let colors = UIColor.categoryColors()
-            let category_dict = appData!.category_dict
+            let category_dict = appData.category_dict
             var category: String
             
             if let expense = expense {
                 category = expense.category
             } else {
-                category = appData!.categories[0]
+                category = appData.categories[0]
             }
             
             categoryLabel!.text = category
             let index = category_dict[category]
             colorView!.backgroundColor = colors[index!]
-            pickerView!.selectRow(appData!.categories.firstIndex(of: category)!, inComponent: 0, animated: true)
+            pickerView!.selectRow(appData.categories.firstIndex(of: category)!, inComponent: 0, animated: true)
             
             return cell
         default:
@@ -196,7 +186,7 @@ class ExpenseTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = UIColor.outlineStrokeColor
+        view.backgroundColor = UIColor.light_pink
         
         
         let label = UILabel()
@@ -264,6 +254,7 @@ class ExpenseTableViewController: UITableViewController {
         let notes = notesTextField!.text
         let category = categoryLabel!.text!
         
+        prevExpense = expense
         expense = Expense(amount: amount, dueDate: dueDate, notes: notes, category: category)
     }
 

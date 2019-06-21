@@ -14,15 +14,86 @@ class MoneyViewController: UIViewController {
     @IBOutlet weak var countingLabel: CountingLabel!
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var maxAmountLabel: UILabel!
-    
     @IBOutlet weak var toSpendLabel: UILabel!
     @IBOutlet weak var spendedLabel: UILabel!
     @IBOutlet weak var moneyToSpendLabel: UILabel!
     @IBOutlet weak var moneySpendedLabel: UILabel!
     
-    var appData: AppData?
+    @IBAction func unwindToController(segue: UIStoryboardSegue) {
+        guard segue.identifier == "saveUnwind" else { return }
+        let sourceViewController = segue.source as! ExpenseTableViewController
+        
+        if let expense = sourceViewController.expense {
+            appData.addExpense(expense)
+            AppData.saveAppData(appData)
+        }
+    }
+    
+    var appData: AppData!
     var shapeLayer: CAShapeLayer!
     var pulsatingLayer: CAShapeLayer!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupNotificationsObserver()
+        self.setupNavigationBar()
+        self.setupSwipeRecognizer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.delegate = self as? UITabBarControllerDelegate
+        
+        if let loadedData = AppData.loadAppData() {
+            appData = loadedData
+        } else {
+            let newData = AppData(isEmpty: true, expenses: [], maxAmount: Float(100))
+            AppData.saveAppData(newData)
+            appData = newData
+        }
+        
+        setupNavigationBar()
+        updateMoneyLabels()
+        setUpCircleLayers()
+        updatePercentageAnimations()
+    }
+    
+    @objc private func handleEnterForeground() {
+        animatePulsatingLayer()
+    }
+    
+    @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .left {
+            if (self.tabBarController?.selectedIndex)! < 3 { // set your total tabs here
+                self.tabBarController?.selectedIndex += 1
+            }
+        } else if gesture.direction == .right {
+            if (self.tabBarController?.selectedIndex)! > 0 {
+                self.tabBarController?.selectedIndex -= 1
+            }
+        }
+    }
+    
+    private func setupNotificationsObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification , object: nil)
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.barTintColor = UIColor.light_pink
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        tabBarController?.tabBar.tintColor = UIColor.light_pink
+    }
+    
+    private func setupSwipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
     
     private func createLoadCircle(strokeColor: UIColor, fillColor: UIColor) -> CAShapeLayer {
         let layer = CAShapeLayer()
@@ -37,49 +108,18 @@ class MoneyViewController: UIViewController {
         return layer
     }
     
-    private func setupNotificationsObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification , object: nil)
-    }
-    
-    @objc private func handleEnterForeground() {
-        animatePulsatingLayer()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tabBarController?.delegate = self as? UITabBarControllerDelegate
-        
-        setupNotificationsObserver()
-        
-        if let appData = AppData.loadAppData() {
-            AppData.saveAppData(appData)
-        } else {
-            let appData = AppData(isEmpty: true, expenses: [], maxAmount: 10.0)
-            AppData.saveAppData(appData)
-            
-        }
-        
-        appData = AppData.loadAppData()
-        
-        updateMoneyLabels()
-        setUpCircleLayers()
-        updatePercentageAnimations()
-    }
-    
-    
-    
     private func setUpCircleLayers() {
         // Create pulsating layer
-        pulsatingLayer = createLoadCircle(strokeColor: .clear, fillColor: UIColor.pullsatingFillColor)
+        pulsatingLayer = createLoadCircle(strokeColor: .clear, fillColor: UIColor.dark_pink)
         view.layer.addSublayer(pulsatingLayer)
         animatePulsatingLayer()
         
         // Create track layer
-        let trackLayer = createLoadCircle(strokeColor: .trackStrokeColor, fillColor: .white)
+        let trackLayer = createLoadCircle(strokeColor: UIColor.lightGray, fillColor: .white)
         view.layer.addSublayer(trackLayer)
         
         // Create circle layer
-        shapeLayer = createLoadCircle(strokeColor: .outlineStrokeColor, fillColor: .clear)
+        shapeLayer = createLoadCircle(strokeColor: UIColor.light_pink, fillColor: .clear)
         shapeLayer.transform = CATransform3DMakeRotation(-CGFloat.pi / 2, 0, 0, 1)
         shapeLayer.strokeEnd = 0
         view.layer.addSublayer(shapeLayer)
@@ -88,7 +128,7 @@ class MoneyViewController: UIViewController {
     private func updatePercentageAnimations() {
         view.addSubview(countingLabel)
         
-        var percentage: Float = (appData!.totalExpense() / appData!.maxAmount)
+        var percentage: Float = (appData.totalExpense() / appData.maxAmount)
         if percentage > 1 {
             percentage = 1
         }
@@ -114,48 +154,46 @@ class MoneyViewController: UIViewController {
     }
     
     private func updateMoneyLabels() {
-        if appData!.totalExpense() >= appData!.maxAmount {
+        if appData.totalExpense() >= appData.maxAmount {
             moneyLabel.textColor = UIColor.red
+            moneyToSpendLabel.textColor = UIColor.red
         } else {
             moneyLabel.textColor = UIColor.black
         }
         
         toSpendLabel.text = "Nog te besteden:"
-        let moneyLeft = appData!.maxAmount - appData!.totalExpense()
+        let moneyLeft = appData.maxAmount - appData.totalExpense()
         if floor(moneyLeft) == moneyLeft {
             moneyLabel.text = "€ \(Int(moneyLeft))"
-            moneyToSpendLabel.text = "€\(Int(moneyLeft))"
+            moneyToSpendLabel.text = "€ \(Int(moneyLeft))"
         } else {
-            moneyLabel.text = "€\(moneyLeft)"
-            moneyToSpendLabel.text = "€\(moneyLeft)"
+            moneyLabel.text = "€ \(moneyLeft)"
+            moneyToSpendLabel.text = "€ \(moneyLeft)"
         }
         
         spendedLabel.text = "Uitgegeven:"
-        let moneySpended = appData!.totalExpense()
+        let moneySpended = appData.totalExpense()
         if floor(moneySpended) == moneySpended {
-            moneySpendedLabel.text = "€\(Int(moneySpended))"
+            moneySpendedLabel.text = "€ \(Int(moneySpended))"
         } else {
-            moneySpendedLabel.text = "€\(moneySpended)"
+            moneySpendedLabel.text = "€ \(moneySpended)"
         }
         
-        maxAmountLabel.textColor = .gray
-        let maxAmount = appData!.maxAmount
+        let maxAmount = appData.maxAmount
         if floor(maxAmount) == maxAmount {
-            maxAmountLabel.text = "Totaal: €\(Int(maxAmount))"
+            maxAmountLabel.text = "Totaal: € \(Int(maxAmount))"
         } else {
-            maxAmountLabel.text = "Totaal: €\(maxAmount)"
+            maxAmountLabel.text = "Totaal: € \(maxAmount)"
         }
     }
     
-    @IBAction func unwindToController(segue: UIStoryboardSegue) {
-        guard segue.identifier == "saveUnwind" else { return }
-        let sourceViewController = segue.source as! ExpenseTableViewController
-        
-        if let expense = sourceViewController.expense {
-            appData!.addExpense(expense)
-            AppData.saveAppData(appData!)
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if appData.categories.count == 0 {
+            let alert = UIAlertController(title: "Fout!", message: "Voeg een categorie toe.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+            return false
         }
+        return true
     }
-        
-        
 }
