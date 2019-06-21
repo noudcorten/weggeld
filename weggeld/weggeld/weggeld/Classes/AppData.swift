@@ -288,7 +288,6 @@ struct AppData: Codable {
                 for expense in categoryList {
                     totalAmount += expense.amount
                 }
-                
                 categoryMoneyDict[category] = totalAmount
             }
         }
@@ -296,9 +295,11 @@ struct AppData: Codable {
     }
     
     func totalExpense() -> Float {
+        let allExpenses = self.getAllExpensesList()!
+        
         var expenseSum: Float = 0.0
-        for expense in expenses {
-            expenseSum = expenseSum + expense.amount
+        for expense in allExpenses[0] {
+            expenseSum += expense.amount
         }
         return expenseSum
     }
