@@ -52,13 +52,9 @@ class StatisticsViewController: UIViewController {
     
     @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .left {
-            if (self.tabBarController?.selectedIndex)! < 3 { // set your total tabs here
-                self.tabBarController?.selectedIndex += 1
-            }
+            self.tabBarController?.selectedIndex += 1
         } else if gesture.direction == .right {
-            if (self.tabBarController?.selectedIndex)! > 0 {
-                self.tabBarController?.selectedIndex -= 1
-            }
+            self.tabBarController?.selectedIndex -= 1
         }
     }
     

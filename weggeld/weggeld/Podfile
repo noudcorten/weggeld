@@ -7,6 +7,5 @@ target 'WegGeld' do
 
   # Pods for WegGeld
   pod 'Charts'
-  pod "Macaw"
 
 end
