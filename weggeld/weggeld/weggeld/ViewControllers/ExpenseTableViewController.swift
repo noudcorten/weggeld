@@ -15,6 +15,7 @@ class ExpenseTableViewController: UITableViewController {
     var amountTextField: UITextField?
     var dueDateLabel: UILabel?
     var dueDatePickerView: UIDatePicker?
+    var todayButton: UIButton?
     var categoryLabel: UILabel?
     var colorView: UIView?
     var pickerView: UIPickerView?
@@ -58,8 +59,13 @@ class ExpenseTableViewController: UITableViewController {
         tableView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
-    @objc func datePickerChanged(_ sender: Any) {
+    @objc func datePickerChanged(_ sender: UIDatePicker) {
         updateDueDateLabel(with: dueDatePickerView!.date)
+    }
+    
+    @objc func todayButtonClicked(_ sender: UIButton) {
+        updateDueDateLabel(with: Date())
+        dueDatePickerView!.date = Date()
     }
     
     private func setupNavigationBar() {
@@ -80,6 +86,7 @@ class ExpenseTableViewController: UITableViewController {
     
     /// Update the due date label to match the date from the date picker.
     /// - parameter date: The actual date from the data picker.
+
     private func updateDueDateLabel(with date: Date) {
         dueDateLabel!.text = Expense.dueDateFormatter.string(from: date)
     }
@@ -153,6 +160,8 @@ class ExpenseTableViewController: UITableViewController {
             dueDateLabel = cell.dueDateLabel
             dueDatePickerView = cell.dueDatePickerView
             dueDatePickerView!.addTarget(self, action: #selector(self.datePickerChanged), for: UIControl.Event.valueChanged)
+            todayButton = cell.todayButton
+            todayButton!.addTarget(self, action: #selector(self.todayButtonClicked), for: UIControl.Event.touchUpInside)
             
             if let expense = expense {
                 dueDatePickerView!.date = expense.dueDate
@@ -239,7 +248,6 @@ class ExpenseTableViewController: UITableViewController {
     }
     
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     /// Prepares everything before the segue happens.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)

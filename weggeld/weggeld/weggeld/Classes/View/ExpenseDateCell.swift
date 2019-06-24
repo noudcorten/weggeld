@@ -12,7 +12,7 @@ class ExpenseDateCell: UITableViewCell {
     
     @IBOutlet weak var dueDateLabel: UILabel!
     @IBOutlet weak var dueDatePickerView: UIDatePicker!
-    
+    @IBOutlet weak var todayButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()

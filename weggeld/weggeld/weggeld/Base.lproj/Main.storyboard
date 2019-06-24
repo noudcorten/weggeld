@@ -416,10 +416,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXF-Gj-mCf">
-                                <rect key="frame" x="37.5" y="108.5" width="300" height="450"/>
+                                <rect key="frame" x="52" y="123" width="270" height="420"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jf-0H-hAO">
-                                        <rect key="frame" x="25" y="25" width="250" height="400"/>
+                                        <rect key="frame" x="10" y="10" width="250" height="400"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Naam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJc-Ba-qRi">
                                                 <rect key="frame" x="102" y="8" width="46.5" height="21"/>
@@ -520,9 +520,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="BsG-eW-QJV"/>
+                                    <constraint firstAttribute="width" constant="270" id="BsG-eW-QJV"/>
                                     <constraint firstItem="4jf-0H-hAO" firstAttribute="centerY" secondItem="VXF-Gj-mCf" secondAttribute="centerY" id="Sk2-XR-g31"/>
-                                    <constraint firstAttribute="height" constant="450" id="jvs-cZ-Xqp"/>
+                                    <constraint firstAttribute="height" constant="420" id="jvs-cZ-Xqp"/>
                                     <constraint firstItem="4jf-0H-hAO" firstAttribute="centerX" secondItem="VXF-Gj-mCf" secondAttribute="centerX" id="lEh-8K-Ve6"/>
                                 </constraints>
                             </view>
@@ -794,20 +794,30 @@
                                             <locale key="locale" localeIdentifier="nl_NL"/>
                                         </datePicker>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8vG-8q-YTR">
-                                            <rect key="frame" x="166.5" y="23" width="42" height="21"/>
+                                            <rect key="frame" x="36" y="23" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t9i-j9-bUZ">
+                                            <rect key="frame" x="279" y="23" width="60" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="xKk-IG-Pz5"/>
+                                            </constraints>
+                                            <state key="normal" title="Vandaag"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="8vG-8q-YTR" firstAttribute="top" secondItem="wpM-xw-FQA" secondAttribute="topMargin" constant="12" id="ACg-Ca-Spm"/>
-                                        <constraint firstItem="8vG-8q-YTR" firstAttribute="centerX" secondItem="wpM-xw-FQA" secondAttribute="centerX" id="NUf-mC-GPC"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="t9i-j9-bUZ" secondAttribute="trailing" constant="20" id="lop-Kb-8f4"/>
+                                        <constraint firstItem="8vG-8q-YTR" firstAttribute="leading" secondItem="wpM-xw-FQA" secondAttribute="leadingMargin" constant="20" id="ncr-Y6-s46"/>
+                                        <constraint firstItem="t9i-j9-bUZ" firstAttribute="top" secondItem="wpM-xw-FQA" secondAttribute="topMargin" constant="12" id="pHk-PG-qUw"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dueDateLabel" destination="8vG-8q-YTR" id="hUf-Wq-udY"/>
                                     <outlet property="dueDatePickerView" destination="kgf-SI-e9T" id="LEA-cK-uoe"/>
+                                    <outlet property="todayButton" destination="t9i-j9-bUZ" id="jyT-Kk-llj"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" rowHeight="200" id="SJ8-ec-vJ9" customClass="ExpenseCategoryCell" customModule="WegGeld" customModuleProvider="target">

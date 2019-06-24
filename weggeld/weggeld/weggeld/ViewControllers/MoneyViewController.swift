@@ -47,7 +47,7 @@ class MoneyViewController: UIViewController {
         if let loadedData = AppData.loadAppData() {
             appData = loadedData
         } else {
-            let newData = AppData(isEmpty: true, expenses: [], maxAmount: Float(100))
+            let newData = AppData()
             AppData.saveAppData(newData)
             appData = newData
         }

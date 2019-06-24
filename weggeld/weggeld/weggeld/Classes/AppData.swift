@@ -9,9 +9,9 @@
 import Foundation
 
 struct AppData: Codable {
-    var isEmpty: Bool
-    var expenses: [Expense]
-    var maxAmount: Float
+    var isEmpty = Bool()
+    var expenses = [Expense]()
+    var maxAmount = Float()
     
     var categories = [String]()
     var category_dict = [String: Int]()
@@ -19,13 +19,8 @@ struct AppData: Codable {
     var months = [String]()
     var month_dict = [String: Int]()
     
-    init(isEmpty: Bool, expenses: [Expense], maxAmount: Float) {
-        self.isEmpty = isEmpty
-        self.expenses = expenses
-        self.maxAmount = maxAmount
-        
-        self.createCategories()
-        self.createMonths()
+    init() {
+        self.reset()
     }
     
     mutating func createCategories() {
@@ -39,10 +34,11 @@ struct AppData: Codable {
     }
     
     mutating func reset() {
+        self.isEmpty = true
+        self.expenses = []
+        self.maxAmount = 100
         self.createCategories()
         self.createMonths()
-        self.expenses = []
-        self.isEmpty = true
     }
     
     mutating func addExpense(_ expense: Expense) {
@@ -214,8 +210,8 @@ struct AppData: Codable {
         var allExpensesList = [[Expense]]()
         let dateDict = self.getDateDict()
         
-        if let usedYear = self.getUsedYears() {
-            for year in self.getUsedYears()! {
+        if let usedYears = self.getUsedYears() {
+            for year in usedYears {
                 if let monthDict = dateDict[year] {
                     for month in self.getUsedMonths(year: year)! {
                         if let expenses = monthDict[month] {
