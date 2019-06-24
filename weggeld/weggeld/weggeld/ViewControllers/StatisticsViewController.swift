@@ -77,11 +77,26 @@ class StatisticsViewController: UIViewController {
         monthYearPicker.tintColor = UIColor.light_pink
         
         pickedYear = Expense.getYear.string(from: Date())
-        let monthNumber = Expense.getMonthNumber.string(from: Date())
-        let monthString = appData.months[Int(monthNumber)!-1]
         if let usedMonths = appData.getUsedMonths(year: pickedYear) {
+            let monthNumber = Expense.getMonthNumber.string(from: Date())
+            let monthString = appData.months[Int(monthNumber)!-1]
             if let indexInUsedMonths = usedMonths.firstIndex(of: monthString) {
                 pickedMonth = String(indexInUsedMonths)
+            } else {
+                let usedMonth = usedMonths.first!
+                if let indexInUsedMonths = usedMonths.firstIndex(of: usedMonth) {
+                    pickedMonth = String(indexInUsedMonths)
+                }
+            }
+        } else {
+            if let usedYears = appData.getUsedYears() {
+                pickedYear = usedYears.first!
+                if let usedMonths = appData.getUsedMonths(year: pickedYear) {
+                    let usedMonth = usedMonths.first!
+                    if let indexInUsedMonths = usedMonths.firstIndex(of: usedMonth) {
+                        pickedMonth = String(indexInUsedMonths)
+                    }
+                }
             }
         }
     }
@@ -94,9 +109,11 @@ class StatisticsViewController: UIViewController {
     }
     
     func setupConfigurations() {
-        if appData.getUsedMonths(year: pickedYear)!.count > 0 {
-            pickerView.selectRow(Int(pickedMonth)!, inComponent: 0, animated: true)
-            pickerView.selectRow(Array(appData.getDateDict().keys).firstIndex(of:pickedYear)!, inComponent: 1, animated: true)
+        if let usedMonths = appData.getUsedMonths(year: pickedYear) {
+            if usedMonths.count > 0 {
+                pickerView.selectRow(Int(pickedMonth)!, inComponent: 0, animated: true)
+                pickerView.selectRow(Array(appData.getDateDict().keys).firstIndex(of:pickedYear)!, inComponent: 1, animated: true)
+            }
         }
     }
     
@@ -105,8 +122,6 @@ class StatisticsViewController: UIViewController {
         var dataEntries = [PieChartDataEntry]()
         
         if !(appData.isEmpty) {
-            print(appData.getUsedMonths(year: pickedYear))
-            print(Int(pickedMonth))
             let monthString = appData.getUsedMonths(year: pickedYear)![Int(pickedMonth)!]
             
             if monthIsPicked {
@@ -252,7 +267,10 @@ extension StatisticsViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
         case 0:
-            return appData.getUsedMonths(year: pickedYear)!.count
+            if let usedMonths = appData.getUsedMonths(year: pickedYear) {
+                return usedMonths.count
+            }
+            return 0
         case 1:
             return appData.getDateDict().keys.count
         default:

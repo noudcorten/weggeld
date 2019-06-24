@@ -9,10 +9,10 @@
 import Foundation
 
 struct Expense: Codable {
-    var amount: Float
     var dueDate: Date
-    var notes: String?
+    var amount: Float
     var category: String
+    var notes: String?
     
     static let dueDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -35,6 +35,12 @@ struct Expense: Codable {
     static let getYear: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
+        return formatter
+    }()
+    
+    static let getMonthYear: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/yyyy"
         return formatter
     }()
     

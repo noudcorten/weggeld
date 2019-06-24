@@ -13,16 +13,36 @@ struct AppData: Codable {
     var expenses: [Expense]
     var maxAmount: Float
     
-    var categories: [String] = ["Eten", "Vervoer", "Kleding", "Wonen", "Onderwijs", "Gezondheid", "Vakantie", "Liefdadigheid", "Vermaak", "Sparen"]
-    var category_dict: [String: Int] = ["Eten" : 0, "Vervoer" : 1, "Kleding" : 2, "Wonen" : 3, "Onderwijs" : 4, "Gezondheid" : 5, "Vakantie" : 6, "Liefdadigheid" : 7, "Vermaak" : 0, "Sparen" : 1]
+    var categories = [String]()
+    var category_dict = [String: Int]()
     
-    let months: [String] = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
-    let month_dict: [String: Int] = ["Januari" : 1, "Februari" : 2, "Maart" : 3, "April" : 4, "Mei" : 5, "Juni" : 6, "Juli" : 7, "Augustus" : 8, "September" : 9, "Oktober" : 10, "November" : 11, "December" : 12]
+    var months = [String]()
+    var month_dict = [String: Int]()
     
     init(isEmpty: Bool, expenses: [Expense], maxAmount: Float) {
         self.isEmpty = isEmpty
         self.expenses = expenses
         self.maxAmount = maxAmount
+        
+        self.createCategories()
+        self.createMonths()
+    }
+    
+    mutating func createCategories() {
+        self.categories = ["Eten", "Vervoer", "Kleding", "Wonen", "Onderwijs", "Gezondheid", "Vakantie", "Liefdadigheid", "Vermaak", "Sparen"]
+        self.category_dict = ["Eten" : 0, "Vervoer" : 1, "Kleding" : 2, "Wonen" : 3, "Onderwijs" : 4, "Gezondheid" : 5, "Vakantie" : 6, "Liefdadigheid" : 7, "Vermaak" : 8, "Sparen" : 9]
+    }
+    
+    mutating func createMonths() {
+        self.months = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
+        self.month_dict = ["Januari" : 1, "Februari" : 2, "Maart" : 3, "April" : 4, "Mei" : 5, "Juni" : 6, "Juli" : 7, "Augustus" : 8, "September" : 9, "Oktober" : 10, "November" : 11, "December" : 12]
+    }
+    
+    mutating func reset() {
+        self.createCategories()
+        self.createMonths()
+        self.expenses = []
+        self.isEmpty = true
     }
     
     mutating func addExpense(_ expense: Expense) {
@@ -91,7 +111,7 @@ struct AppData: Codable {
     mutating func replaceCategoryInExpense(_ newName: String, _ prevName: String) {
         for prevExpense in self.expenses {
             if prevExpense.category == prevName {
-                let newExpense = Expense(amount: prevExpense.amount, dueDate: prevExpense.dueDate, notes: prevExpense.notes, category: newName)
+                let newExpense = Expense(dueDate: prevExpense.dueDate, amount: prevExpense.amount, category: newName, notes: prevExpense.notes)
                 self.replaceExpense(prevExpense, newExpense)
             }
         }
@@ -122,10 +142,9 @@ struct AppData: Codable {
     
     func getUsedMonths(year: String) -> [String]? {
         let dateDict = getDateDict()
+        var monthArray = [String]()
         
         if let dict = dateDict[year] {
-            var monthArray = [String]()
-            
             for i in 1...self.month_dict.count {
                 for month in Array(dict.keys) {
                     if month_dict[month] == i {
@@ -134,29 +153,55 @@ struct AppData: Codable {
                     }
                 }
             }
-            return monthArray
-        } else {
-            return []
         }
+        if monthArray.count > 0 {
+            return monthArray
+        }
+        return nil
     }
     
     func getUsedYears() -> [String]? {
         let dateDict = getDateDict()
         
-        var yearArray = [String]()
+        var yearArray = [Int]()
         for (year, _) in dateDict {
-            yearArray.append(year)
+            yearArray.append(Int(year)!)
         }
         
-        return yearArray
+        if yearArray.count > 0 {
+            yearArray.sort(by: {(year1, year2) -> Bool in
+                return year1 < year2
+            })
+            
+            var stringYearArray = [String]()
+            for year in yearArray {
+                stringYearArray.append(String(year))
+            }
+            
+            return stringYearArray
+        }
+        return nil
+        
     }
     
+//    func getUsedMonthNumber(year: String) -> String {
+//        let usedMonths = self.getUsedMonths(year: year)!.reversed()
+//        let monthNumber = Expense.getMonthNumber.string(from: Date())
+//        let monthString = appData.months[Int(monthNumber)!-1]
+//        let monthString = appData.getMonthNumber(year: pickedYear)
+//    }
+    
+    
+    // Creates a dictionary with the dates of the expenses in correct chronological
+    // order.
     func getAllUsedMonthsString() -> [Int: String] {
         var allUsedMonths = [Int: String]()
+        var monthYearString = String()
         var index = 0
+        
         for year in self.getUsedYears()!.reversed() {
             for month in getUsedMonths(year: year)!.reversed() {
-                let monthYearString = month + " (" + year + ")"
+                monthYearString = month + " (" + year + ")"
                 allUsedMonths[index] = monthYearString
                 index += 1
             }
@@ -169,11 +214,13 @@ struct AppData: Codable {
         var allExpensesList = [[Expense]]()
         let dateDict = self.getDateDict()
         
-        for year in self.getUsedYears()! {
-            if let monthDict = dateDict[year] {
-                for month in self.getUsedMonths(year: year)! {
-                    if let expenses = monthDict[month] {
-                        allExpensesList.append(expenses)
+        if let usedYear = self.getUsedYears() {
+            for year in self.getUsedYears()! {
+                if let monthDict = dateDict[year] {
+                    for month in self.getUsedMonths(year: year)! {
+                        if let expenses = monthDict[month] {
+                            allExpensesList.append(expenses)
+                        }
                     }
                 }
             }
@@ -298,8 +345,16 @@ struct AppData: Codable {
         let allExpenses = self.getAllExpensesList()!
         
         var expenseSum: Float = 0.0
-        for expense in allExpenses[0] {
-            expenseSum += expense.amount
+        if allExpenses.count > 0 {
+            for expenseList in allExpenses {
+                for expense in expenseList {
+                    if Expense.getMonthYear.string(from: expense.dueDate) == Expense.getMonthYear.string(from: Date()) {
+                        expenseSum += expense.amount
+                    } else {
+                        break
+                    }
+                }
+            }
         }
         return expenseSum
     }

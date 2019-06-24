@@ -36,6 +36,7 @@
 		04BD4DBF22A9292100150288 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBE22A9292100150288 /* settings.png */; };
 		04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DC322A95ED700150288 /* ExpenseCell.swift */; };
 		04BD4DC622AA5B7600150288 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DC522AA5B7600150288 /* AppData.swift */; };
+		04F32D7D22BD034200E62401 /* ExportToCSVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F32D7C22BD034200E62401 /* ExportToCSVCell.swift */; };
 		B89FEB6CB90D41E2D179C715 /* Pods_WegGeld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 686C030CB85E4BA6AE51964B /* Pods_WegGeld.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		04BD4DBE22A9292100150288 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../../../../../iOS_11_glyph_icons/PNG/settings.png; sourceTree = "<group>"; };
 		04BD4DC322A95ED700150288 /* ExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCell.swift; sourceTree = "<group>"; };
 		04BD4DC522AA5B7600150288 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		04F32D7C22BD034200E62401 /* ExportToCSVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportToCSVCell.swift; sourceTree = "<group>"; };
 		1F1F1D8F0876A7F90FE80224 /* Pods-WegGeld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WegGeld.release.xcconfig"; path = "Target Support Files/Pods-WegGeld/Pods-WegGeld.release.xcconfig"; sourceTree = "<group>"; };
 		2845423499FB63FB4B08433B /* Pods-WegGeld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WegGeld.debug.xcconfig"; path = "Target Support Files/Pods-WegGeld/Pods-WegGeld.debug.xcconfig"; sourceTree = "<group>"; };
 		686C030CB85E4BA6AE51964B /* Pods_WegGeld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WegGeld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +181,7 @@
 				042CF1F622BA56450044CFCC /* ExpenseDateCell.swift */,
 				042CF1F822BA565A0044CFCC /* ExpenseCategoryCell.swift */,
 				042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */,
+				04F32D7C22BD034200E62401 /* ExportToCSVCell.swift */,
 			);
 			name = View;
 			path = Classes/View;
@@ -328,6 +331,7 @@
 				04BD4DA022A9254E00150288 /* StatisticsViewController.swift in Sources */,
 				042CF1F522BA56200044CFCC /* ExpenseInputCell.swift in Sources */,
 				04BD4D9E22A9252200150288 /* ExpenseTableViewController.swift in Sources */,
+				04F32D7D22BD034200E62401 /* ExportToCSVCell.swift in Sources */,
 				04BD4DA222A9257900150288 /* SettingsTableViewController.swift in Sources */,
 				04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */,
 				042CF1F722BA56450044CFCC /* ExpenseDateCell.swift in Sources */,

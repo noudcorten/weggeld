@@ -72,6 +72,25 @@ class AwayTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem!.title = "Wijzig"
     }
     
+    private func getLabel(section: Int, x: Int, y: Int, width: Int, height: Int, text: String?) -> UILabel {
+        let width = 200
+        let height = 20
+        
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.frame = CGRect(x: x, y: y, width: width, height: height)
+        
+        if let text = text {
+            label.text = text
+        } else {
+            let allUsedMonths = appData.getAllUsedMonthsString()
+            label.text = allUsedMonths[section]!
+        }
+        
+        return label
+        
+    }
+    
     override func setEditing (_ editing:Bool, animated:Bool) {
         super.setEditing(editing,animated:animated)
         
@@ -154,20 +173,31 @@ class AwayTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
+        let window_width = Int(self.view.frame.size.width)
+        let currentMonth_width = 110
+        let month_width = 200
+        let currentMonth_x_offset = window_width - currentMonth_width
+        let month_x_offset = 10
+        let y_offset = 3
+        let height = 20
         
-        let numOfSections = appData.getAllExpensesList()!.count
-        if numOfSections > 0 {
-            view.backgroundColor = UIColor.light_pink
+        let view = UIView()
+        let allExpensesList = appData.getAllExpensesList()!
+        
+        if allExpensesList.count > 0 {
+            let monthLabel = getLabel(section: section, x: month_x_offset, y: y_offset, width: month_width, height: height, text: nil)
+            view.addSubview(monthLabel)
             
-            let label = UILabel()
-            label.textColor = UIColor.white
-            label.frame = CGRect(x: 10, y: 3, width: 200, height: 20)
-            
-            let allUsedMonths = appData.getAllUsedMonthsString()
-            label.text = allUsedMonths[section]
-            
-            view.addSubview(label)
+            if Expense.getMonthYear.string(from: allExpensesList[section].first!.dueDate) == Expense.getMonthYear.string(from: Date()) {
+                view.backgroundColor = UIColor.dark_pink
+                
+                let currentMonthLabel = getLabel(section: section, x: currentMonth_x_offset, y: y_offset, width: currentMonth_width, height: height, text: "Deze maand")
+                monthLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+                currentMonthLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
+                view.addSubview(currentMonthLabel)
+            } else {
+                view.backgroundColor = UIColor.light_pink
+            }
         }
         return view
     }

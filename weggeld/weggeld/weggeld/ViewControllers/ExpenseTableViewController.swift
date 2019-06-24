@@ -97,9 +97,7 @@ class ExpenseTableViewController: UITableViewController {
         let largeCellHeight = CGFloat(200)
         
         switch indexPath.section {
-        case 1:
-            return largeCellHeight
-        case 2:
+        case 1...2:
             return largeCellHeight
         default:
             return normalCellHeight
@@ -127,23 +125,6 @@ class ExpenseTableViewController: UITableViewController {
             
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! ExpenseDateCell
-            cell.selectionStyle = .none
-            dueDateLabel = cell.dueDateLabel
-            dueDatePickerView = cell.dueDatePickerView
-            dueDatePickerView!.maximumDate = Date()
-            dueDatePickerView!.addTarget(self, action: #selector(self.datePickerChanged), for: UIControl.Event.valueChanged)
-            
-            if let expense = expense {
-                dueDatePickerView!.date = expense.dueDate
-            } else {
-                dueDatePickerView!.date = Date()
-            }
-            
-            updateDueDateLabel(with: dueDatePickerView!.date)
-
-            return cell
-        case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! ExpenseCategoryCell
             cell.selectionStyle = .none
             pickerView = cell.pickerView
@@ -165,6 +146,22 @@ class ExpenseTableViewController: UITableViewController {
             colorView!.backgroundColor = colors[index!]
             pickerView!.selectRow(appData.categories.firstIndex(of: category)!, inComponent: 0, animated: true)
             
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! ExpenseDateCell
+            cell.selectionStyle = .none
+            dueDateLabel = cell.dueDateLabel
+            dueDatePickerView = cell.dueDatePickerView
+            dueDatePickerView!.addTarget(self, action: #selector(self.datePickerChanged), for: UIControl.Event.valueChanged)
+            
+            if let expense = expense {
+                dueDatePickerView!.date = expense.dueDate
+            } else {
+                dueDatePickerView!.date = Date()
+            }
+            
+            updateDueDateLabel(with: dueDatePickerView!.date)
+
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath) as! ExpenseInfoCell
@@ -188,7 +185,6 @@ class ExpenseTableViewController: UITableViewController {
         let view = UIView()
         view.backgroundColor = UIColor.light_pink
         
-        
         let label = UILabel()
         label.textColor = UIColor.white
         label.frame = CGRect(x: 10, y: 3, width: 200, height: 20)
@@ -197,9 +193,9 @@ class ExpenseTableViewController: UITableViewController {
         case 0:
             label.text = "UITGAVE"
         case 1:
-            label.text = "DATUM"
-        case 2:
             label.text = "CATEGORIE"
+        case 2:
+            label.text = "DATUM"
         default:
             label.text = "EXTRA INFO"
         }
@@ -255,7 +251,7 @@ class ExpenseTableViewController: UITableViewController {
         let category = categoryLabel!.text!
         
         prevExpense = expense
-        expense = Expense(amount: amount, dueDate: dueDate, notes: notes, category: category)
+        expense = Expense(dueDate: dueDate, amount: amount, category: category, notes: notes)
     }
 
 }

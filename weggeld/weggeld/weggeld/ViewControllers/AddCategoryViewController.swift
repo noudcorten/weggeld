@@ -10,6 +10,7 @@ import UIKit
 
 class AddCategoryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var boundaryBox: UIView!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cancelButton: UIButton!
@@ -25,6 +26,8 @@ class AddCategoryViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        nameField.addTarget(self, action: #selector(self.returnPressed(_:)), for: .primaryActionTriggered)
+        boundaryBox.backgroundColor = UIColor.light_pink
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -33,22 +36,33 @@ class AddCategoryViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
+    @objc func returnPressed(_ sender: UITextField) {
+        self.view.endEditing(true)
+    }
+    
+    private func sentAlert(message: String) {
+        let alert = UIAlertController(title: "Fout!", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         guard identifier == "saveCategory" else { return true }
-        
-        if let _ = categoryLabel {
-            return true
-        } else {
-            let name = nameField.text!.capitalizingFirstLetter()
-            if appData.categories.contains(name) {
-                let alert = UIAlertController(title: "Fout!", message: "Deze categorie bestaat al.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true, completion: nil)
-                return false
-            } else {
+
+        let name = nameField.text!.capitalizingFirstLetter()
+        if name.isEmpty {
+            sentAlert(message: "Voer een naam in.")
+            return false
+        } else if appData.categories.contains(name) {
+            if let _ = categoryLabel {
                 return true
+            } else {
+                sentAlert(message: "Deze categorie bestaat al.")
+                return false
             }
         }
+        
+        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

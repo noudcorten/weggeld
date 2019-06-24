@@ -13,6 +13,8 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
+    var downloadButton: UIButton?
+    
     @IBAction func saveButtonPressed(_ sender: Any) {
         view.endEditing(true)
         var text = maxAmountTextField!.text!
@@ -68,6 +70,40 @@ class SettingsTableViewController: UITableViewController {
     @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .right {
             self.tabBarController?.selectedIndex -= 1
+        }
+    }
+    
+    @objc func resetButtonPressed(sender: UIButton!) {
+        showAlert(title: "Waarschuwing!", message: "Bij een 'Reset' zullen ALLE veranderingen in de app worden verwijderd.", optionOne: "Stop", optionTwo: "Reset", method: "Reset", category: nil, indexPath: nil)
+    }
+    
+    @objc func downloadButtonPressed(sender: UIButton!) {
+        let fileName = "Uitgaves.csv"
+        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        
+        var csvText = "Datum,Bedrag,Categorie,Extra info\n"
+        for expense in appData.expenses {
+            let newLine = "\(expense.dueDate),\(expense.amount),\(expense.category),\(expense.notes ?? "")\n"
+            csvText.append(contentsOf: newLine)
+        }
+        
+        do {
+            try csvText.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
+            let vc = UIActivityViewController(activityItems: [path!], applicationActivities: [])
+            vc.excludedActivityTypes = [
+                UIActivity.ActivityType.assignToContact,
+                UIActivity.ActivityType.saveToCameraRoll,
+                UIActivity.ActivityType.postToFlickr,
+                UIActivity.ActivityType.postToVimeo,
+                UIActivity.ActivityType.postToTencentWeibo,
+                UIActivity.ActivityType.postToTwitter,
+                UIActivity.ActivityType.postToFacebook,
+                UIActivity.ActivityType.openInIBooks
+            ]
+            present(vc, animated: true, completion: nil)
+        } catch {
+            print("Failed to create file")
+            print("\(error)")
         }
     }
     
@@ -139,6 +175,64 @@ class SettingsTableViewController: UITableViewController {
                                      for: UIControl.Event.editingChanged)
     }
     
+    private func showAlert(title: String, message: String, optionOne: String, optionTwo: String, method: String, category: String?, indexPath: IndexPath?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: optionOne, style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: optionTwo, style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+            switch method {
+            case "Remove":
+                self.removeCategory(category: category!, indexPath: indexPath!)
+            case "Reset":
+                self.appData.reset()
+                AppData.saveAppData(self.appData)
+                self.tableView.reloadData()
+            default:
+                return
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func removeCategory(category: String, indexPath: IndexPath) {
+        self.appData.removeCategory(category: category)
+        AppData.saveAppData(self.appData)
+        self.tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
+    private func getUI(type: String) -> UIView? {
+        let frame_width = Int(self.view.frame.size.width)
+        let x_offset = 10
+        let y_offset = 2
+        let label_boxWidth = 200
+        let button_boxWidth = 85
+        let label_boxHeight = 20
+        let button_boxHeight = 25
+        
+        switch type {
+        case "View":
+            let view = UIView()
+            view.frame = CGRect(x: 0, y: 0, width: frame_width, height: label_boxHeight)
+            view.backgroundColor = UIColor.light_pink
+            return view
+        case "Label":
+            let label = UILabel()
+            label.textColor = UIColor.white
+            label.frame = CGRect(x: x_offset, y: y_offset, width: label_boxWidth, height: label_boxHeight)
+            return label
+        case "Button":
+            let button = UIButton()
+            button.frame = CGRect(x: frame_width - button_boxWidth, y: 0, width: button_boxWidth, height: button_boxHeight)
+            button.backgroundColor = UIColor.dark_pink
+            button.setTitle("Reset", for: .normal)
+            button.addTarget(self, action: #selector(resetButtonPressed), for: .touchUpInside)
+            return button
+        default:
+            return nil
+        }
+        
+    }
+    
     override func setEditing (_ editing:Bool, animated:Bool) {
         super.setEditing(editing,animated:animated)
         
@@ -150,20 +244,28 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 1
-        default:
+        case 1:
             return appData.categories.count
+        default:
+            return 1
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(40)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat(10)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(25)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -176,7 +278,7 @@ class SettingsTableViewController: UITableViewController {
             updateTextField()
             updateSaveButtonState()
             return cell
-        default:
+        case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
             
             let category = appData.categories[indexPath.row]
@@ -190,41 +292,44 @@ class SettingsTableViewController: UITableViewController {
             cell.colorView.layer.cornerRadius = radius
             
             return cell
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ExportCell", for: indexPath) as! ExportToCSVCell
+            cell.selectionStyle = .none
+            cell.downloadLabel.text = "Download .csv file"
+            downloadButton = cell.downloadButton
+            downloadButton!.setTitle("Download", for: .normal)
+            downloadButton!.addTarget(self, action: #selector(downloadButtonPressed), for: .touchUpInside)
+            return cell
         }
     }
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         switch indexPath.section {
-        case 0:
-            return false
-        default:
+        case 1:
             return true
+        default:
+            return false
         }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = UIColor.light_pink
-        
-        
-        let label = UILabel()
-        label.textColor = UIColor.white
-        label.frame = CGRect(x: 10, y: 3, width: 200, height: 20)
+        let view = getUI(type: "View")!
+        let label = getUI(type: "Label") as! UILabel
         
         switch section {
         case 0:
             label.text = "Maximale Bedrag"
-        default:
+        case 1:
             label.text = "Categorieën"
+            let button = getUI(type: "Button") as! UIButton
+            view.addSubview(button)
+        default:
+            label.text = "Extra opties"
         }
         
         view.addSubview(label)
         return view
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat(10)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -233,20 +338,9 @@ class SettingsTableViewController: UITableViewController {
             let category = categories[indexPath.row]
             
             if appData.hasCategory(category) {
-                let alert = UIAlertController(title: "Waarschuwing!", message: "Het verwijderen van deze categorie zal alle uitgaves in deze categorie verwijderen.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Stop", style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
-                    return
-                }))
-                alert.addAction(UIAlertAction(title: "Doorgaan", style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
-                    self.appData.removeCategory(category: category)
-                    AppData.saveAppData(self.appData)
-                    self.tableView.deleteRows(at: [indexPath], with: .fade)
-                }))
-                self.present(alert, animated: true, completion: nil)
+                showAlert(title: "Waarschuwing!", message: "Het verwijderen van deze categorie zal alle uitgaves in deze categorie verwijderen.", optionOne: "Stop", optionTwo: "Verwijder", method: "Remove", category: category, indexPath: indexPath)
             } else {
-                self.appData.removeCategory(category: category)
-                AppData.saveAppData(self.appData)
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                removeCategory(category: category, indexPath: indexPath)
             }
         }
     }
