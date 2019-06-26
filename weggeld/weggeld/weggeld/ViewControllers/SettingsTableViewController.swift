@@ -64,7 +64,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        updateSaveButtonState()
+        checkMaxAmountTextField()
     }
     
     @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
@@ -111,7 +111,8 @@ class SettingsTableViewController: UITableViewController {
     }
     
     private func setupSwipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        let swipeRight = UISwipeGestureRecognizer(target: self,
+                                                  action: #selector(swiped))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
     }
@@ -119,13 +120,27 @@ class SettingsTableViewController: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = UIColor.gray
         navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes =
+            [.foregroundColor: UIColor.white]
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.navigationItem.leftBarButtonItem!.title = "Wijzig"
     }
     
+    private func checkForMaxAmount(_ amount: Float) {
+        if amount > 1000000 {
+            let alert = UIAlertController(
+                title: "Fout!",
+                message: "Getal mag niet groter zijn dan 1.000.000",
+                preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+            
+            var text = maxAmountTextField!.text!
+            text.remove(at: text.index(before: text.endIndex))
+            maxAmountTextField!.text = text
+        }
+    }
 
-    
     private func inputIsInt(input: String) -> Bool {
         if let _ = Int(input) {
             return true
@@ -154,11 +169,12 @@ class SettingsTableViewController: UITableViewController {
     }
     
     /// Disable the save button if there is no title.
-    private func updateSaveButtonState() {
+    private func checkMaxAmountTextField() {
         let text = maxAmountTextField!.text ?? ""
         saveButton.isEnabled = !text.isEmpty
         
         if let inputAmount = Float(text) {
+            checkForMaxAmount(inputAmount)
             if inputAmount == appData.maxAmount {
                 saveButton.isEnabled = false
             }
@@ -178,11 +194,18 @@ class SettingsTableViewController: UITableViewController {
                                      for: UIControl.Event.editingChanged)
     }
     
-    private func showAlert(title: String, message: String, optionOne: String, optionTwo: String, method: String, category: String?, indexPath: IndexPath?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: optionOne, style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+    private func showAlert(title: String, message: String, optionOne: String,
+                           optionTwo: String, method: String, category: String?,
+                           indexPath: IndexPath?) {
+        let alert = UIAlertController(title: title, message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(
+            title: optionOne, style: .default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: optionTwo, style: .default, handler: { (action) in alert.dismiss(animated: true, completion: nil)
+        alert.addAction(UIAlertAction(
+            title: optionTwo, style: .default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
             switch method {
             case "Remove":
                 self.removeCategory(category: category!, indexPath: indexPath!)
@@ -278,7 +301,7 @@ class SettingsTableViewController: UITableViewController {
             cell.inputField.delegate = self as? UITextFieldDelegate
             maxAmountTextField = cell.inputField
             updateTextField()
-            updateSaveButtonState()
+            checkMaxAmountTextField()
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell

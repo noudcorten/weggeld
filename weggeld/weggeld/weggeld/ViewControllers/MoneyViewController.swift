@@ -9,7 +9,6 @@
 import UIKit
 
 class MoneyViewController: UIViewController {
-
     
     @IBOutlet weak var countingLabel: CountingLabel!
     @IBOutlet weak var moneyLabel: UILabel!

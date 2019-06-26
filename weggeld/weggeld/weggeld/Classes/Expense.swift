@@ -16,6 +16,7 @@ struct Expense: Codable {
     var category: String
     var notes: String?
     
+    /// Standard initializer for the Expense Class.
     init(dueDate: Date, amount: Float, category: String, notes: String?) {
         self.dueDate = dueDate
         self.amount = amount
@@ -23,12 +24,12 @@ struct Expense: Codable {
         self.notes = notes
     }
     
-    // Returns the number of the saved date (e.g. '01')
+    /// Returns the number of the saved date (e.g. '01')
     func getMonthNumber() -> Int {
         return Int(DateFormatter.getMonthNumber.string(from: self.dueDate))!
     }
     
-    // Returns the year of the saved date (e.g. '2019')
+    /// Returns the year of the saved date (e.g. '2019')
     func getYear() -> String {
         return DateFormatter.getYear.string(from: self.dueDate)
     }

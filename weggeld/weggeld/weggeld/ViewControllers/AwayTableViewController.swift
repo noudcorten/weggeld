@@ -84,7 +84,7 @@ class AwayTableViewController: UITableViewController {
             label.text = text
         } else {
             let allUsedMonths = appData.getAllUsedMonthsString()
-            label.text = allUsedMonths[section]!
+            label.text = allUsedMonths[section]
         }
         
         return label

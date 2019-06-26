@@ -84,17 +84,21 @@ class ExpenseTableViewController: UITableViewController {
     private func checkAmountTextField() {
         let text = amountTextField!.text ?? ""
         if let amount = Float(text) {
-            if amount > 1000000 {
-                let alert = UIAlertController(title: "Fout!", message: "Getal mag niet groter zijn dan 1.000.000", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true, completion: nil)
-                
-                var text = amountTextField!.text!
-                text.remove(at: text.index(before: text.endIndex))
-                amountTextField!.text = text
-            }
+            checkForMaxAmount(amount)
         }
         saveButton.isEnabled = !text.isEmpty
+    }
+    
+    private func checkForMaxAmount(_ amount: Float) {
+        if amount > 1000000 {
+            let alert = UIAlertController(title: "Fout!", message: "Getal mag niet groter zijn dan 1.000.000", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+            
+            var text = amountTextField!.text!
+            text.remove(at: text.index(before: text.endIndex))
+            amountTextField!.text = text
+        }
     }
     
     /// Update the due date label to match the date from the date picker.
