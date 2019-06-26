@@ -40,7 +40,7 @@
 
 ### Week 2
 #### Day 1
-* HEMELVAART
+* TWEEDE PINKSTERDAG
 
 #### Day 2
 * Finished the 'Geld-Screen'.
