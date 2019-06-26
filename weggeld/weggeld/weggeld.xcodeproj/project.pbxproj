@@ -173,18 +173,50 @@
 		04BD4DC222A95E7000150288 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04F32D8022C37D2800E62401 /* MoneyLabels */,
+				04F32D8122C37D4300E62401 /* AwayCells */,
+				04F32D7F22C37CF500E62401 /* ExpenseCells */,
+				04F32D7E22C37CDD00E62401 /* SettingsCells */,
+			);
+			name = View;
+			path = Classes/View;
+			sourceTree = "<group>";
+		};
+		04F32D7E22C37CDD00E62401 /* SettingsCells */ = {
+			isa = PBXGroup;
+			children = (
 				04B5A7E422B4030C0059A04F /* InputCell.swift */,
+				04F32D7C22BD034200E62401 /* ExportToCSVCell.swift */,
 				04B5A7E022B3F0BF0059A04F /* CategoryCell.swift */,
-				04BD4DC322A95ED700150288 /* ExpenseCell.swift */,
-				04B5A7CB22AFADF50059A04F /* CountingLabel.swift */,
+			);
+			path = SettingsCells;
+			sourceTree = "<group>";
+		};
+		04F32D7F22C37CF500E62401 /* ExpenseCells */ = {
+			isa = PBXGroup;
+			children = (
 				042CF1F422BA56200044CFCC /* ExpenseInputCell.swift */,
 				042CF1F622BA56450044CFCC /* ExpenseDateCell.swift */,
 				042CF1F822BA565A0044CFCC /* ExpenseCategoryCell.swift */,
 				042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */,
-				04F32D7C22BD034200E62401 /* ExportToCSVCell.swift */,
 			);
-			name = View;
-			path = Classes/View;
+			path = ExpenseCells;
+			sourceTree = "<group>";
+		};
+		04F32D8022C37D2800E62401 /* MoneyLabels */ = {
+			isa = PBXGroup;
+			children = (
+				04B5A7CB22AFADF50059A04F /* CountingLabel.swift */,
+			);
+			path = MoneyLabels;
+			sourceTree = "<group>";
+		};
+		04F32D8122C37D4300E62401 /* AwayCells */ = {
+			isa = PBXGroup;
+			children = (
+				04BD4DC322A95ED700150288 /* ExpenseCell.swift */,
+			);
+			path = AwayCells;
 			sourceTree = "<group>";
 		};
 		813E5D6447CE076F89B2B2F1 /* Frameworks */ = {

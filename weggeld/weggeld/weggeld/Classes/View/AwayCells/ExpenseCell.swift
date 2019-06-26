@@ -8,9 +8,10 @@
 
 import UIKit
 
+/* TableViewCell Class which is used in the AwayTableViewController. */
 class ExpenseCell: UITableViewCell {
 
-    
+    // Enables editing of the expense-, category- & dateLabel and colorView.
     @IBOutlet weak var expenseLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -18,6 +19,5 @@ class ExpenseCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 }

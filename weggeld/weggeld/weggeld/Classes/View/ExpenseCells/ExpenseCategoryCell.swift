@@ -8,8 +8,11 @@
 
 import UIKit
 
-class ExpenseCategoryCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
+/* TableViewCell Class which is used in the ExpenseTableViewController. */
+class ExpenseCategoryCell:
+    UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // Enables editing of the pickerView, colorView and categoryLabel.
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var categoryLabel: UILabel!
@@ -20,43 +23,44 @@ class ExpenseCategoryCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDa
         super.awakeFromNib()
         self.selectionStyle = .none
         
+        // Changes dataSource and delegate of pickerview to make it editable.
         pickerView!.dataSource = self
         pickerView!.delegate = self
         
         appData = AppData.loadAppData()
-        
         configureColorView()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
-    func configureColorView() {
+    // Turns the UIView into a circle.
+    private func configureColorView() {
         let radius = colorView.frame.height / 2
         colorView.layer.cornerRadius = radius
     }
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    // MARK - Configurations of the pickerView.
+    internal func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    internal func pickerView(_ pickerView: UIPickerView,
+                             numberOfRowsInComponent component: Int) -> Int {
         return appData!.categories.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    internal func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
+                             inComponent component: Int) {
+        // Gets the matching category name for the selected row.
         let category = appData!.categories[row]
         categoryLabel.text = category
         
+        // Gets the matching color for the selected row.
         let colors = UIColor.categoryColors()
         let pickedColor = appData!.category_dict[category]!
         colorView.backgroundColor = colors[pickedColor]
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    internal func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
+                             forComponent component: Int) -> String? {
         return appData!.categories[row]
     }
 

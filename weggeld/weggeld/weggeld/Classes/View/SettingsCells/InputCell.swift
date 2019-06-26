@@ -8,9 +8,10 @@
 
 import UIKit
 
-/* TableViewCell Class which is used in the Settings */
+/* TableViewCell Class which is used in the SettingsTableViewController. */
 class InputCell: UITableViewCell {
     
+    // Enables reading of the UITextField
     @IBOutlet weak var inputField: UITextField!
 
     override func awakeFromNib() {

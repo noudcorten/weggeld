@@ -8,13 +8,14 @@
 
 import UIKit
 
+/* TableViewCell Class which is used in the SettingsTableViewController. */
 class CategoryCell: UITableViewCell {
     
+    // Enables editing of the categoryLabel and the colorView
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var colorView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 }

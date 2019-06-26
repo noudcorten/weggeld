@@ -8,13 +8,14 @@
 
 import UIKit
 
+/* TableViewCell Class which is used in the ExpenseTableViewController. */
 class ExpenseInputCell: UITableViewCell {
     
+    // Enables editing of the amountTextField
     @IBOutlet weak var amountTextField: UITextField!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        // Initialization code
     }
 }

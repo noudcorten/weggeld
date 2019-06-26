@@ -8,8 +8,10 @@
 
 import UIKit
 
+/* TableViewCell Class which is used in the SettingsTableViewController. */
 class ExportToCSVCell: UITableViewCell {
     
+    // Enables editing of the downloadLabel and downloadButton.
     @IBOutlet weak var downloadLabel: UILabel!
     @IBOutlet weak var downloadButton: UIButton!
     

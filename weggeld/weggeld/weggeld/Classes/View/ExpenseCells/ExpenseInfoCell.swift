@@ -8,8 +8,10 @@
 
 import UIKit
 
+/* TableViewCell Class which is used in the ExpenseTableViewController. */
 class ExpenseInfoCell: UITableViewCell {
     
+    // Enables editing of the notesTextField.
     @IBOutlet weak var notesTextField: UITextField!
 
     override func awakeFromNib() {

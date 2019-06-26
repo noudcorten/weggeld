@@ -8,8 +8,10 @@
 
 import UIKit
 
+/* TableViewCell Class which is used in the ExpenseTableViewController. */
 class ExpenseDateCell: UITableViewCell {
     
+    // Enables editing of the dueDateLabel, pickerView and button.
     @IBOutlet weak var dueDateLabel: UILabel!
     @IBOutlet weak var dueDatePickerView: UIDatePicker!
     @IBOutlet weak var todayButton: UIButton!
@@ -17,6 +19,5 @@ class ExpenseDateCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        // Initialization code
     }
 }
