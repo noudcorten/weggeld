@@ -107,6 +107,26 @@
 #### Day 5
 * Fixed total expense
 * Added horizontal gesture recognizer
+* Added .csv download option
+
+### Week 4
+#### Day 1
+* Added functionality to add expenses in the future.
+   * Made some changes in the UI to make the view more readable.
+* Added more category colours.
+
+#### Day 2
+* Started cleaning code
+   * Added some comments.
+   * Splitted some functions into more smaller functions.
+
+#### Day 3
+* Same as day 2.
+
+#### Day 4
+
+#### Day 5
+
 
 ## Daily Standup
 ### Week 1
@@ -134,7 +154,7 @@
 
 ### Week 2
 #### Day 1
-* HEMELVAART
+* TWEEDE PINKSTERDAG
 
 #### Day 2
 * Came up with more ideas for the app
@@ -153,7 +173,55 @@
    * https://github.com/noudcorten/weggeld/blob/master/STYLE.md
 
 #### Day 4
-
+* Not much to discuss with other style guides. Almost all requirements in the style guide were similar.
 
 #### Day 5
+* Presented alpha version of the app.
+   
 
+### Week 3
+#### Day 1
+* Finishing the app on friday.
+* Focus on making the UI better.
+* Removing all bugs.
+
+#### Day 2
+* Plan for changes in the UI were correct.
+* Changes in category editing system were tested and approved.
+
+#### Day 3
+* Github was OK.
+   * TIP: Change the amount of steps to get to the code (current: weggeld/weggeld/weggeld/weggeld - no joke.)
+   * TIP: Update the README.md to fit the current app better (screenshots of current UI)
+
+#### Day 4
+* Plan for finalizing product was made.
+   * Start cleaning and commenting code.
+   * Remove all bugs.
+   * Wanted to add few more features (weekly- and monthly expenses (automatic)). After discussion decided to cut these features.
+
+#### Day 5
+* App worked OK
+   * Found a bug with adding big numbers (crash with numbers larger than 1 * 10^25).
+   * Some small changes in the UI were suggested.
+
+### Week 4
+#### Day 1
+* Finilazing the app.
+   * Clean code.
+   * UI completely optimal.
+   * If time left: try to add optional features.
+
+#### Day 2
+* TIP: Focus mainly on cleaning the code.
+* TIP: Extra features could result in more bugs which can't be fixed due to time issues.
+
+#### Day 3
+* Made a plan for what to show in the product video.
+   * Explain all possible features.
+   * Talk about the main idea of the app.
+   * Keep the video short and informative.
+
+#### Day 4
+
+#### Day 5
