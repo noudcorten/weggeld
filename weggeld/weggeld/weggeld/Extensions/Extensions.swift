@@ -58,11 +58,34 @@ extension UIViewController {
     }
 }
 
-/* Extension of String which is used to turn a given string into a new string
- with only lowercased letters except the first one. */
+/* Extension of String which is used to add more functionality to a string */
 extension String {
+    // Turns the string into a lowercased string with only the first letter
+    // uppercased.
     func capitalizingFirstLetter() -> String {
         return prefix(1).uppercased() + self.lowercased().dropFirst()
+    }
+    
+    // Checks if the string is an integer.
+    func isInt() -> Bool {
+        if let _ = Int(self) {
+            return true
+        }
+        return false
+    }
+    
+    // Checks if the string is a float.
+    func isFloat() -> Bool {
+        if let _ = Float(self) {
+            let dotString = "."
+            if self.contains(dotString) {
+                // Input is float with a maximum of two decimals
+                if self.components(separatedBy: dotString)[1].count <= 2 {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
 

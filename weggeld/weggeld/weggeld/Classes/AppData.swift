@@ -397,7 +397,8 @@ struct AppData: Codable {
                 for expense in expenseList {
                     // Only increases the value of expenseSum when the selected
                     // expense is from the current month.
-                    if DateFormatter.getMonthYear.string(from: expense.dueDate) == DateFormatter.getMonthYear.string(from: Date()) {
+                    if DateFormatter.getMonthYear.string(from: expense.dueDate)
+                        == DateFormatter.getMonthYear.string(from: Date()) {
                         expenseSum += expense.amount
                     // Breaks from the loop if the expense date doesn't match
                     // the current date. All the expenses in this list will have
@@ -412,11 +413,13 @@ struct AppData: Codable {
     }
     
     /// MARK: - Enables the class to be saved to and loaded from the device.
-    static var DocumentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    static var DocumentsDirectory = FileManager.default.urls(
+        for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("appdata")
     
     static func loadAppData() -> AppData? {
-        guard let codedAppData = try? Data(contentsOf: ArchiveURL) else { return nil }
+        guard let codedAppData = try? Data(contentsOf: ArchiveURL) else
+        { return nil }
         let propertyListDecoder = PropertyListDecoder()
         return try? propertyListDecoder.decode(AppData.self, from: codedAppData)
     }
