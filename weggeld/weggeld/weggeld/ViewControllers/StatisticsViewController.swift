@@ -76,9 +76,9 @@ class StatisticsViewController: UIViewController {
     private func setupMonthAndYear() {
         monthYearPicker.tintColor = UIColor.light_pink
         
-        pickedYear = Expense.getYear.string(from: Date())
+        pickedYear = DateFormatter.getYear.string(from: Date())
         if let usedMonths = appData.getUsedMonths(year: pickedYear) {
-            let monthNumber = Expense.getMonthNumber.string(from: Date())
+            let monthNumber = DateFormatter.getMonthNumber.string(from: Date())
             let monthString = appData.months[Int(monthNumber)!-1]
             if let indexInUsedMonths = usedMonths.firstIndex(of: monthString) {
                 pickedMonth = String(indexInUsedMonths)
@@ -226,6 +226,7 @@ class StatisticsViewController: UIViewController {
             
             for (offset: index, element: (key: label, value: entry)) in data.enumerated() {
                 let chartDataSet = BarChartDataSet(values: [entry], label: label)
+                // If the BarChart 
                 if appData.months.contains(label) {
                     colors = ChartColorTemplates.joyful()
                     chartDataSet.colors = [colors[index]]

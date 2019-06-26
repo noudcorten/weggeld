@@ -83,7 +83,10 @@ class SettingsTableViewController: UITableViewController {
         
         var csvText = "Datum,Bedrag,Categorie,Extra info\n"
         for expense in appData.expenses {
-            let newLine = "\(expense.dueDate),\(expense.amount),\(expense.category),\(expense.notes ?? "")\n"
+            // Turns the saved date into the correct format.
+            let correctDate = DateFormatter.correctFormat.string(from: expense.dueDate)
+            // Creates entry for the .csv file.
+            let newLine = "\(correctDate),\(expense.amount),\(expense.category),\(expense.notes ?? "")\n"
             csvText.append(contentsOf: newLine)
         }
         
@@ -272,7 +275,6 @@ class SettingsTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath) as! InputCell
-            cell.selectionStyle = .none
             cell.inputField.delegate = self as? UITextFieldDelegate
             maxAmountTextField = cell.inputField
             updateTextField()
@@ -294,7 +296,6 @@ class SettingsTableViewController: UITableViewController {
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ExportCell", for: indexPath) as! ExportToCSVCell
-            cell.selectionStyle = .none
             cell.downloadLabel.text = "Download .csv file"
             downloadButton = cell.downloadButton
             downloadButton!.setTitle("Download", for: .normal)

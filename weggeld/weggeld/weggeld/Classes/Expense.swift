@@ -8,51 +8,29 @@
 
 import Foundation
 
+/* Structure of an expense. Stores all the important information about the
+ expense. */
 struct Expense: Codable {
     var dueDate: Date
     var amount: Float
     var category: String
     var notes: String?
     
-    static let dueDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        return formatter
-    }()
-    
-    static let getMonth: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM"
-        return formatter
-    }()
-    
-    static let getMonthNumber: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "M"
-        return formatter
-    }()
-    
-    static let getYear: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy"
-        return formatter
-    }()
-    
-    static let getMonthYear: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/yyyy"
-        return formatter
-    }()
-    
-    func getMonth() -> String {
-        return Expense.getMonth.string(from: self.dueDate)
+    init(dueDate: Date, amount: Float, category: String, notes: String?) {
+        self.dueDate = dueDate
+        self.amount = amount
+        self.category = category
+        self.notes = notes
     }
     
+    // Returns the number of the saved date (e.g. '01')
     func getMonthNumber() -> Int {
-        return Int(Expense.getMonthNumber.string(from: self.dueDate))!
+        return Int(DateFormatter.getMonthNumber.string(from: self.dueDate))!
     }
     
+    // Returns the year of the saved date (e.g. '2019')
     func getYear() -> String {
-        return Expense.getYear.string(from: self.dueDate)
+        return DateFormatter.getYear.string(from: self.dueDate)
     }
 }
+

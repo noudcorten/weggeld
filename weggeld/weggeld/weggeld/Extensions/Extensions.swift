@@ -8,37 +8,15 @@
 
 import UIKit
 
+/* Extension for UIColor which adds a list of colors used for category-coloring
+ and creates some static colors used for the app UI. */
 extension UIColor {
+    // Creates color based on given inputs for r(ed), g(reen) and b(lue).
     static func rgb(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> UIColor {
         return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
-    static func chartColors() -> [UIColor] {
-        return [UIColor.rgb(255,127,80),
-                UIColor.rgb(255,99,71),
-                UIColor.rgb(255,165,0),
-                UIColor.rgb(144,238,144),
-                UIColor.rgb(0,128,128),
-                UIColor.rgb(100,149,237),
-                UIColor.rgb(65,105,225),
-                UIColor.rgb(147,112,219),
-                UIColor.rgb(219,112,147),
-                UIColor.rgb(255,192,203),
-                UIColor.rgb(244,164,96)]
-    }
-    
-    static func categoryColorss() -> [UIColor] {
-        return [UIColor.rgb(244, 66, 66),
-                UIColor.rgb(244, 157, 65),
-                UIColor.rgb(244, 232, 65),
-                UIColor.rgb(79, 244, 65),
-                UIColor.rgb(65, 235, 244),
-                UIColor.rgb(67, 65, 244),
-                UIColor.rgb(178, 65, 244),
-                UIColor.rgb(255, 66, 226),
-                UIColor.rgb(244, 107, 173)]
-    }
-    
+    // List of UIColors which is used for the category coloring.
     static func categoryColors() -> [UIColor] {
         return [UIColor.rgb(244, 66, 66),
                 UIColor.rgb(244, 65, 128),
@@ -59,11 +37,15 @@ extension UIColor {
         ]
     }
     
+    // Static colors which are used in the app UI.
     static let light_pink = UIColor.rgb(244, 107, 173)
     static let dark_pink = UIColor.rgb(216, 69, 143)
     static let light_gray = UIColor.rgb(178, 174, 176)
 }
 
+/* Extension for the UIViewController which adds a TapGestureRecognizer which
+ is used to make the keyboard go away when the user touches anywhere on the
+ screen. */
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
@@ -76,8 +58,50 @@ extension UIViewController {
     }
 }
 
+/* Extension of String which is used to turn a given string into a new string
+ with only lowercased letters except the first one. */
 extension String {
     func capitalizingFirstLetter() -> String {
         return prefix(1).uppercased() + self.lowercased().dropFirst()
     }
+}
+
+/* Extension of DateFormatter which adds extra functionality for representing
+ the date in different formats. */
+extension DateFormatter {
+    /// DateFormatter which returns the format '01/01/2019'.
+    static let dueDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter
+    }()
+    
+    /// DateFormatter which returns the format '01'.
+    static let getMonthNumber: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M"
+        return formatter
+    }()
+    
+    /// DateFormatter which returns the format '2019'.
+    static let getYear: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter
+    }()
+    
+    /// DateFormatter which returns the format '01/2019'.
+    static let getMonthYear: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/yyyy"
+        return formatter
+    }()
+    
+    /// DateFormatter which returns the format '01-01-2019 12:00'.
+    static let correctFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(identifier: "CEST")
+        formatter.dateFormat = "dd-MM-yyyy HH:mm"
+        return formatter
+    }()
 }

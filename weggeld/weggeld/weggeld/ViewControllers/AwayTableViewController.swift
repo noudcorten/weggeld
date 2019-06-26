@@ -135,7 +135,7 @@ class AwayTableViewController: UITableViewController {
         }
         
         cell.categoryLabel.text = expense.category
-        cell.dateLabel.text = Expense.dueDateFormatter.string(from: expense.dueDate)
+        cell.dateLabel.text = DateFormatter.dueDateFormatter.string(from: expense.dueDate)
         
         let colors = UIColor.categoryColors()
         let pickedColor = appData.category_dict[expense.category]!
@@ -188,7 +188,7 @@ class AwayTableViewController: UITableViewController {
             let monthLabel = getLabel(section: section, x: month_x_offset, y: y_offset, width: month_width, height: height, text: nil)
             view.addSubview(monthLabel)
             
-            if Expense.getMonthYear.string(from: allExpensesList[section].first!.dueDate) == Expense.getMonthYear.string(from: Date()) {
+            if DateFormatter.getMonthYear.string(from: allExpensesList[section].first!.dueDate) == DateFormatter.getMonthYear.string(from: Date()) {
                 view.backgroundColor = UIColor.dark_pink
                 
                 let currentMonthLabel = getLabel(section: section, x: currentMonth_x_offset, y: y_offset, width: currentMonth_width, height: height, text: "Deze maand")

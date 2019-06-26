@@ -18,6 +18,7 @@ class ExpenseCategoryCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDa
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         
         pickerView!.dataSource = self
         pickerView!.delegate = self

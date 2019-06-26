@@ -344,7 +344,7 @@ struct AppData: Codable {
         if allExpenses.count > 0 {
             for expenseList in allExpenses {
                 for expense in expenseList {
-                    if Expense.getMonthYear.string(from: expense.dueDate) == Expense.getMonthYear.string(from: Date()) {
+                    if DateFormatter.getMonthYear.string(from: expense.dueDate) == DateFormatter.getMonthYear.string(from: Date()) {
                         expenseSum += expense.amount
                     } else {
                         break

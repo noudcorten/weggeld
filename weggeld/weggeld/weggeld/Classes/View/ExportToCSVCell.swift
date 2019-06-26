@@ -10,20 +10,11 @@ import UIKit
 
 class ExportToCSVCell: UITableViewCell {
     
-
     @IBOutlet weak var downloadLabel: UILabel!
     @IBOutlet weak var downloadButton: UIButton!
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.selectionStyle = .none
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

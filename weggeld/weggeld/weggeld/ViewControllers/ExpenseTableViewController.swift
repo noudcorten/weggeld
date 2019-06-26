@@ -25,6 +25,7 @@ class ExpenseTableViewController: UITableViewController {
     var prevExpense: Expense?
     var appData: AppData!
     var isExtraInfoHidden: Bool = true
+    let maxAmount = 1000000
     
     var bottomConstraint: NSLayoutConstraint?
     
@@ -43,11 +44,12 @@ class ExpenseTableViewController: UITableViewController {
     }
     
     @objc func textEditingChanged(_ sender: UITextField) {
-        updateSaveButtonState()
+        checkAmountTextField()
     }
     
     @objc func beginEditing(_ sender: UITextField) {
-        tableView.contentOffset = CGPoint(x: 0, y: 40)
+        let frame_width = Int(self.view.frame.size.width)
+        tableView.contentOffset = CGPoint(x: 0, y: frame_width/2)
     }
     
     @objc func endEditing(_ sender: UITextField) {
@@ -79,8 +81,19 @@ class ExpenseTableViewController: UITableViewController {
     }
     
     /// Disable the save button if there is no title.
-    private func updateSaveButtonState() {
+    private func checkAmountTextField() {
         let text = amountTextField!.text ?? ""
+        if let amount = Float(text) {
+            if amount > 1000000 {
+                let alert = UIAlertController(title: "Fout!", message: "Getal mag niet groter zijn dan 1.000.000", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+                
+                var text = amountTextField!.text!
+                text.remove(at: text.index(before: text.endIndex))
+                amountTextField!.text = text
+            }
+        }
         saveButton.isEnabled = !text.isEmpty
     }
     
@@ -88,7 +101,7 @@ class ExpenseTableViewController: UITableViewController {
     /// - parameter date: The actual date from the data picker.
 
     private func updateDueDateLabel(with date: Date) {
-        dueDateLabel!.text = Expense.dueDateFormatter.string(from: date)
+        dueDateLabel!.text = DateFormatter.dueDateFormatter.string(from: date)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -115,7 +128,7 @@ class ExpenseTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath) as! ExpenseInputCell
-            cell.selectionStyle = .none
+
             cell.amountTextField.delegate = self as? UITextFieldDelegate
             amountTextField = cell.amountTextField
             amountTextField!.addTarget(self, action: #selector(self.textEditingChanged(_:)), for: UIControl.Event.editingChanged)
@@ -128,12 +141,11 @@ class ExpenseTableViewController: UITableViewController {
                 }
             }
             
-            updateSaveButtonState()
+            checkAmountTextField()
             
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! ExpenseCategoryCell
-            cell.selectionStyle = .none
             pickerView = cell.pickerView
             categoryLabel = cell.categoryLabel
             colorView = cell.colorView
@@ -156,7 +168,6 @@ class ExpenseTableViewController: UITableViewController {
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell", for: indexPath) as! ExpenseDateCell
-            cell.selectionStyle = .none
             dueDateLabel = cell.dueDateLabel
             dueDatePickerView = cell.dueDatePickerView
             dueDatePickerView!.addTarget(self, action: #selector(self.datePickerChanged), for: UIControl.Event.valueChanged)
@@ -174,7 +185,6 @@ class ExpenseTableViewController: UITableViewController {
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath) as! ExpenseInfoCell
-            cell.selectionStyle = .none
             cell.notesTextField.delegate = self as? UITextFieldDelegate
             notesTextField = cell.notesTextField
             notesTextField!.addTarget(self, action: #selector(self.beginEditing(_:)), for: .editingDidBegin)
