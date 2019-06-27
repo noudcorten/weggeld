@@ -3,7 +3,7 @@
 ## Advanced sketch
 <body>
 <p float="left">
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/advanced_sketch_1-1.png" width="1000" height="500"/>
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/advanced_sketch_1-1.png" width="1000" height="500"/>
 </p>
 </body>
 
