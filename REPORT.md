@@ -3,8 +3,8 @@ Weggeld is **the** app for keeping track of your monthly expenses. This app has 
 
 <body>
 <p float="left">
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/WegScreen.png" width="280" height="500"/>
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/StatistiekenScreen.png" width="280" height="500"/>
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/WegScreen.png" width="280" height="500"/>
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/StatistiekenScreen.png" width="280" height="500"/>
 </p>
 </body>
 
@@ -17,7 +17,7 @@ Weggeld is **the** app for keeping track of your monthly expenses. This app has 
 #### High Level Overview
 <body>
 <p float="left">
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/advanced_sketch_2-1.png" width="1000" height="500"/>
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/advanced_sketch_2-1.png" width="1000" height="500"/>
 </p>
 </body>
 
@@ -46,6 +46,11 @@ Class | Information Stored | Functionality
 AppData | Expenses, Maximum Amount, Categories, Category Colors, Months | Most important class in the app. This class stores all the information that the app needs with the most important information being the expenses done by the user.
 Expense | Date, Amount, Category, Extra Info | Class which stores all the important information about an expense. The class 'AppData' has a list of expenses, in which every expense is the class 'Expense'.
 
+#### Important Dictionaries
+Dictionary | Requestable From | Format | Functionality
+---------- | ---------------- | ------ | -------------
+DateDict | AppData | DateDict[year][month] = [Expense] | Used to represent all the expenses by month and year
+
 #### Extensions / Pods / Extra Classes
 Type | Extension Of | Used In | Functionality
 ---- | ------------ | ------- | -------------
@@ -53,7 +58,14 @@ Extension | UIColor | **Every** ViewController | Adds extra colors to the UIColo
 Extension | UIViewController | ExpenseTableViewController, SettingsTableViewController, AddCategoryViewController | Used in ViewControllers which use textfields. Allows to user to click somewhere on the screen to let the keyboard disappeared.
 Extension | String | ExpenseTableViewController, SettingsTableViewController, AddCategoryViewController | Used to add functionality to string manipulation. Checking if strings are correct floats/ints and writing names in one way (e.g. "Name").
 Extension | DateFormatter | AwayTableViewController, ExpenseTableViewController, StatisticsViewController, SettingsTableViewController | Used to manipulate the date of an expense. Used write the date in a certain way or used for comparing different dates.
-Pod | XCode | StatisticsViewController | Pod used to create nice graphs in the Statistics Screen.
+Pod | Xcode | StatisticsViewController | Pod used to create nice graphs in the Statistics Screen.
 Class | UILabel | MoneyViewController | Creates an animation for the percentage label counting up.
 CABasicAnimation | . | MoneyViewController | Creates a pullsating circle and a circle which represents expense percentage.
 CAShapeLayer | . | MoneyViewController | Creates circles which are used for the CABasicAnimations.
+
+## Challenges during design
+#### Changes in amount of controllers
+When I started building the app I realised that I deffinately needed more screens to the controller. The most important screen to add was the 'Settings Screen'. This screen was really important because the feature that a user could enter it's own monthly expense was one of the main features in the PROPOSAL.md, so I needed a screen in which this could be done. During the design process I also came to the realisation that the categories needed to be edited as well. So the 'Settings Screen' could be used for that as well. But for adding and editing these categories another ViewController was needed. These decisions resulted in the addition of two Controller: 'SettingsTableViewController' and 'AddCategoryViewController'.
+
+#### Creation of graphs
+For making the 'Statistics Screen' I needed a plug-in which could handle data and make nice looking graphs. Online I found the pod 'Charts' which stated on their GitHub that it could create beautiful charts and was really easy to use. After finding a lot of information online I was able to understand the framework of 'Charts'. The problem I ran into was that I needed to create a framework which would represent the information of the expenses in easy to use lists or dictionaries. I needed information like: amount of expense per category, amount of expense per category per month, amount of expense per year, etc. To get this information in a easy to use format I created six dictionaries in the AppData class in which all this information was stored and easily extractable.
