@@ -203,8 +203,10 @@ class MoneyViewController: UIViewController {
             moneyLabel.text = "€ \(Int(moneyLeft))"
             moneyToSpendLabel.text = "€ \(Int(moneyLeft))"
         } else {
-            moneyLabel.text = "€ \(moneyLeft)"
-            moneyToSpendLabel.text = "€ \(moneyLeft)"
+            // Converts float to correct format.
+            let moneyLeftString = String(format: "%0.2f", moneyLeft)
+            moneyLabel.text = "€ " + moneyLeftString
+            moneyToSpendLabel.text = "€ " + moneyLeftString
         }
     }
     
@@ -215,7 +217,8 @@ class MoneyViewController: UIViewController {
         if floor(moneySpended) == moneySpended {
             moneySpendedLabel.text = "€ \(Int(moneySpended))"
         } else {
-            moneySpendedLabel.text = "€ \(moneySpended)"
+            let moneySpendedString = String(format: "%0.2f", moneySpended)
+            moneySpendedLabel.text = "€ " + moneySpendedString
         }
     }
     

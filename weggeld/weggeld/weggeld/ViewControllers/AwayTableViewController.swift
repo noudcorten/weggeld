@@ -152,7 +152,8 @@ class AwayTableViewController: UITableViewController {
         if floor(expense.amount) == expense.amount {
             cell.expenseLabel.text = "€ \(Int(expense.amount))"
         } else {
-            cell.expenseLabel.text = "€ \(expense.amount)"
+            let expenseString = String(format: "%0.2f", expense.amount)
+            cell.expenseLabel.text = "€ " + expenseString
         }
         
         // Updates the category- and datelabels.
