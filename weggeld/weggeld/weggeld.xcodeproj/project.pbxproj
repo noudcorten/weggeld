@@ -149,8 +149,8 @@
 		04BD4DA622A925AB00150288 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				04BD4DA422A925A200150288 /* Expense.swift */,
 				04BD4DC522AA5B7600150288 /* AppData.swift */,
+				04BD4DA422A925A200150288 /* Expense.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
