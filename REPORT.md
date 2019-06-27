@@ -1,6 +1,7 @@
 # REPORT - WegGeld
 Weggeld is **the** app for keeping track of your monthly expenses. This app has the ability to show you where all your money is going to every month and shows you where you in which category you can maybe save some money. Every month you choose a certain amount which you want to spend and this app will show you the extent tho which you have reached this amount. The app has a very easy to read view of the expenses and beautiful statistics where you can see your monthly expenses.
 
+**Screenshots:**
 <body>
 <p float="left">
   <img src="https://github.com/noudcorten/weggeld/blob/master/docs/WegScreen.png" width="280" height="500"/>
