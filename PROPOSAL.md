@@ -16,9 +16,9 @@ Een app waarin de gebruiker zijn/haar maandelijkse kosten kan bijhouden.
 ### Visual Sketch
 <body>
 <p float="left">
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/app_screen_1.png" width="280" height="500"/>
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/app_screen_2.png" width="280" height="500"/> 
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/app_screen_3.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/app_screen_1.png" width="280" height="500"/>
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/app_screen_2.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/app_screen_3.png" width="280" height="500"/> 
 </p>
 </body>
 
