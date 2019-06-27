@@ -16,24 +16,23 @@ Een app waarin de gebruiker zijn/haar maandelijkse kosten kan bijhouden.
 ### Visual Sketch
 <body>
 <p float="left">
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/app_screen_1.png" width="280" height="500"/>
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/app_screen_2.png" width="280" height="500"/> 
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/app_screen_3.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/GeldScreen.png" width="280" height="500"/>
+  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/WegScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/StatistiekenScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/InstellingenScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/UitgaveScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/CategorieScreen.png" width="280" height="500"/> 
 </p>
 </body>
 
 ### Main Features
 * Bijhouden van bedrag dat nog mag worden uitgegeven.
-* Toevoegen van kosten met daarbij extra informatie (categorie, datum, beschrijving, etc.)
-* Progress bar die vertelt welk percentage van het totale bedrag er is uitgegeven.
-* Het zien van alle uitgaves van de gekozen maand.
+* Toevoegen van kosten met daarbij extra informatie (categorie, datum en extra informatie)
+* Progress cirkel die vertelt welk percentage van het totale bedrag er is uitgegeven.
+* Het zien van alle uitgaves per maand.
 * Weergeven van statistieken van de uitgaves.
-
-### MVP
-* Totaal bedrag dat verandert na het toevoegen van een uitgave.
-* Het toevoegen van een uitgave.
-* Een opsomming van uitgaves.
-* Een cirkeldiagram die de kosten per categorie weergeeft (in percentages).
+* Het zelf toevoegen/aanpassen van de categorieën (naam en kleur)
+* Het downloaden van alle uitgaves als een .csv bestand.
 
 ## Prerequisites
 ### Data Sources
@@ -46,15 +45,5 @@ Een app waarin de gebruiker zijn/haar maandelijkse kosten kan bijhouden.
     * Wordt gebruikt voor het toevoegen van effecten tijdens het weergeven van de data.
 * PropertyListEncoder
     * Wordt gebruikt voor het lokaal opslaan van de data.
-    
-### Similar
-* De apps die vergelijkbaar zijn met deze app beschikken vooral over de mogelijkheid om kosten toe te voegen en te zien wat er totaal is uitgegeven.
-* In deze apps is het niet mogelijk om een bepaald bedrag per maand aan te geven wat je maximaal wilt uitgeven.
-* De uitgaves zijn in de apps niet overzichtelijk weergegeven.
-* Er worden in deze apps geen duidelijke statistieken weergegeven van de data.
-
-### Hardest Parts
-* Het lokaal opslaan van de data.
-* Het toevoegen van een uitgave en deze weer te geven.
-* Het meteen updaten van het model na het toevoegen van een uitgave.
-* Het weergeven van de data in statistieken.
+* Charts
+    * Pod die wordt gebruikt voor het maken van de grafieken.
