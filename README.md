@@ -16,12 +16,12 @@ Een app waarin de gebruiker zijn/haar maandelijkse kosten kan bijhouden.
 ### Visual Sketch
 <body>
 <p float="left">
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/GeldScreen.png" width="280" height="500"/>
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/WegScreen.png" width="280" height="500"/> 
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/StatistiekenScreen.png" width="280" height="500"/> 
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/InstellingenScreen.png" width="280" height="500"/> 
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/UitgaveScreen.png" width="280" height="500"/> 
-  <img src="https://github.com/noudcorten/weggeld/blob/master/doc/CategorieScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/GeldScreen.png" width="280" height="500"/>
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/WegScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/StatistiekenScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/InstellingenScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/UitgaveScreen.png" width="280" height="500"/> 
+  <img src="https://github.com/noudcorten/weggeld/blob/master/docs/CategorieScreen.png" width="280" height="500"/> 
 </p>
 </body>
 
