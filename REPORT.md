@@ -47,9 +47,14 @@ AppData | Expenses, Maximum Amount, Categories, Category Colors, Months | Most i
 Expense | Date, Amount, Category, Extra Info | Class which stores all the important information about an expense. The class 'AppData' has a list of expenses, in which every expense is the class 'Expense'.
 
 #### Important Dictionaries
-Dictionary | Requestable From | Format | Functionality
----------- | ---------------- | ------ | -------------
-DateDict | AppData | DateDict[year][month] = [Expense] | Used to represent all the expenses by month and year
+Dictionary | Requestable From | Format | Parameters | Functionality
+---------- | ---------------- | ---------------------------------------- | ------------- | -------------
+DateDict | AppData | DateDict[year][month] = [Expense] | None | Returns all the expenses by month and year
+categoryMonthMoneyDict | AppData | categoryMonthMoneyDict[category] = Float | Year, Month | Returns amount of expense per category
+categoryYearMoneyDict | AppData | categoryYearMoneyDict[category] = Float | Year | Returns amount of expense per category
+yearMoneyDict | AppData | yearMoneyDict[month] = Float | Year | Returns amount of expense per month
+categoryDict | AppData | categoryDict[category] = [Expense] | None | Returns all the expenses per category
+categoryMoneyDict | AppData | categoryMoneyDict[category] = Float| None | Returns amount of expense per category
 
 #### Extensions / Pods / Extra Classes
 Type | Extension Of | Used In | Functionality
@@ -64,8 +69,15 @@ CABasicAnimation | . | MoneyViewController | Creates a pullsating circle and a c
 CAShapeLayer | . | MoneyViewController | Creates circles which are used for the CABasicAnimations.
 
 ## Challenges during design
+#### Saving class and not list
+In my first proposal I decided that I would just save the list of expenses (list of 'Expense'-Classes) and then retrieve the important information just from the 'Expense'-Class. After starting to work on the app I managed that I needed to save a lot more important information and needed this to be easily accesable in the entire app. So I changed the list of expenses to an entire class named 'AppData'. In this class it was much more easy to save all the important data and add functions which would make accesing of the data a lot easier. I then updated my PROPOSAL.md with this idea.
+
 #### Changes in amount of controllers
 When I started building the app I realised that I deffinately needed more screens to the controller. The most important screen to add was the 'Settings Screen'. This screen was really important because the feature that a user could enter it's own monthly expense was one of the main features in the PROPOSAL.md, so I needed a screen in which this could be done. During the design process I also came to the realisation that the categories needed to be edited as well. So the 'Settings Screen' could be used for that as well. But for adding and editing these categories another ViewController was needed. These decisions resulted in the addition of two Controller: 'SettingsTableViewController' and 'AddCategoryViewController'.
 
 #### Creation of graphs
-For making the 'Statistics Screen' I needed a plug-in which could handle data and make nice looking graphs. Online I found the pod 'Charts' which stated on their GitHub that it could create beautiful charts and was really easy to use. After finding a lot of information online I was able to understand the framework of 'Charts'. The problem I ran into was that I needed to create a framework which would represent the information of the expenses in easy to use lists or dictionaries. I needed information like: amount of expense per category, amount of expense per category per month, amount of expense per year, etc. To get this information in a easy to use format I created six dictionaries in the AppData class in which all this information was stored and easily extractable.
+For making the 'Statistics Screen' I needed a plug-in which could handle data and make nice looking graphs. Online I found the pod 'Charts' which stated on their GitHub that it could create beautiful charts and was really easy to use. After finding a lot of information online I was able to understand the framework of 'Charts'. The problem I ran into was that I needed to create a framework which would represent the information of the expenses in easy to use lists or dictionaries. I needed information like: amount of expense per category, amount of expense per category per month, amount of expense per year, etc. To get this information in a easy to use format I created six dictionaries in the AppData class in which all this information was stored and easily extractable (See Important Dictionaries).
+
+## Defending Decisions
+
+
