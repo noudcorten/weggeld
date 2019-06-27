@@ -1,0 +1,6 @@
+framework module Pods_WegGeld {
+  umbrella header "Pods-WegGeld-umbrella.h"
+
+  export *
+  module * { export * }
+}
