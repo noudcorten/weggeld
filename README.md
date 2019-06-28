@@ -34,6 +34,9 @@ Een app waarin de gebruiker zijn/haar maandelijkse kosten kan bijhouden.
 * Het zelf toevoegen/aanpassen van de categorieën (naam en kleur)
 * Het downloaden van alle uitgaves als een .csv bestand.
 
+### Product Video
+* https://youtu.be/oRmRVtpcyb4
+
 ## Prerequisites
 ### Data Sources
 * Deze app maakt geen gebruik van Data Sources
