@@ -124,8 +124,12 @@
 * Same as day 2.
 
 #### Day 4
+* Created REPORT.md
+* Added a LICENSE
+* Updated GIT
 
 #### Day 5
+* Made the product video
 
 
 ## Daily Standup
@@ -221,7 +225,3 @@
    * Explain all possible features.
    * Talk about the main idea of the app.
    * Keep the video short and informative.
-
-#### Day 4
-
-#### Day 5
