@@ -12,13 +12,13 @@
 		042CF1F722BA56450044CFCC /* ExpenseDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1F622BA56450044CFCC /* ExpenseDateCell.swift */; };
 		042CF1F922BA565A0044CFCC /* ExpenseCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1F822BA565A0044CFCC /* ExpenseCategoryCell.swift */; };
 		042CF1FB22BA56660044CFCC /* ExpenseInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */; };
+		04A3AECC22C61EF600D0AE01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A3AECB22C61EF600D0AE01 /* Assets.xcassets */; };
 		04B5A7CC22AFADF50059A04F /* CountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CB22AFADF50059A04F /* CountingLabel.swift */; };
 		04B5A7CE22AFC3DF0059A04F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CD22AFC3DF0059A04F /* Extensions.swift */; };
 		04B5A7E122B3F0BF0059A04F /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7E022B3F0BF0059A04F /* CategoryCell.swift */; };
 		04B5A7E522B4030C0059A04F /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7E422B4030C0059A04F /* InputCell.swift */; };
 		04BD4D8822A923FC00150288 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4D8722A923FC00150288 /* AppDelegate.swift */; };
 		04BD4D8D22A923FC00150288 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4D8B22A923FC00150288 /* Main.storyboard */; };
-		04BD4D8F22A923FE00150288 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4D8E22A923FE00150288 /* Assets.xcassets */; };
 		04BD4D9222A923FE00150288 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4D9022A923FE00150288 /* LaunchScreen.storyboard */; };
 		04BD4D9C22A924E800150288 /* AwayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4D9B22A924E800150288 /* AwayTableViewController.swift */; };
 		04BD4D9E22A9252200150288 /* ExpenseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4D9D22A9252200150288 /* ExpenseTableViewController.swift */; };
@@ -38,6 +38,7 @@
 		042CF1F622BA56450044CFCC /* ExpenseDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDateCell.swift; sourceTree = "<group>"; };
 		042CF1F822BA565A0044CFCC /* ExpenseCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCategoryCell.swift; sourceTree = "<group>"; };
 		042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseInfoCell.swift; sourceTree = "<group>"; };
+		04A3AECB22C61EF600D0AE01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../weggeld/WegGeld/Assets.xcassets; sourceTree = "<group>"; };
 		04B5A7CB22AFADF50059A04F /* CountingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingLabel.swift; sourceTree = "<group>"; };
 		04B5A7CD22AFC3DF0059A04F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		04B5A7E022B3F0BF0059A04F /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
@@ -45,7 +46,6 @@
 		04BD4D8422A923FC00150288 /* WegGeld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WegGeld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04BD4D8722A923FC00150288 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04BD4D8C22A923FC00150288 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		04BD4D8E22A923FE00150288 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04BD4D9122A923FE00150288 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04BD4D9322A923FE00150288 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04BD4D9B22A924E800150288 /* AwayTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwayTableViewController.swift; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 				04BD4DB122A9265D00150288 /* Icons */,
 				04BD4D8722A923FC00150288 /* AppDelegate.swift */,
 				04BD4D8B22A923FC00150288 /* Main.storyboard */,
-				04BD4D8E22A923FE00150288 /* Assets.xcassets */,
+				04A3AECB22C61EF600D0AE01 /* Assets.xcassets */,
 				04BD4D9022A923FE00150288 /* LaunchScreen.storyboard */,
 				04BD4D9322A923FE00150288 /* Info.plist */,
 			);
@@ -273,7 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04BD4D9222A923FE00150288 /* LaunchScreen.storyboard in Resources */,
-				04BD4D8F22A923FE00150288 /* Assets.xcassets in Resources */,
+				04A3AECC22C61EF600D0AE01 /* Assets.xcassets in Resources */,
 				04BD4D8D22A923FC00150288 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
