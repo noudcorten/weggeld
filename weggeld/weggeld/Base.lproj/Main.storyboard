@@ -416,7 +416,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXF-Gj-mCf">
-                                <rect key="frame" x="52" y="123" width="270" height="420"/>
+                                <rect key="frame" x="52.5" y="123.5" width="270" height="420"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jf-0H-hAO">
                                         <rect key="frame" x="10" y="10" width="250" height="400"/>
@@ -552,7 +552,7 @@
         <scene sceneID="eKT-7W-9uy">
             <objects>
                 <navigationController id="GBH-ho-3Pr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Instellingen" image="settings.png" id="VPz-vK-t3Y"/>
+                    <tabBarItem key="tabBarItem" title="Instellingen" image="settings" id="VPz-vK-t3Y"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2re-ZX-0Li">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -569,7 +569,7 @@
         <scene sceneID="Nh8-2U-hez">
             <objects>
                 <navigationController id="1zy-hl-O38" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Statistieken" image="bar_chart.png" id="XRY-cp-oEo"/>
+                    <tabBarItem key="tabBarItem" title="Statistieken" image="bar_chart" id="XRY-cp-oEo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uNS-tQ-iHM">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -586,7 +586,7 @@
         <scene sceneID="C7K-Ro-cwt">
             <objects>
                 <navigationController id="xIV-G4-sLS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Weg" image="wallet_app.png" id="IvK-Vk-62I"/>
+                    <tabBarItem key="tabBarItem" title="Weg" image="list" id="IvK-Vk-62I"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="h0J-QN-NK8">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -603,7 +603,7 @@
         <scene sceneID="ui4-vg-rwM">
             <objects>
                 <navigationController id="jnm-MN-X2T" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Geld" image="money_box.png" landscapeImage="money_bag.png" id="52B-qC-Q7m"/>
+                    <tabBarItem key="tabBarItem" title="Geld" image="money_box" id="52B-qC-Q7m"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9cp-FW-yo4">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -951,11 +951,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bar_chart.png" width="30" height="30"/>
-        <image name="money_bag.png" width="30" height="30"/>
-        <image name="money_box.png" width="30" height="30"/>
-        <image name="settings.png" width="30" height="30"/>
-        <image name="wallet_app.png" width="30" height="30"/>
+        <image name="bar_chart" width="30" height="30"/>
+        <image name="list" width="30" height="30"/>
+        <image name="money_box" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Mxc-Y6-07f"/>

@@ -14,11 +14,6 @@
 		042CF1FB22BA56660044CFCC /* ExpenseInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */; };
 		04B5A7CC22AFADF50059A04F /* CountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CB22AFADF50059A04F /* CountingLabel.swift */; };
 		04B5A7CE22AFC3DF0059A04F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7CD22AFC3DF0059A04F /* Extensions.swift */; };
-		04B5A7D322B1056C0059A04F /* bar_chart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D222B1056C0059A04F /* bar_chart@3x.png */; };
-		04B5A7D522B105820059A04F /* money_box@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D422B105820059A04F /* money_box@3x.png */; };
-		04B5A7D722B105940059A04F /* money_box.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D622B105940059A04F /* money_box.png */; };
-		04B5A7D922B105AE0059A04F /* wallet_app@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7D822B105AE0059A04F /* wallet_app@2x.png */; };
-		04B5A7DB22B105BA0059A04F /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B5A7DA22B105BA0059A04F /* settings@3x.png */; };
 		04B5A7E122B3F0BF0059A04F /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7E022B3F0BF0059A04F /* CategoryCell.swift */; };
 		04B5A7E522B4030C0059A04F /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B5A7E422B4030C0059A04F /* InputCell.swift */; };
 		04BD4D8822A923FC00150288 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4D8722A923FC00150288 /* AppDelegate.swift */; };
@@ -31,9 +26,6 @@
 		04BD4DA222A9257900150288 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DA122A9257900150288 /* SettingsTableViewController.swift */; };
 		04BD4DA522A925A200150288 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DA422A925A200150288 /* Expense.swift */; };
 		04BD4DB722A9271100150288 /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DB622A9271100150288 /* MoneyViewController.swift */; };
-		04BD4DB922A928F000150288 /* bar_chart.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DB822A928EF00150288 /* bar_chart.png */; };
-		04BD4DBD22A9290D00150288 /* wallet_app.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBC22A9290D00150288 /* wallet_app.png */; };
-		04BD4DBF22A9292100150288 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BD4DBE22A9292100150288 /* settings.png */; };
 		04BD4DC422A95ED700150288 /* ExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DC322A95ED700150288 /* ExpenseCell.swift */; };
 		04BD4DC622AA5B7600150288 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4DC522AA5B7600150288 /* AppData.swift */; };
 		04F32D7D22BD034200E62401 /* ExportToCSVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F32D7C22BD034200E62401 /* ExportToCSVCell.swift */; };
@@ -48,11 +40,6 @@
 		042CF1FA22BA56660044CFCC /* ExpenseInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseInfoCell.swift; sourceTree = "<group>"; };
 		04B5A7CB22AFADF50059A04F /* CountingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingLabel.swift; sourceTree = "<group>"; };
 		04B5A7CD22AFC3DF0059A04F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		04B5A7D222B1056C0059A04F /* bar_chart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_chart@3x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/bar_chart@3x.png"; sourceTree = "<group>"; };
-		04B5A7D422B105820059A04F /* money_box@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "money_box@3x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/money_box@3x.png"; sourceTree = "<group>"; };
-		04B5A7D622B105940059A04F /* money_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = money_box.png; path = ../../../../../iOS_11_glyph_icons/PNG/money_box.png; sourceTree = "<group>"; };
-		04B5A7D822B105AE0059A04F /* wallet_app@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet_app@2x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/wallet_app@2x.png"; sourceTree = "<group>"; };
-		04B5A7DA22B105BA0059A04F /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@3x.png"; path = "../../../../../iOS_11_glyph_icons/PNG/settings@3x.png"; sourceTree = "<group>"; };
 		04B5A7E022B3F0BF0059A04F /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		04B5A7E422B4030C0059A04F /* InputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
 		04BD4D8422A923FC00150288 /* WegGeld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WegGeld.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,9 +54,6 @@
 		04BD4DA122A9257900150288 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		04BD4DA422A925A200150288 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		04BD4DB622A9271100150288 /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
-		04BD4DB822A928EF00150288 /* bar_chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_chart.png; path = ../../../../../iOS_11_glyph_icons/PNG/bar_chart.png; sourceTree = "<group>"; };
-		04BD4DBC22A9290D00150288 /* wallet_app.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wallet_app.png; path = ../../../../../iOS_11_glyph_icons/PNG/wallet_app.png; sourceTree = "<group>"; };
-		04BD4DBE22A9292100150288 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../../../../../iOS_11_glyph_icons/PNG/settings.png; sourceTree = "<group>"; };
 		04BD4DC322A95ED700150288 /* ExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCell.swift; sourceTree = "<group>"; };
 		04BD4DC522AA5B7600150288 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		04F32D7C22BD034200E62401 /* ExportToCSVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportToCSVCell.swift; sourceTree = "<group>"; };
@@ -158,14 +142,6 @@
 		04BD4DB122A9265D00150288 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				04B5A7D622B105940059A04F /* money_box.png */,
-				04B5A7D422B105820059A04F /* money_box@3x.png */,
-				04BD4DBC22A9290D00150288 /* wallet_app.png */,
-				04B5A7D822B105AE0059A04F /* wallet_app@2x.png */,
-				04BD4DB822A928EF00150288 /* bar_chart.png */,
-				04B5A7D222B1056C0059A04F /* bar_chart@3x.png */,
-				04BD4DBE22A9292100150288 /* settings.png */,
-				04B5A7DA22B105BA0059A04F /* settings@3x.png */,
 			);
 			path = Icons;
 			sourceTree = "<group>";
@@ -296,16 +272,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B5A7DB22B105BA0059A04F /* settings@3x.png in Resources */,
 				04BD4D9222A923FE00150288 /* LaunchScreen.storyboard in Resources */,
-				04B5A7D722B105940059A04F /* money_box.png in Resources */,
-				04BD4DBF22A9292100150288 /* settings.png in Resources */,
-				04B5A7D922B105AE0059A04F /* wallet_app@2x.png in Resources */,
 				04BD4D8F22A923FE00150288 /* Assets.xcassets in Resources */,
-				04B5A7D522B105820059A04F /* money_box@3x.png in Resources */,
-				04BD4DB922A928F000150288 /* bar_chart.png in Resources */,
-				04B5A7D322B1056C0059A04F /* bar_chart@3x.png in Resources */,
-				04BD4DBD22A9290D00150288 /* wallet_app.png in Resources */,
 				04BD4D8D22A923FC00150288 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
